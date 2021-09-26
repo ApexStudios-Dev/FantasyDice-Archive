@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dicemod:item/gold/twenty_sided_die"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "dicemod:bone_six_sided_die",
+    "dicemod:iron_six_sided_die",
+    "dicemod:gold_six_sided_die",
+    "dicemod:diamond_six_sided_die"
+  ]
+}

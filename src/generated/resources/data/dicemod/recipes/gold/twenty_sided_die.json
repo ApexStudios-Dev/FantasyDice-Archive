@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "dice/gold",
+  "pattern": [
+    " I ",
+    "III",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:nuggets/gold"
+    }
+  },
+  "result": {
+    "item": "dicemod:gold_twenty_sided_die",
+    "count": 8
+  }
+}

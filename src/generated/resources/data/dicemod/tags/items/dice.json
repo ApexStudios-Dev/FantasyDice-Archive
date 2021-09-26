@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#dicemod:dice/six_sided",
+    "#dicemod:dice/twenty_sided",
+    "#dicemod:dice/bone",
+    "#dicemod:dice/iron",
+    "#dicemod:dice/gold",
+    "#dicemod:dice/diamond"
+  ]
+}

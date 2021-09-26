@@ -1,0 +1,20 @@
+{
+  "dicemod.dice.bone": "Bone",
+  "dicemod.dice.bone.using": "Using a Bone Die",
+  "dicemod.dice.diamond": "Diamond",
+  "dicemod.dice.diamond.using": "Using a Diamond Die",
+  "dicemod.dice.gold": "Gold",
+  "dicemod.dice.gold.using": "Using a Gold Die",
+  "dicemod.dice.iron": "Iron",
+  "dicemod.dice.iron.using": "Using a Iron Die",
+  "dicemod.dice.roll": "%s rolls %dx %s",
+  "item.dicemod.bone_six_sided_die": "Bone d6",
+  "item.dicemod.bone_twenty_sided_die": "Bone d20",
+  "item.dicemod.diamond_six_sided_die": "Diamond d6",
+  "item.dicemod.diamond_twenty_sided_die": "Diamond d20",
+  "item.dicemod.gold_six_sided_die": "Gold d6",
+  "item.dicemod.gold_twenty_sided_die": "Gold d20",
+  "item.dicemod.iron_six_sided_die": "Iron d6",
+  "item.dicemod.iron_twenty_sided_die": "Iron d20",
+  "itemGroup.dicemod": "Dice"
+}

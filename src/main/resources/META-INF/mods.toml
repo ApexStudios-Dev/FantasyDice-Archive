@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="GNU"
+# issueTrackerURL="https://github.com/ApexModder/DiceMod/issues"
+
+[[mods]]
+modId="dicemod"
+version="${file.jarVersion}"
+displayName="DiceMod"
+# updateJSONURL="https://raw.githubusercontent.com/ApexModder/DiceMod/main/update.json"
+# displayURL="https://www.curseforge.com/minecraft/mc-mods/dicemod"
+# logoFile="logo.png"
+# credits=""
+authors="ApexModder, FantasyGaming"
+description='''
+DiceMod
+'''
+
+[[dependencies.dicemod]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.dicemod]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17]"
+    ordering="NONE"
+    side="BOTH"

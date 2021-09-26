@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "dice/iron",
+  "pattern": [
+    " I ",
+    "III",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:nuggets/iron"
+    }
+  },
+  "result": {
+    "item": "dicemod:iron_twenty_sided_die",
+    "count": 8
+  }
+}
