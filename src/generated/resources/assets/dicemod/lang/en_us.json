@@ -10,5 +10,7 @@
   "item.dicemod.gold_twenty_sided_die": "Gold d20",
   "item.dicemod.iron_six_sided_die": "Iron d6",
   "item.dicemod.iron_twenty_sided_die": "Iron d20",
+  "item.dicemod.paper_six_sided_die": "Paper d6",
+  "item.dicemod.paper_twenty_sided_die": "Paper d20",
   "itemGroup.dicemod": "Dice"
 }

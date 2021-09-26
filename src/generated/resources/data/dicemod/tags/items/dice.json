@@ -3,6 +3,7 @@
   "values": [
     "#dicemod:dice/six_sided",
     "#dicemod:dice/twenty_sided",
+    "#dicemod:dice/paper",
     "#dicemod:dice/bone",
     "#dicemod:dice/iron",
     "#dicemod:dice/gold",

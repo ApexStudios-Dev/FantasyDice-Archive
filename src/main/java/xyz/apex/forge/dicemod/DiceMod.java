@@ -9,9 +9,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -19,8 +21,10 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.versions.forge.ForgeVersion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import xyz.apex.forge.dicemod.client.ClientSetup;
 import xyz.apex.forge.dicemod.config.ServerConfig;
 import xyz.apex.forge.dicemod.data.ItemModelGenerator;
 import xyz.apex.forge.dicemod.data.ItemTagGenerator;
@@ -38,12 +42,14 @@ public final class DiceMod
 	public static final Tags.IOptionalNamedTag<Item> DICE = ItemTags.createOptional(new ResourceLocation(ID, "dice"));
 	public static final Tags.IOptionalNamedTag<Item> DICE_SIX_SIDED = ItemTags.createOptional(new ResourceLocation(ID, "dice/six_sided"));
 	public static final Tags.IOptionalNamedTag<Item> DICE_TWENTY_SIDED = ItemTags.createOptional(new ResourceLocation(ID, "dice/twenty_sided"));
+	public static final Tags.IOptionalNamedTag<Item> PAPER = ItemTags.createOptional(new ResourceLocation(ForgeVersion.MOD_ID, "paper")); // does not exist by default
 	public static final ItemGroup ITEM_GROUP = new DiceItemGroup();
 
 	public DiceMod()
 	{
 		LOGGER.info("Initializing mod...");
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientSetup::new);
 
 		bus.addListener(this::onGatherData);
 

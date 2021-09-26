@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "dicemod:paper_twenty_sided_die",
     "dicemod:bone_twenty_sided_die",
     "dicemod:iron_twenty_sided_die",
     "dicemod:gold_twenty_sided_die",

@@ -14,7 +14,7 @@ import xyz.apex.forge.dicemod.util.DiceHelper;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public final class DiceItem extends Item
+public class DiceItem extends Item
 {
 	public DiceItem(Properties properties)
 	{
