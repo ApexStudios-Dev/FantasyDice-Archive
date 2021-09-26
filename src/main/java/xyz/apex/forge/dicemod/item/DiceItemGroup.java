@@ -28,7 +28,7 @@ public final class DiceItemGroup extends ItemGroup
 
 			if(isSix)
 			{
-				diceType = (diceType + 1) % (Dice.TYPES.length - 1);
+				diceType = (diceType + 1) % Dice.TYPES.length;
 				isSix = false;
 			}
 			else

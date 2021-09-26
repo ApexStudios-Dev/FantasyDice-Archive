@@ -38,6 +38,7 @@ public enum Dice
 	IRON("iron", TextFormatting.GRAY, Tags.Items.INGOTS_IRON, DiceItem::new),
 	GOLD("gold", TextFormatting.YELLOW, Tags.Items.INGOTS_GOLD, DiceItem::new),
 	DIAMOND("diamond", TextFormatting.AQUA, Tags.Items.GEMS_DIAMOND, DiceItem::new),
+	EMERALD("emerald", TextFormatting.GREEN, Tags.Items.GEMS_EMERALD, DiceItem::new),
 	;
 
 	public static final Dice[] TYPES = values();

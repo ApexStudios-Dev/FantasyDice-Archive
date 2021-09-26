@@ -7,6 +7,7 @@
     "#dicemod:dice/bone",
     "#dicemod:dice/iron",
     "#dicemod:dice/gold",
-    "#dicemod:dice/diamond"
+    "#dicemod:dice/diamond",
+    "#dicemod:dice/emerald"
   ]
 }
