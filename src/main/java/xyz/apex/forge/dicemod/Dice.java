@@ -20,6 +20,7 @@ import net.minecraftforge.fml.RegistryObject;
 import xyz.apex.forge.dicemod.data.ItemModelGenerator;
 import xyz.apex.forge.dicemod.data.LanguageGenerator;
 import xyz.apex.forge.dicemod.item.DiceItem;
+import xyz.apex.forge.dicemod.util.DiceHelper;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -31,8 +32,8 @@ import java.util.function.Supplier;
 public enum Dice
 {
 	BONE("bone", TextFormatting.WHITE, Tags.Items.BONES),
-	IRON("iron", TextFormatting.GRAY, Tags.Items.NUGGETS_IRON),
-	GOLD("gold", TextFormatting.YELLOW, Tags.Items.NUGGETS_GOLD),
+	IRON("iron", TextFormatting.GRAY, Tags.Items.INGOTS_IRON),
+	GOLD("gold", TextFormatting.YELLOW, Tags.Items.INGOTS_GOLD),
 	DIAMOND("diamond", TextFormatting.AQUA, Tags.Items.GEMS_DIAMOND),
 	;
 
@@ -43,8 +44,6 @@ public enum Dice
 	public final RegistryObject<Item> six_sided_die;
 	public final RegistryObject<Item> twenty_sided_die;
 	public final String typeName;
-	public final String typeLangKey;
-	public final String typeLangUsingKey;
 	public final TextFormatting typeColor;
 	public final Rarity rarity;
 
@@ -55,9 +54,6 @@ public enum Dice
 		this.craftingItem = craftingItem;
 		this.rarity = Rarity.create(DiceMod.ID + ":" + typeName, typeColor);
 
-		typeLangKey = DiceMod.ID + ".dice." + typeName;
-		typeLangUsingKey = typeLangKey + ".using";
-
 		tag = ItemTags.createOptional(new ResourceLocation(DiceMod.ID, "dice/" + typeName));
 
 		six_sided_die = register(this, "six_sided_die");
@@ -67,9 +63,6 @@ public enum Dice
 	public void onGenerateLanguage(BiConsumer<Supplier<Item>, String> addItem, BiConsumer<String, String> addGen)
 	{
 		String typeNameEnglish = typeName.substring(0, 1).toUpperCase(Locale.ROOT) + typeName.substring(1).toLowerCase();
-
-		addGen.accept(typeLangKey, typeNameEnglish);
-		addGen.accept(typeLangUsingKey, "Using a " + typeNameEnglish + " Die");
 
 		addItem.accept(six_sided_die, typeNameEnglish + " d6");
 		addItem.accept(twenty_sided_die, typeNameEnglish + " d20");
@@ -127,19 +120,40 @@ public enum Dice
 		return style.withItalic(true).withColor(typeColor);
 	}
 
-	public IFormattableTextComponent createTextComponent(PlayerEntity thrower, ItemStack die, int roll, int min, int max)
+	public IFormattableTextComponent createItemTooltipComponent(ItemStack die, int min)
 	{
+		int sides = DiceHelper.getSides(die);
+
+		return new TranslationTextComponent(
+				LanguageGenerator.DICE_ROLL_DESC_KEY,
+				new StringTextComponent("" + min).withStyle(style -> style.withColor(TextFormatting.DARK_GRAY).withItalic(true)),
+				new StringTextComponent("" + sides).withStyle(style -> style.withColor(TextFormatting.DARK_GRAY).withItalic(true))
+		).withStyle(style -> style.withColor(TextFormatting.DARK_GRAY));
+	}
+
+	public IFormattableTextComponent createItemTooltipComponent(ItemStack die)
+	{
+		return createItemTooltipComponent(die, 1);
+	}
+
+	public IFormattableTextComponent createTextComponent(PlayerEntity thrower, ItemStack die, int roll)
+	{
+		int sides = DiceHelper.getSides(die);
+		String strAmount = "";
+
+		if(die.getCount() > 1)
+			strAmount += die.getCount();
+
 		return new TranslationTextComponent(
 				LanguageGenerator.DICE_ROLL_KEY,
 				thrower.getDisplayName(),
-				new StringTextComponent("" + roll).withStyle(this::getTextComponentStyle),
-				die.getDisplayName().plainCopy().withStyle(this::getTextComponentStyle)
+				new StringTextComponent(roll + " (" + strAmount + "d" + sides + ")").withStyle(this::getTextComponentStyle)
 		)
 				.withStyle(style ->
 						style.withHoverEvent(
 								new HoverEvent(
 										HoverEvent.Action.SHOW_TEXT,
-										new TranslationTextComponent(typeLangUsingKey).withStyle(hoverStyle -> hoverStyle.withColor(typeColor))
+										new TranslationTextComponent(LanguageGenerator.DICE_ROLL_USING_KEY, die.getHoverName()).withStyle(hoverStyle -> hoverStyle.withColor(typeColor))
 								)
 						)
 				);

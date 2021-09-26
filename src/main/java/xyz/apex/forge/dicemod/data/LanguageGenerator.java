@@ -7,7 +7,9 @@ import xyz.apex.forge.dicemod.DiceMod;
 
 public final class LanguageGenerator extends LanguageProvider
 {
-	public static final String DICE_ROLL_KEY = "dicemod.dice.roll";
+	public static final String DICE_ROLL_KEY = DiceMod.ID + ".dice.roll";
+	public static final String DICE_ROLL_USING_KEY = DiceMod.ID + ".dice.using";
+	public static final String DICE_ROLL_DESC_KEY = DiceMod.ID + ".dice.roll.desc";
 
 	public LanguageGenerator(DataGenerator generator)
 	{
@@ -18,7 +20,9 @@ public final class LanguageGenerator extends LanguageProvider
 	protected void addTranslations()
 	{
 		add("itemGroup." + DiceMod.ID, "Dice");
-		add(DICE_ROLL_KEY, "%s rolls %dx %s");
+		add(DICE_ROLL_KEY, "%s rolls %s");
+		add(DICE_ROLL_USING_KEY, "Using a %s");
+		add(DICE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
 
 		for(Dice dice : Dice.TYPES)
 		{

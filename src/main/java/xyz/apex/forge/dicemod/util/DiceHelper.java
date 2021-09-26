@@ -79,7 +79,7 @@ public final class DiceHelper
 			totalRolls += roll;
 		}
 
-		DiceMod.sendMessageToPlayers(thrower, dice.createTextComponent(thrower, die, totalRolls, min, sides));
+		DiceMod.sendMessageToPlayers(thrower, dice.createTextComponent(thrower, die, totalRolls));
 
 		return true;
 	}
