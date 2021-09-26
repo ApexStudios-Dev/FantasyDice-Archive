@@ -2,6 +2,7 @@ package xyz.apex.forge.dicemod.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -25,6 +26,10 @@ public final class ItemModelGenerator extends ItemModelProvider
 	@Override
 	protected void registerModels()
 	{
+		getBuilder(DiceMod.POUCH.getId().toString())
+		       .parent(ItemModelGenerator.GENERATED)
+		       .texture("layer0", new ResourceLocation(DiceMod.ID, "item/pouch"));
+
 		for(Dice dice : Dice.TYPES)
 		{
 			dice.onGenerateItemModel(this::getBuilder);

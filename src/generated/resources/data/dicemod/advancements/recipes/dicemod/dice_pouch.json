@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "dicemod:dice_pouch"
+    ]
+  },
+  "criteria": {
+    "has_leather": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:leather"
+          }
+        ]
+      }
+    },
+    "has_string": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:string"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "dicemod:dice_pouch"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_leather",
+      "has_string",
+      "has_the_recipe"
+    ]
+  ]
+}

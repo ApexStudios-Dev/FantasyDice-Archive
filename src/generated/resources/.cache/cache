@@ -1,4 +1,4 @@
-dea7d4e22dd49590a6e3fa8c8c2a047c09e0e206 assets/dicemod/lang/en_us.json
+272ac2a8588240ff5aa0d9124245b5d123361047 assets/dicemod/lang/en_us.json
 eb2334b948be75596a7c3df777ed667fa6f6de92 assets/dicemod/models/item/bone_six_sided_die.json
 ab0f4794c45e18cd492aacc344f24ae2e6eda59d assets/dicemod/models/item/bone_twenty_sided_die.json
 c11c755ba52588f93208e88fe2e1d6f413955a82 assets/dicemod/models/item/diamond_six_sided_die.json
@@ -9,10 +9,12 @@ c328866119a933ab8f43a1b50c87719aad549712 assets/dicemod/models/item/gold_six_sid
 595c2774afc2259dd6411f67570bffc10cadbfb1 assets/dicemod/models/item/iron_twenty_sided_die.json
 ec46399ae159de357ad281d4e2001df61cebd615 assets/dicemod/models/item/paper_six_sided_die.json
 6a164a895f82ffc8498beae317ecc45487849f7b assets/dicemod/models/item/paper_twenty_sided_die.json
+bb9bab8793495495c256bb920a0570cafdb3382e assets/dicemod/models/item/pouch.json
 382ba0626f618397e61a9e46a5b9a002d596ee85 data/dicemod/advancements/recipes/dicemod/bone/six_sided_die.json
 8d5e4bb14a873f167727bf56976836d478a6066b data/dicemod/advancements/recipes/dicemod/bone/twenty_sided_die.json
 e257a1b499f9eb356c97b7c316ba13b5c86a3e3e data/dicemod/advancements/recipes/dicemod/diamond/six_sided_die.json
 3de3425ffc3b9912c4d3b04c1abc803d18b5ad0f data/dicemod/advancements/recipes/dicemod/diamond/twenty_sided_die.json
+20834536066ae8412a8324047612695028bb7a8a data/dicemod/advancements/recipes/dicemod/dice_pouch.json
 d31e567d74da9f7fd78b0a2eba96ce729a9af556 data/dicemod/advancements/recipes/dicemod/gold/six_sided_die.json
 f2b0ff905c9a7079a9cd5576f0f960bba1e8901b data/dicemod/advancements/recipes/dicemod/gold/twenty_sided_die.json
 04258f335b375e67bafb0c347228462b244570ac data/dicemod/advancements/recipes/dicemod/iron/six_sided_die.json
@@ -23,6 +25,7 @@ a9939b40be9515d38af8750ae30bb387c5755507 data/dicemod/advancements/recipes/dicem
 33e8e93ecd2ac077e2ea9e2574354bf02afe2d2a data/dicemod/recipes/bone/twenty_sided_die.json
 ee986a9247282d223ce9989753ddc9980467959b data/dicemod/recipes/diamond/six_sided_die.json
 8ef618b6fc3d214b08af72c59c7cc08b0df3bf0b data/dicemod/recipes/diamond/twenty_sided_die.json
+54a9596c5205a3bdf7c55baa57392a113306a5b6 data/dicemod/recipes/dice_pouch.json
 9133fbeb93a1f2a10ec62e2044b67ac1e1cb1cfa data/dicemod/recipes/gold/six_sided_die.json
 a218bdf4c7ee68d5220d346fc221e9cec6abd3e6 data/dicemod/recipes/gold/twenty_sided_die.json
 344966be1323901094b2ba81e03ab0eaef8ad8cf data/dicemod/recipes/iron/six_sided_die.json

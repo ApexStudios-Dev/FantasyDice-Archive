@@ -2,6 +2,7 @@
   "dicemod.dice.roll": "%s rolls %s",
   "dicemod.dice.roll.desc": "Rolls a random number between %s & %s",
   "dicemod.dice.using": "Using a %s",
+  "dicemod.pouch.title": "Dice Pouch",
   "item.dicemod.bone_six_sided_die": "Bone d6",
   "item.dicemod.bone_twenty_sided_die": "Bone d20",
   "item.dicemod.diamond_six_sided_die": "Diamond d6",
@@ -12,5 +13,6 @@
   "item.dicemod.iron_twenty_sided_die": "Iron d20",
   "item.dicemod.paper_six_sided_die": "Paper d6",
   "item.dicemod.paper_twenty_sided_die": "Paper d20",
+  "item.dicemod.pouch": "Dice Pouch",
   "itemGroup.dicemod": "Dice"
 }
