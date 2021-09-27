@@ -8,6 +8,7 @@
     "#dicemod:dice/iron",
     "#dicemod:dice/gold",
     "#dicemod:dice/diamond",
-    "#dicemod:dice/emerald"
+    "#dicemod:dice/emerald",
+    "#dicemod:dice/lapis_lazuli"
   ]
 }

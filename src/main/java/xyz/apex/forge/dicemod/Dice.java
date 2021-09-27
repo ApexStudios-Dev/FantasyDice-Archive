@@ -30,6 +30,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public enum Dice
 {
@@ -39,6 +40,7 @@ public enum Dice
 	GOLD("gold", TextFormatting.YELLOW, Tags.Items.INGOTS_GOLD, DiceItem::new),
 	DIAMOND("diamond", TextFormatting.AQUA, Tags.Items.GEMS_DIAMOND, DiceItem::new),
 	EMERALD("emerald", TextFormatting.GREEN, Tags.Items.GEMS_EMERALD, DiceItem::new),
+	LAPIS_LAZULI("lapis_lazuli", TextFormatting.BLUE, Tags.Items.GEMS_LAPIS, DiceItem::new),
 	;
 
 	public static final Dice[] TYPES = values();
@@ -66,7 +68,9 @@ public enum Dice
 
 	public void onGenerateLanguage(BiConsumer<Supplier<Item>, String> addItem, BiConsumer<String, String> addGen)
 	{
-		String typeNameEnglish = typeName.substring(0, 1).toUpperCase(Locale.ROOT) + typeName.substring(1).toLowerCase();
+		// String typeName.substring(0, 1).toUpperCase(Locale.ROOT) + typeName.substring(1).toLowerCase();
+		String[] tokens = typeName.split("_");
+		String typeNameEnglish = Arrays.stream(tokens).map(token -> token.substring(0, 1).toUpperCase(Locale.ROOT) + token.substring(1).toLowerCase(Locale.ROOT) + ' ').collect(Collectors.joining()).trim();
 
 		addItem.accept(six_sided_die, typeNameEnglish + " d6");
 		addItem.accept(twenty_sided_die, typeNameEnglish + " d20");
