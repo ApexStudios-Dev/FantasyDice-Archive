@@ -8,7 +8,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import xyz.apex.forge.dicemod.Dice;
+import xyz.apex.forge.dicemod.init.Dice;
 import xyz.apex.forge.dicemod.util.DiceHelper;
 
 import javax.annotation.Nullable;

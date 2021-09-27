@@ -3,9 +3,9 @@ package xyz.apex.forge.dicemod.container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import xyz.apex.forge.dicemod.DiceMod;
+import xyz.apex.forge.dicemod.init.DTags;
 
-public class DiceSlot extends Slot
+public final class DiceSlot extends Slot
 {
 	public DiceSlot(IInventory inventory, int slotIndex, int xPos, int yPos)
 	{
@@ -15,6 +15,6 @@ public class DiceSlot extends Slot
 	@Override
 	public boolean mayPlace(ItemStack stack)
 	{
-		return stack.getItem().is(DiceMod.DICE);
+		return stack.getItem().is(DTags.Items.DICE);
 	}
 }

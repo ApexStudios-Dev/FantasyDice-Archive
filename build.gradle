@@ -11,9 +11,9 @@ buildscript {
 	}
 }
 
-/*plugins {
+plugins {
 	id 'com.github.johnrengelman.shadow' version "${jr_shadow_version}"
-}*/
+}
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
@@ -26,13 +26,9 @@ archivesBaseName = "${mod_name}-${mc_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
-/*configurations {
+configurations {
 	shade
-
-	library
-	implementation.extendsFrom library
-	shade.extendsFrom library
-}*/
+}
 
 minecraft {
 	mappings channel: 'official', version: "${mc_version}"
@@ -109,14 +105,6 @@ minecraft {
 			}
 		}
 	}
-
-	/*runs.all {
-		lazyToken('minecraft_classpath') {
-			configurations.library.copyRecursive().resolve().collect {
-				it.absolutePath
-			}.join(File.pathSeparator)
-		}
-	}*/
 }
 
 /*mixin {
@@ -144,6 +132,11 @@ dependencies {
 	compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${mc_version_short}:${mc_version_short}-${top_version}:api")
 	runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${mc_version_short}:${mc_version_short}-${top_version}")
 
+	// Registrate
+	compileOnly fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}")
+	runtimeOnly fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}")
+	shade "com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}"
+
 	if(project.hasProperty('apex_local_deps') && project.getProperty('apex_local_deps')) {
 		// runtimeOnly fg.deobf("${apex_package}:devworld:${mc_version}-${devworld_version}")
 		// runtimeOnly fg.deobf("${apex_package}:smoothboot:${mc_version}-${smoothboot_version}")
@@ -164,7 +157,7 @@ artifacts {
 	archives jar
 	archives sourcesJar
 	archives deobfJar
-	// archives shadowJar
+	archives shadowJar
 }
 
 jar {
@@ -185,10 +178,11 @@ jar {
 	}
 }
 
-/*shadowJar {
+shadowJar {
 	configurations = [ project.configurations.shade ]
+	relocate 'com.tterrag.registrate', "${project.group}.repack.com.tterrag.registrate"
 	classifier = 'fat'
-}*/
+}
 
 jar.finalizedBy('reobfJar')
 
@@ -202,7 +196,7 @@ publishing {
 			artifact jar
 			artifact sourcesJar
 			artifact deobfJar
-			// artifact shadowJar
+			artifact shadowJar
 		}
 	}
 	repositories {

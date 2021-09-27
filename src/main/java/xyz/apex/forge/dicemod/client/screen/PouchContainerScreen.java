@@ -10,11 +10,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.apex.forge.dicemod.DiceMod;
 import xyz.apex.forge.dicemod.container.PouchContainer;
+import xyz.apex.forge.dicemod.init.DStrings;
 
 @OnlyIn(Dist.CLIENT)
 public class PouchContainerScreen extends ContainerScreen<PouchContainer>
 {
-	private static final ResourceLocation CONTAINER_LOCATION = new ResourceLocation(DiceMod.ID,"textures/gui/container/pouch.png");
+	private static final ResourceLocation CONTAINER_LOCATION = new ResourceLocation(DiceMod.ID, DStrings.CONTAINER_POUCH_TEXTURE);
 
 	public PouchContainerScreen(PouchContainer container, PlayerInventory playerInventory, ITextComponent textComponent)
 	{
@@ -40,7 +41,7 @@ public class PouchContainerScreen extends ContainerScreen<PouchContainer>
 	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1F, 1F, 1F, 1F);
-		this.minecraft.getTextureManager().bind(CONTAINER_LOCATION);
+		minecraft.getTextureManager().bind(CONTAINER_LOCATION);
 		int i = (width - imageWidth) / 2;
 		int j = (height - imageHeight) / 2;
 		blit(matrixStack, i, j, 0, 0, imageWidth, imageHeight);

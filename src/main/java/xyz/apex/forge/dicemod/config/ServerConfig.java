@@ -12,9 +12,11 @@ public final class ServerConfig
 	{
 		ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
+		// formatter:off
 		diceCooldown = builder
 				.comment("Cooldown for dice items (value is in TPS, 20 == 1 second)")
 				.defineInRange("dice.cooldown", 20, 0, Integer.MAX_VALUE);
+		// formatter:on
 
 		spec = builder.build();
 	}

@@ -6,9 +6,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Hand;
-import xyz.apex.forge.dicemod.DiceMod;
 import xyz.apex.forge.dicemod.item.PouchItem;
 
 import javax.annotation.Nullable;
@@ -23,7 +20,7 @@ public class PouchContainer extends Container
 	private final PlayerEntity player;
 	private final PouchItem.Inv pouchInventory;
 
-	public PouchContainer(@Nullable ContainerType<?> containerType, PlayerInventory playerInventory, PouchItem.Inv pouchInventory, int windowId)
+	public PouchContainer(@Nullable ContainerType<?> containerType, int windowId, PlayerInventory playerInventory, PouchItem.Inv pouchInventory)
 	{
 		super(containerType, windowId);
 
@@ -32,7 +29,7 @@ public class PouchContainer extends Container
 
 		// checkContainerSize(pouchInventory, SLOTS);
 		bindPlayerInventory(this, playerInventory, this::addSlot);
-		pouchInventory.startOpen(player);
+		pouchInventory.startOpen(player); // opening the inventory loads items from nbt data
 
 		// pouch slots
 		for(int row = 0; row < ROWS; row++)
@@ -42,12 +39,6 @@ public class PouchContainer extends Container
 				addSlot(new DiceSlot(pouchInventory, col + row * 6, 35 + col * 18, 17 + row * 18));
 			}
 		}
-	}
-
-	@Deprecated // internal use only
-	public PouchContainer(int windowId, PlayerInventory inv, PacketBuffer data)
-	{
-		this(DiceMod.POUCH_CONTAINER.get(), inv, new PouchItem.Inv(inv.player.getItemInHand(data.readEnum(Hand.class))), windowId);
 	}
 
 	@Override
@@ -88,7 +79,7 @@ public class PouchContainer extends Container
 	public void removed(PlayerEntity player)
 	{
 		super.removed(player);
-		pouchInventory.stopOpen(player);
+		pouchInventory.stopOpen(player); // closing inventory saves all items to nbt
 	}
 
 	// Consumer<Slot> -> Container#addSlot

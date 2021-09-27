@@ -10,7 +10,7 @@ displayName="DiceMod"
 # updateJSONURL="https://raw.githubusercontent.com/ApexModder/DiceMod/main/update.json"
 # displayURL="https://www.curseforge.com/minecraft/mc-mods/dicemod"
 # logoFile="logo.png"
-credits="ApexSPG (ApexModder) - Programming, Testing\nFantasyGaming - Mod Requester, Textures, Testing\nTobiSPG - Testing"
+credits="ApexSPG (ApexModder) - Programming, Testing\nFantasyGaming - Mod Requester, Textures, Testing\nTobiSPG - Testing\n\nTTerrag - Registrate"
 authors="ApexModder, FantasyGaming"
 description="Adds various types of Die to the game which can be rolled by players"
 

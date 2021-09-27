@@ -3,8 +3,8 @@ package xyz.apex.forge.dicemod.item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import xyz.apex.forge.dicemod.Dice;
 import xyz.apex.forge.dicemod.DiceMod;
+import xyz.apex.forge.dicemod.init.Dice;
 
 public final class DiceItemGroup extends ItemGroup
 {

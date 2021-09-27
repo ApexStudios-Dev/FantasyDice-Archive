@@ -4,8 +4,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import xyz.apex.forge.dicemod.Dice;
 import xyz.apex.forge.dicemod.DiceMod;
+import xyz.apex.forge.dicemod.init.DTags;
+import xyz.apex.forge.dicemod.init.Dice;
 
 import java.util.Random;
 
@@ -38,9 +39,9 @@ public final class DiceHelper
 
 	public static int getSides(ItemStack stack)
 	{
-		if(stack.getItem().is(DiceMod.DICE_TWENTY_SIDED))
+		if(stack.getItem().is(DTags.Items.DICE_TWENTY_SIDED))
 			return 20;
-		if(stack.getItem().is(DiceMod.DICE_SIX_SIDED))
+		if(stack.getItem().is(DTags.Items.DICE_SIX_SIDED))
 			return 6;
 		return 6;
 	}
@@ -49,7 +50,7 @@ public final class DiceHelper
 	{
 		ItemStack die = thrower.getItemInHand(hand);
 
-		if(die.getItem().is(DiceMod.DICE))
+		if(die.getItem().is(DTags.Items.DICE))
 		{
 			if(throwDice(world, thrower, hand, die, min))
 			{

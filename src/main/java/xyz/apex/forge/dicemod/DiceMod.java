@@ -1,76 +1,77 @@
 package xyz.apex.forge.dicemod;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.util.NonNullLazyValue;
 import net.minecraft.command.CommandSource;
-import net.minecraft.data.BlockTagsProvider;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.TagsProvider;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.versions.forge.ForgeVersion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import xyz.apex.forge.dicemod.client.ClientSetup;
 import xyz.apex.forge.dicemod.command.RollCommand;
 import xyz.apex.forge.dicemod.config.ServerConfig;
-import xyz.apex.forge.dicemod.container.PouchContainer;
-import xyz.apex.forge.dicemod.data.ItemModelGenerator;
-import xyz.apex.forge.dicemod.data.ItemTagGenerator;
-import xyz.apex.forge.dicemod.data.LanguageGenerator;
-import xyz.apex.forge.dicemod.data.RecipeGenerator;
+import xyz.apex.forge.dicemod.init.DContainers;
+import xyz.apex.forge.dicemod.init.DItems;
+import xyz.apex.forge.dicemod.init.DTags;
+import xyz.apex.forge.dicemod.init.Dice;
 import xyz.apex.forge.dicemod.item.DiceItemGroup;
-import xyz.apex.forge.dicemod.item.PouchItem;
 
 @Mod(DiceMod.ID)
 public final class DiceMod
 {
 	public static final String ID = "dicemod";
+	public static final String DICE_ROLL_KEY = DiceMod.ID + ".dice.roll";
+	public static final String DICE_ROLL_USING_KEY = DiceMod.ID + ".dice.using";
+	public static final String DICE_ROLL_DESC_KEY = DiceMod.ID + ".dice.roll.desc";
+	public static final String POUCH_SCREEN_TITLE_KEY = DiceMod.ID + ".pouch.title"; // narrator message for pouch screen
+
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final ServerConfig SERVER_CONFIG = new ServerConfig();
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ID);
-	public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ID);
-	public static final RegistryObject<Item> POUCH = ITEMS.register("pouch", PouchItem::new);
-	public static final RegistryObject<ContainerType<PouchContainer>> POUCH_CONTAINER = CONTAINERS.register("pouch", () -> IForgeContainerType.create(PouchContainer::new));
-	public static final Tags.IOptionalNamedTag<Item> DICE = ItemTags.createOptional(new ResourceLocation(ID, "dice"));
-	public static final Tags.IOptionalNamedTag<Item> DICE_SIX_SIDED = ItemTags.createOptional(new ResourceLocation(ID, "dice/six_sided"));
-	public static final Tags.IOptionalNamedTag<Item> DICE_TWENTY_SIDED = ItemTags.createOptional(new ResourceLocation(ID, "dice/twenty_sided"));
-	public static final Tags.IOptionalNamedTag<Item> PAPER = ItemTags.createOptional(new ResourceLocation(ForgeVersion.MOD_ID, "paper")); // does not exist by default
 	public static final ItemGroup ITEM_GROUP = new DiceItemGroup();
+
+	private static final NonNullLazyValue<Registrate> REGISTRATE_LAZY = new NonNullLazyValue<>(() -> Registrate.create(ID));
 
 	public DiceMod()
 	{
 		LOGGER.info("Initializing mod...");
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientSetup::new);
 
-		bus.addListener(this::onGatherData);
-		MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
 
+		registrate()
+				.itemGroup(() -> ITEM_GROUP)
+				.addDataGenerator(ProviderType.LANG, provider -> {
+					provider.add(ITEM_GROUP, "Dice");
+					provider.add(DICE_ROLL_KEY, "%s rolls %s");
+					provider.add(DICE_ROLL_USING_KEY, "Using a %s");
+					provider.add(DICE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
+					provider.add(POUCH_SCREEN_TITLE_KEY, "Dice Pouch");
+				})
+				.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
+					provider.tag(DTags.Items.PAPER).add(Items.PAPER);
+					TagsProvider.Builder<Item> diceBuilder = provider.tag(DTags.Items.DICE).addTags(DTags.Items.DICE_SIX_SIDED, DTags.Items.DICE_TWENTY_SIDED);
+
+					for(Dice dice : Dice.TYPES)
+					{
+						diceBuilder.addTag(dice.tag);
+					}
+				});
+
+		DTags.register();
+		DContainers.register();
+		DItems.register();
 		Dice.register();
-		ITEMS.register(bus);
-		CONTAINERS.register(bus);
 
+		MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG.spec);
 	}
 
@@ -79,26 +80,6 @@ public final class DiceMod
 		CommandDispatcher<CommandSource> dispatcher = event.getDispatcher();
 
 		RollCommand.register(dispatcher);
-	}
-
-	private void onGatherData(GatherDataEvent event)
-	{
-		DataGenerator generator = event.getGenerator();
-		ExistingFileHelper fileHelper = event.getExistingFileHelper();
-
-		generator.addProvider(new LanguageGenerator(generator));
-		generator.addProvider(new RecipeGenerator(generator));
-		generator.addProvider(new ItemModelGenerator(generator, fileHelper));
-
-		BlockTagsProvider blockTagsProvider = new BlockTagsProvider(generator, ID, fileHelper) {
-			@Override
-			protected void addTags()
-			{
-			}
-		};
-
-		generator.addProvider(blockTagsProvider);
-		generator.addProvider(new ItemTagGenerator(generator, blockTagsProvider, fileHelper));
 	}
 
 	public static void sendMessageToPlayers(PlayerEntity thrower, ITextComponent component)
@@ -115,5 +96,10 @@ public final class DiceMod
 		{
 			player.sendMessage(component, thrower.getUUID());
 		}
+	}
+
+	public static Registrate registrate()
+	{
+		return REGISTRATE_LAZY.get();
 	}
 }
