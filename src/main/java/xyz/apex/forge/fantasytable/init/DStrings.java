@@ -18,8 +18,12 @@ public final class DStrings
 	public static final String DICE_EMERALD = "emerald";
 	public static final String DICE_LAPIS_LAZULI = "lapis_lazuli";
 
+	public static final String COIN_IRON = "iron";
+	public static final String COIN_GOLD = "gold";
+
 	public static final String TAG_PAPER = "paper";
 	public static final String TAG_DICE = "dice";
+	public static final String TAG_COINS = "coins";
 	public static final String TAG_SIX_SIDED = TAG_DICE + "/six_sided";
 	public static final String TAG_TWENTY_SIDED = TAG_DICE + "/twenty_sided";
 

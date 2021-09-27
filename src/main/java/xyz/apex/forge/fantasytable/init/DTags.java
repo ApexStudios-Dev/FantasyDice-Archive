@@ -21,6 +21,7 @@ public final class DTags
 		public static final Tags.IOptionalNamedTag<Item> DICE_SIX_SIDED = ItemTags.createOptional(Names.DICE_SIX_SIDED);
 		public static final Tags.IOptionalNamedTag<Item> DICE_TWENTY_SIDED = ItemTags.createOptional(Names.DICE_TWENTY_SIDED);
 		public static final Tags.IOptionalNamedTag<Item> PAPER = ItemTags.createOptional(Names.PAPER); // does not exist by default
+		public static final Tags.IOptionalNamedTag<Item> COINS = ItemTags.createOptional(Names.COINS);
 
 		private static void register() { }
 	}
@@ -31,5 +32,6 @@ public final class DTags
 		public static final ResourceLocation DICE_SIX_SIDED = new ResourceLocation(FantasyTable.ID, DStrings.TAG_SIX_SIDED);
 		public static final ResourceLocation DICE_TWENTY_SIDED = new ResourceLocation(FantasyTable.ID, DStrings.TAG_TWENTY_SIDED);
 		public static final ResourceLocation PAPER = new ResourceLocation(ForgeVersion.MOD_ID, DStrings.TAG_PAPER);
+		public static final ResourceLocation COINS = new ResourceLocation(FantasyTable.ID, DStrings.TAG_COINS);
 	}
 }

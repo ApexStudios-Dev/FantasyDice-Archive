@@ -21,10 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.apex.forge.fantasytable.command.RollCommand;
 import xyz.apex.forge.fantasytable.config.ServerConfig;
-import xyz.apex.forge.fantasytable.init.DContainers;
-import xyz.apex.forge.fantasytable.init.DItems;
-import xyz.apex.forge.fantasytable.init.DTags;
-import xyz.apex.forge.fantasytable.init.Dice;
+import xyz.apex.forge.fantasytable.init.*;
 import xyz.apex.forge.fantasytable.item.FantasyTableItemGroup;
 
 @Mod(FantasyTable.ID)
@@ -45,7 +42,6 @@ public final class FantasyTable
 	public FantasyTable()
 	{
 		LOGGER.info("Initializing mod...");
-
 
 		registrate()
 				.itemGroup(() -> ITEM_GROUP)
@@ -70,6 +66,7 @@ public final class FantasyTable
 		DContainers.register();
 		DItems.register();
 		Dice.register();
+		Coins.register();
 
 		MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG.spec);

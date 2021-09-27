@@ -206,8 +206,8 @@ public enum Dice
 					.properties(properties -> properties.stacksTo(8).rarity(dice.rarity))
 					// simple `item/generated` model
 					// but texture is relocated from `<modid>:textures/item/<item_name>.png`
-					// into `<modid>:textures/item/<dice_type>/<item_name>.png`
-					.model((ctx, provider) -> provider.generated(ctx, new ResourceLocation(FantasyTable.ID, ITEM_FOLDER + '/' + dice.typeName + '/' + itemName)))
+					// into `<modid>:textures/item/dice/<dice_type>/<item_name>.png`
+					.model((ctx, provider) -> provider.generated(ctx, new ResourceLocation(FantasyTable.ID, ITEM_FOLDER + "/dice/" + dice.typeName + '/' + itemName)))
 					.recipe((ctx, provider) -> recipePattern
 							// create the recipe builder
 							// then apply the pattern provider

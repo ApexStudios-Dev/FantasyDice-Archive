@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fantasytable:item/paper/six_sided_die"
+    "layer0": "fantasytable:item/dice/paper/six_sided_die"
   }
 }
