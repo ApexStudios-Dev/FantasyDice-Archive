@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasytable.init;
 
+import com.tterrag.registrate.providers.RegistrateLangProvider;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.data.ShapelessRecipeBuilder;
@@ -43,6 +44,7 @@ public enum Coins
 				.registrate()
 				.object("coin_" + name)
 				.item(CoinItem::new)
+				.lang(RegistrateLangProvider.toEnglishName(name) + " Coin")
 				.tag(DTags.Items.COINS)
 				.properties(properties -> properties.rarity(rarity).stacksTo(12))
 				.model((ctx, provider) ->
