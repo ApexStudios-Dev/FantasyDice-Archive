@@ -184,6 +184,10 @@ shadowJar {
 	classifier = 'fat'
 }
 
+reobf {
+	shadowJar { }
+}
+
 jar.finalizedBy('reobfJar')
 
 publishing {
