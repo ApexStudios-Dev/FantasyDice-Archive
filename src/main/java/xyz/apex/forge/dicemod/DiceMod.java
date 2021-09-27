@@ -1,5 +1,7 @@
 package xyz.apex.forge.dicemod;
 
+import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.command.CommandSource;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,9 +13,11 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -28,6 +32,7 @@ import net.minecraftforge.versions.forge.ForgeVersion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.apex.forge.dicemod.client.ClientSetup;
+import xyz.apex.forge.dicemod.command.RollCommand;
 import xyz.apex.forge.dicemod.config.ServerConfig;
 import xyz.apex.forge.dicemod.container.PouchContainer;
 import xyz.apex.forge.dicemod.data.ItemModelGenerator;
@@ -60,12 +65,20 @@ public final class DiceMod
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientSetup::new);
 
 		bus.addListener(this::onGatherData);
+		MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
 
 		Dice.register();
 		ITEMS.register(bus);
 		CONTAINERS.register(bus);
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG.spec);
+	}
+
+	private void onRegisterCommands(RegisterCommandsEvent event)
+	{
+		CommandDispatcher<CommandSource> dispatcher = event.getDispatcher();
+
+		RollCommand.register(dispatcher);
 	}
 
 	private void onGatherData(GatherDataEvent event)
