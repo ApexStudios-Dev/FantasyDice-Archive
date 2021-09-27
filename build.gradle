@@ -45,7 +45,7 @@ minecraft {
 			// args '-mixin.config=' + mod_id + '.mixins.json'
 
 			mods {
-				DiceMod {
+				FantasyTable {
 					source sourceSets.main
 				}
 			}
@@ -81,7 +81,7 @@ minecraft {
 			args 'nogui'
 
 			mods {
-				DiceMod {
+				FantasyTable {
 					source sourceSets.main
 				}
 			}
@@ -99,7 +99,7 @@ minecraft {
 			args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
 			mods {
-				DiceMod {
+				FantasyTable {
 					source sourceSets.main
 				}
 			}

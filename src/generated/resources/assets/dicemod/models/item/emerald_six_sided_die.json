@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "dicemod:item/emerald/six_sided_die"
-  }
-}

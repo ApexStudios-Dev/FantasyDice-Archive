@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "#fantasytable:dice/six_sided",
+    "#fantasytable:dice/twenty_sided",
+    "#fantasytable:dice/paper",
+    "#fantasytable:dice/bone",
+    "#fantasytable:dice/iron",
+    "#fantasytable:dice/gold",
+    "#fantasytable:dice/diamond",
+    "#fantasytable:dice/emerald",
+    "#fantasytable:dice/lapis_lazuli"
+  ]
+}

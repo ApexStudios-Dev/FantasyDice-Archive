@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "fantasytable:item/emerald/twenty_sided_die"
+  }
+}

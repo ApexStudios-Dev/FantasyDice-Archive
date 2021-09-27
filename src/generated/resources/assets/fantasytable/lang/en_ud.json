@@ -1,0 +1,22 @@
+{
+  "fantasytable.dice.roll": "%s s\u05DF\u05DFo\u0279 %s",
+  "fantasytable.dice.roll.desc": "%s & %s u\u01DD\u01DD\u028D\u0287\u01DDq \u0279\u01DDq\u026Fnu \u026Fopu\u0250\u0279 \u0250 s\u05DF\u05DFo\u1D1A",
+  "fantasytable.dice.using": "%s \u0250 bu\u0131s\u2229",
+  "fantasytable.pouch.title": "\u0265\u0254no\u0500 \u01DD\u0254\u0131\u15E1",
+  "item.fantasytable.bone_six_sided_die": "9p \u01DDuo\u15FA",
+  "item.fantasytable.bone_twenty_sided_die": "0\u1105p \u01DDuo\u15FA",
+  "item.fantasytable.diamond_six_sided_die": "9p puo\u026F\u0250\u0131\u15E1",
+  "item.fantasytable.diamond_twenty_sided_die": "0\u1105p puo\u026F\u0250\u0131\u15E1",
+  "item.fantasytable.emerald_six_sided_die": "9p p\u05DF\u0250\u0279\u01DD\u026F\u018E",
+  "item.fantasytable.emerald_twenty_sided_die": "0\u1105p p\u05DF\u0250\u0279\u01DD\u026F\u018E",
+  "item.fantasytable.gold_six_sided_die": "9p p\u05DFo\u2141",
+  "item.fantasytable.gold_twenty_sided_die": "0\u1105p p\u05DFo\u2141",
+  "item.fantasytable.iron_six_sided_die": "9p uo\u0279I",
+  "item.fantasytable.iron_twenty_sided_die": "0\u1105p uo\u0279I",
+  "item.fantasytable.lapis_lazuli_six_sided_die": "9p \u0131\u05DFnz\u0250\uA780 s\u0131d\u0250\uA780",
+  "item.fantasytable.lapis_lazuli_twenty_sided_die": "0\u1105p \u0131\u05DFnz\u0250\uA780 s\u0131d\u0250\uA780",
+  "item.fantasytable.paper_six_sided_die": "9p \u0279\u01DDd\u0250\u0500",
+  "item.fantasytable.paper_twenty_sided_die": "0\u1105p \u0279\u01DDd\u0250\u0500",
+  "item.fantasytable.pouch": "\u0265\u0254no\u0500 \u01DD\u0254\u0131\u15E1",
+  "itemGroup.fantasytable": "do\u27D8\u01DD\u05DFq\u0250\u27D8 s,\u028Es\u0250\u0287u\u0250\u2132"
+}

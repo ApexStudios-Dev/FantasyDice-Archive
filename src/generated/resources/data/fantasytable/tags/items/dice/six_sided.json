@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "fantasytable:paper_six_sided_die",
+    "fantasytable:bone_six_sided_die",
+    "fantasytable:iron_six_sided_die",
+    "fantasytable:gold_six_sided_die",
+    "fantasytable:diamond_six_sided_die",
+    "fantasytable:emerald_six_sided_die",
+    "fantasytable:lapis_lazuli_six_sided_die"
+  ]
+}
