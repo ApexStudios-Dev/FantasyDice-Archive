@@ -31,7 +31,7 @@ public class RollCommand
 											TextComponent component = new TranslationTextComponent(
 													LanguageGenerator.DICE_ROLL_KEY,
 													thrower.getDisplayName(),
-													new StringTextComponent(roll + " (d" + max + ")").withStyle(style -> style.withItalic(true))
+													new StringTextComponent(roll + " (" + max + ")").withStyle(style -> style.withItalic(true))
 											);
 
 											DiceMod.sendMessageToPlayers(thrower, component);
