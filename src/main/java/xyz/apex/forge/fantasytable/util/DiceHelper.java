@@ -2,7 +2,9 @@ package xyz.apex.forge.fantasytable.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.init.DTags;
@@ -80,8 +82,33 @@ public final class DiceHelper
 			totalRolls += roll;
 		}
 
-		FantasyTable.sendMessageToPlayers(thrower, dice.createTextComponent(thrower, die, totalRolls));
-
+		sendMessageToPlayers(thrower, dice.createTextComponent(thrower, die, totalRolls));
 		return true;
+	}
+
+	public static void sendMessageToPlayers(PlayerEntity thrower, ITextComponent component)
+	{
+		MinecraftServer server = thrower.getServer();
+
+		if(server == null) // singleplayer?
+		{
+			thrower.sendMessage(component, thrower.getUUID());
+			return;
+		}
+
+		int rollRange = FantasyTable.SERVER_CONFIG.getDiceRollRange();
+
+		for(PlayerEntity player : server.getPlayerList().getPlayers())
+		{
+			if(rollRange > 0)
+			{
+				if(!player.level.dimensionType().equalTo(thrower.level.dimensionType()))
+					continue;
+				if(player.distanceTo(thrower) > rollRange)
+					continue;
+			}
+
+			player.sendMessage(component, thrower.getUUID());
+		}
 	}
 }

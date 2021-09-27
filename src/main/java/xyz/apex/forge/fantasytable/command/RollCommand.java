@@ -34,7 +34,7 @@ public final class RollCommand
 													new StringTextComponent(roll + " (" + max + ')').withStyle(style -> style.withItalic(true))
 											);
 
-											FantasyTable.sendMessageToPlayers(thrower, component);
+											DiceHelper.sendMessageToPlayers(thrower, component);
 											return 1;
 										})
 						)
