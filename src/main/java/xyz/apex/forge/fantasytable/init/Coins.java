@@ -4,15 +4,18 @@ import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.Rarity;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fml.DistExecutor;
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.item.CoinItem;
-
-import static net.minecraftforge.client.model.generators.ModelProvider.ITEM_FOLDER;
 
 public enum Coins
 {
@@ -41,11 +44,41 @@ public enum Coins
 				.object("coin_" + name)
 				.item(CoinItem::new)
 				.tag(DTags.Items.COINS)
-				.properties(properties -> properties.rarity(rarity))
-				// simple `item/generated` model
-				// but texture is relocated from `<modid>:textures/item/<item_name>.png`
-				// into `<modid>:textures/item/<coin_type>/<item_name>.png`
-				.model((ctx, provider) -> provider.generated(ctx, new ResourceLocation(FantasyTable.ID, ITEM_FOLDER + "/coin/" + name)))
+				.properties(properties -> properties.rarity(rarity).stacksTo(12))
+				.model((ctx, provider) ->
+						provider.getBuilder(provider.name(ctx))
+								.parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
+
+						        // single
+								.override()
+									.predicate(FantasyTable.COIN_PREDICATE_NAME, 0F)
+									.model(
+											provider.getBuilder(provider.name(ctx) + "_single")
+											        .parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
+													.texture("layer0", new ResourceLocation(FantasyTable.ID, "item/coin/" + name + "_1"))
+									)
+								.end()
+
+						        // double
+								.override()
+									.predicate(FantasyTable.COIN_PREDICATE_NAME, .5F)
+									.model(
+											provider.getBuilder(provider.name(ctx) + "_double")
+											        .parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
+											        .texture("layer0", new ResourceLocation(FantasyTable.ID, "item/coin/" + name + "_2"))
+									)
+								.end()
+
+						        // triple
+								.override()
+									.predicate(FantasyTable.COIN_PREDICATE_NAME, 1F)
+									.model(
+											provider.getBuilder(provider.name(ctx) + "_triple")
+											        .parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
+											        .texture("layer0", new ResourceLocation(FantasyTable.ID, "item/coin/" + name + "_3"))
+									)
+								.end()
+				)
 				.recipe((ctx, provider) ->
 						ShapelessRecipeBuilder.shapeless(ctx::get, 4)
 						                      .requires(craftingItem)
@@ -56,8 +89,27 @@ public enum Coins
 								              .unlockedBy("has_nugget", RegistrateRecipeProvider.hasItem(craftingItem))
 								              .save(provider, new ResourceLocation(FantasyTable.ID, "coins/" + name))
 				)
+				.onRegister(item -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> postRegisterClient(item)))
 				.register();
 		// formatter:on
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private void postRegisterClient(CoinItem item)
+	{
+		ItemModelsProperties.register(item, FantasyTable.COIN_PREDICATE_NAME, (stack, world, entity) -> {
+			int count = stack.getCount();
+
+			// 1 == triple
+			// .5 == double
+			// 0 == single
+
+			if(count <= 4)
+				return 0F;
+			if(count <= 8)
+				return .5F;
+			return 1F;
+		});
 	}
 
 	@Deprecated // internal use only

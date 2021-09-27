@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -37,6 +38,7 @@ public final class FantasyTable
 	public static final ServerConfig SERVER_CONFIG = new ServerConfig();
 	public static final ItemGroup ITEM_GROUP = new FantasyTableItemGroup();
 
+	public static final ResourceLocation COIN_PREDICATE_NAME = new ResourceLocation(FantasyTable.ID, "coin_stack");
 	private static final NonNullLazyValue<Registrate> REGISTRATE_LAZY = new NonNullLazyValue<>(() -> Registrate.create(ID));
 
 	public FantasyTable()
