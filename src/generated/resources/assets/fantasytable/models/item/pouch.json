@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fantasytable:item/pouch"
+    "layer0": "fantasytable:item/pouch",
+    "layer1": "fantasytable:item/pouch_string"
   }
 }

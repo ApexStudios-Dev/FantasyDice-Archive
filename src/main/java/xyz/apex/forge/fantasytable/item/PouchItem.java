@@ -3,6 +3,7 @@ package xyz.apex.forge.fantasytable.item;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -17,7 +18,7 @@ import xyz.apex.forge.fantasytable.container.PouchContainer;
 import xyz.apex.forge.fantasytable.init.DContainers;
 import xyz.apex.forge.fantasytable.init.DStrings;
 
-public class PouchItem extends Item
+public class PouchItem extends Item implements IDyeableArmorItem
 {
 	public PouchItem(Properties properties)
 	{

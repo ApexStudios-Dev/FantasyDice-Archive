@@ -82,7 +82,7 @@ public enum Coins
 								.end()
 				)
 				.recipe((ctx, provider) ->
-						ShapelessRecipeBuilder.shapeless(ctx::get, 4)
+						ShapelessRecipeBuilder.shapeless(ctx::get, 1)
 						                      .requires(craftingItem)
 								              .requires(craftingItem)
 								              .requires(craftingItem)
