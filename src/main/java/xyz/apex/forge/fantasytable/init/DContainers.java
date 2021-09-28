@@ -5,7 +5,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import xyz.apex.forge.fantasytable.FantasyTable;
+import xyz.apex.forge.fantasytable.client.screen.GamblingTableScreen;
 import xyz.apex.forge.fantasytable.client.screen.PouchContainerScreen;
+import xyz.apex.forge.fantasytable.container.GamblingTableContainer;
 import xyz.apex.forge.fantasytable.container.PouchContainer;
 import xyz.apex.forge.fantasytable.item.PouchItem;
 
@@ -16,6 +18,12 @@ public final class DContainers
 			.registrate()
 			.object(DStrings.CONTAINER_POUCH)
 			.container((type, windowId, inv) -> new PouchContainer(type, windowId, inv, findPouch(inv.player)), () -> PouchContainerScreen::new)
+			.register();
+
+	public static final ContainerEntry<GamblingTableContainer> GAMBLING_TABLE = FantasyTable
+			.registrate()
+			.object(DStrings.BLOCK_GAMBLING_TABLE)
+			.container((type, windowId, inv) -> new GamblingTableContainer(type, windowId), () -> GamblingTableScreen::new)
 			.register();
 	// formatter:on
 

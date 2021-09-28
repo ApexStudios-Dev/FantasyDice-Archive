@@ -10,6 +10,10 @@ public final class DStrings
 	public static final String ITEM_SIX_SIDED_DIE = "six_sided_die";
 	public static final String ITEM_TWENTY_SIDED_DIE = "twenty_sided_die";
 
+	public static final String BLOCK_GAMBLING_TABLE = "gambling_table";
+
+	public static final String POI_GAMBLER = "gambler";
+
 	public static final String DICE_PAPER = "paper";
 	public static final String DICE_BONE = "bone";
 	public static final String DICE_IRON = "iron";

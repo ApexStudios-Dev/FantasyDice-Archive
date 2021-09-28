@@ -66,9 +66,11 @@ public final class FantasyTable
 
 		DTags.register();
 		DContainers.register();
+		DBlocks.register();
 		DItems.register();
 		Dice.register();
 		Coins.register();
+		DVillagers.register();
 
 		MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG.spec);

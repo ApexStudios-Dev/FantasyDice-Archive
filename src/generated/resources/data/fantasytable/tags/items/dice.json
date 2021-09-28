@@ -8,7 +8,6 @@
     "#fantasytable:dice/iron",
     "#fantasytable:dice/gold",
     "#fantasytable:dice/diamond",
-    "#fantasytable:dice/emerald",
-    "#fantasytable:dice/lapis_lazuli"
+    "#fantasytable:dice/emerald"
   ]
 }

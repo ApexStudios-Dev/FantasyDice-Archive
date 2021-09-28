@@ -29,13 +29,12 @@ import static net.minecraftforge.client.model.generators.ModelProvider.ITEM_FOLD
 
 public enum Dice
 {
-	PAPER(DStrings.DICE_PAPER, TextFormatting.WHITE, true, DTags.Items.PAPER),
-	BONE(DStrings.DICE_BONE, TextFormatting.WHITE, false, Tags.Items.BONES),
-	IRON(DStrings.DICE_IRON, TextFormatting.GRAY, false, Tags.Items.INGOTS_IRON),
-	GOLD(DStrings.DICE_GOLD, TextFormatting.YELLOW, false, Tags.Items.INGOTS_GOLD),
-	DIAMOND(DStrings.DICE_DIAMOND, TextFormatting.AQUA, false, Tags.Items.GEMS_DIAMOND),
-	EMERALD(DStrings.DICE_EMERALD, TextFormatting.GREEN, false, Tags.Items.GEMS_EMERALD),
-	LAPIS_LAZULI(DStrings.DICE_LAPIS_LAZULI, TextFormatting.BLUE, false, Tags.Items.GEMS_LAPIS),
+	PAPER(DStrings.DICE_PAPER, TextFormatting.WHITE, true, false, DTags.Items.PAPER),
+	BONE(DStrings.DICE_BONE, TextFormatting.WHITE, false, false, Tags.Items.BONES),
+	IRON(DStrings.DICE_IRON, TextFormatting.GRAY, false, true, Tags.Items.INGOTS_IRON),
+	GOLD(DStrings.DICE_GOLD, TextFormatting.YELLOW, false, true, Tags.Items.INGOTS_GOLD),
+	DIAMOND(DStrings.DICE_DIAMOND, TextFormatting.AQUA, false, true, Tags.Items.GEMS_DIAMOND),
+	EMERALD(DStrings.DICE_EMERALD, TextFormatting.GREEN, false, true, Tags.Items.GEMS_EMERALD),
 	;
 
 	public static final Dice[] TYPES = values();
@@ -48,7 +47,7 @@ public enum Dice
 	public final TextFormatting typeColor;
 	public final Rarity rarity;
 
-	Dice(String typeName, TextFormatting typeColor, boolean dyeable, ITag<Item> craftingItem)
+	Dice(String typeName, TextFormatting typeColor, boolean dyeable, boolean hasRecipe, ITag<Item> craftingItem)
 	{
 		this.typeName = typeName;
 		this.typeColor = typeColor;
@@ -58,28 +57,63 @@ public enum Dice
 		tag = ItemTags.createOptional(new ResourceLocation(FantasyTable.ID, DStrings.TAG_DICE + '/' + typeName));
 
 		// formatter:off
-		six_sided_die = register(
+		ItemBuilder<DiceItem, Registrate> sixSidedDieBuilder = register(
 				this,
 				DStrings.ITEM_SIX_SIDED_DIE,
 				6,
 				dyeable,
-				DTags.Items.DICE_SIX_SIDED,
-				recipe -> recipe.pattern("II ")
-				                .pattern("II ")
-				                .pattern("   ")
+				DTags.Items.DICE_SIX_SIDED
 		);
 
-		twenty_sided_die = register(
+		ItemBuilder<DiceItem, Registrate> twentySidedDieBuilder = register(
 				this,
 				DStrings.ITEM_TWENTY_SIDED_DIE,
 				20,
 				dyeable,
-				DTags.Items.DICE_TWENTY_SIDED,
-				recipe -> recipe.pattern(" I ")
-				                .pattern("III")
-				                .pattern(" I ")
+				DTags.Items.DICE_TWENTY_SIDED
 		);
 		// formatter:on
+
+		if(hasRecipe)
+		{
+			// formatter:off
+			sixSidedDieBuilder = registerRecipe(
+					sixSidedDieBuilder,
+					DStrings.ITEM_SIX_SIDED_DIE,
+					recipe -> recipe
+							.pattern("II ")
+							.pattern("II ")
+							.pattern("   ")
+			);
+
+			twentySidedDieBuilder = registerRecipe(
+					twentySidedDieBuilder,
+					DStrings.ITEM_TWENTY_SIDED_DIE,
+					recipe -> recipe
+							.pattern(" I ")
+							.pattern("III")
+							.pattern(" I ")
+			);
+			// formatter:on
+		}
+
+		six_sided_die = sixSidedDieBuilder.register();
+		twenty_sided_die = twentySidedDieBuilder.register();
+	}
+
+	private ItemBuilder<DiceItem, Registrate> registerRecipe(ItemBuilder<DiceItem, Registrate> itemBuilder, String itemName, NonNullUnaryOperator<ShapedRecipeBuilder> recipePattern)
+	{
+		return itemBuilder.recipe((ctx, provider) -> recipePattern
+			// create the recipe builder
+			// then apply the pattern provider
+			.apply(ShapedRecipeBuilder
+					.shaped(ctx::get, 8)
+					.define('I', craftingItem))
+			// finalize recipe builder & save
+			.group("dice/" + typeName)
+			.unlockedBy("has_item", RegistrateRecipeProvider.hasItem(craftingItem))
+			.save(provider, new ResourceLocation(FantasyTable.ID, typeName + '/' + itemName))
+		);
 	}
 
 	public Style getTextComponentStyleColor(ItemStack die, Style style)
@@ -168,7 +202,7 @@ public enum Dice
 		return base(dice, itemName).item(DiceItem::new);
 	}
 
-	private static ItemEntry<DiceItem> register(Dice dice, String itemName, int sides, boolean dyeable, ITag.INamedTag<Item> sidedTag, NonNullUnaryOperator<ShapedRecipeBuilder> recipePattern)
+	private static ItemBuilder<DiceItem, Registrate> register(Dice dice, String itemName, int sides, boolean dyeable, ITag.INamedTag<Item> sidedTag)
 	{
 		// formatter:off
 		// ternary to create item based on if dyeable or not
@@ -207,19 +241,7 @@ public enum Dice
 					// simple `item/generated` model
 					// but texture is relocated from `<modid>:textures/item/<item_name>.png`
 					// into `<modid>:textures/item/dice/<dice_type>/<item_name>.png`
-					.model((ctx, provider) -> provider.generated(ctx, new ResourceLocation(FantasyTable.ID, ITEM_FOLDER + "/dice/" + dice.typeName + '/' + itemName)))
-					.recipe((ctx, provider) -> recipePattern
-							// create the recipe builder
-							// then apply the pattern provider
-							.apply(ShapedRecipeBuilder
-									.shaped(ctx::get, 8)
-									.define('I', dice.craftingItem))
-							// finalize recipe builder & save
-							.group("dice/" + dice.typeName)
-							.unlockedBy("has_item", RegistrateRecipeProvider.hasItem(dice.craftingItem))
-							.save(provider, new ResourceLocation(FantasyTable.ID, dice.typeName + '/' + itemName))
-					)
-				.register();
+					.model((ctx, provider) -> provider.generated(ctx, new ResourceLocation(FantasyTable.ID, ITEM_FOLDER + "/dice/" + dice.typeName + '/' + itemName)));
 		// formatter:on
 	}
 

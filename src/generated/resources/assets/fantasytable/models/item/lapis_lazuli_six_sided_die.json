@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "fantasytable:item/dice/lapis_lazuli/six_sided_die"
-  }
-}
