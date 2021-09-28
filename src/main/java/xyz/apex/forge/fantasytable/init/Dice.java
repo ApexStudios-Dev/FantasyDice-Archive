@@ -24,24 +24,24 @@ import xyz.apex.forge.fantasytable.item.DyeableDiceItem;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
 import xyz.apex.forge.fantasytable.util.registrate.CustomRegistrate;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 
 import static net.minecraftforge.client.model.generators.ModelProvider.ITEM_FOLDER;
 
 public enum Dice
 {
-	PAPER(FStrings.DICE_PAPER, TextFormatting.WHITE, true, false, FTags.Items.PAPER),
-	BONE(FStrings.DICE_BONE, TextFormatting.WHITE, false, false, Tags.Items.BONES),
-	IRON(FStrings.DICE_IRON, TextFormatting.GRAY, false, true, Tags.Items.INGOTS_IRON),
-	GOLD(FStrings.DICE_GOLD, TextFormatting.YELLOW, false, true, Tags.Items.INGOTS_GOLD),
-	DIAMOND(FStrings.DICE_DIAMOND, TextFormatting.AQUA, false, true, Tags.Items.GEMS_DIAMOND),
-	EMERALD(FStrings.DICE_EMERALD, TextFormatting.GREEN, false, true, Tags.Items.GEMS_EMERALD),
+	PAPER(FStrings.DICE_PAPER, TextFormatting.WHITE, false, FTags.Items.PAPER),
+	BONE(FStrings.DICE_BONE, TextFormatting.WHITE, false, Tags.Items.BONES),
+	IRON(FStrings.DICE_IRON, TextFormatting.GRAY, true, Tags.Items.INGOTS_IRON),
+	GOLD(FStrings.DICE_GOLD, TextFormatting.YELLOW, true, Tags.Items.INGOTS_GOLD),
+	DIAMOND(FStrings.DICE_DIAMOND, TextFormatting.AQUA, true, Tags.Items.GEMS_DIAMOND),
+	EMERALD(FStrings.DICE_EMERALD, TextFormatting.GREEN, true, Tags.Items.GEMS_EMERALD),
 	;
 
 	public static final Dice[] TYPES = values();
 
 	public final Tags.IOptionalNamedTag<Item> tag;
-	public final ITag<Item> craftingItem;
 	public final ItemEntry<DiceItem> six_sided_die;
 	public final ItemEntry<DiceItem> twenty_sided_die;
 	public final String typeName;
@@ -51,16 +51,15 @@ public enum Dice
 	// do not use formatting types and only colors from TextFormatting
 	// or just use other constructor
 	@Deprecated
-	Dice(String typeName, TextFormatting typeColor, boolean dyeable, boolean hasRecipe, ITag<Item> craftingItem)
+	Dice(String typeName, TextFormatting typeColor, boolean dyeable, @Nullable ITag<Item> craftingItem)
 	{
-		this(typeName, Validate.notNull(Color.fromLegacyFormat(typeColor)), typeColor, dyeable, hasRecipe, craftingItem);
+		this(typeName, Validate.notNull(Color.fromLegacyFormat(typeColor)), typeColor, dyeable, craftingItem);
 	}
 
-	Dice(String typeName, Color typeColor, TextFormatting rarityColor, boolean dyeable, boolean hasRecipe, ITag<Item> craftingItem)
+	Dice(String typeName, Color typeColor, TextFormatting rarityColor, boolean dyeable, @Nullable ITag<Item> craftingItem)
 	{
 		this.typeName = typeName;
 		this.typeColor = typeColor;
-		this.craftingItem = craftingItem;
 		this.rarity = Rarity.create(FantasyTable.ID + ':' + typeName, rarityColor);
 
 		tag = ItemTags.createOptional(new ResourceLocation(FantasyTable.ID, FStrings.TAG_DICE + '/' + typeName));
@@ -83,12 +82,13 @@ public enum Dice
 		);
 		// formatter:on
 
-		if(hasRecipe)
+		if(craftingItem != null)
 		{
 			// formatter:off
 			sixSidedDieBuilder = registerRecipe(
 					sixSidedDieBuilder,
 					FStrings.ITEM_SIX_SIDED_DIE,
+					craftingItem,
 					recipe -> recipe
 							.pattern("II ")
 							.pattern("II ")
@@ -98,6 +98,7 @@ public enum Dice
 			twentySidedDieBuilder = registerRecipe(
 					twentySidedDieBuilder,
 					FStrings.ITEM_TWENTY_SIDED_DIE,
+					craftingItem,
 					recipe -> recipe
 							.pattern(" I ")
 							.pattern("III")
@@ -110,7 +111,7 @@ public enum Dice
 		twenty_sided_die = twentySidedDieBuilder.register();
 	}
 
-	private ItemBuilder<DiceItem, CustomRegistrate> registerRecipe(ItemBuilder<DiceItem, CustomRegistrate> itemBuilder, String itemName, NonNullUnaryOperator<ShapedRecipeBuilder> recipePattern)
+	private ItemBuilder<DiceItem, CustomRegistrate> registerRecipe(ItemBuilder<DiceItem, CustomRegistrate> itemBuilder, String itemName, ITag<Item> craftingItem, NonNullUnaryOperator<ShapedRecipeBuilder> recipePattern)
 	{
 		return itemBuilder.recipe((ctx, provider) -> recipePattern
 			// create the recipe builder
