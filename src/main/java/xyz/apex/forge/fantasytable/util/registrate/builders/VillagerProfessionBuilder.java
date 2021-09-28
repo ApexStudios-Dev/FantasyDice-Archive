@@ -175,7 +175,7 @@ public class VillagerProfessionBuilder<T extends VillagerProfession, P> extends 
 
 		public int getLevel()
 		{
-			return ordinal();
+			return ordinal() + 1;
 		}
 
 		public static TradeLevel from(int level)
