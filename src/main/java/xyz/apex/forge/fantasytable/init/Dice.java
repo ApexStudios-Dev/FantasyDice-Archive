@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.common.Tags;
+import org.apache.commons.lang3.Validate;
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.item.DiceItem;
 import xyz.apex.forge.fantasytable.item.DyeableDiceItem;
@@ -44,15 +45,23 @@ public enum Dice
 	public final ItemEntry<DiceItem> six_sided_die;
 	public final ItemEntry<DiceItem> twenty_sided_die;
 	public final String typeName;
-	public final TextFormatting typeColor;
+	public final Color typeColor;
 	public final Rarity rarity;
 
+	// do not use formatting types and only colors from TextFormatting
+	// or just use other constructor
+	@Deprecated
 	Dice(String typeName, TextFormatting typeColor, boolean dyeable, boolean hasRecipe, ITag<Item> craftingItem)
+	{
+		this(typeName, Validate.notNull(Color.fromLegacyFormat(typeColor)), typeColor, dyeable, hasRecipe, craftingItem);
+	}
+
+	Dice(String typeName, Color typeColor, TextFormatting rarityColor, boolean dyeable, boolean hasRecipe, ITag<Item> craftingItem)
 	{
 		this.typeName = typeName;
 		this.typeColor = typeColor;
 		this.craftingItem = craftingItem;
-		this.rarity = Rarity.create(FantasyTable.ID + ':' + typeName, typeColor);
+		this.rarity = Rarity.create(FantasyTable.ID + ':' + typeName, rarityColor);
 
 		tag = ItemTags.createOptional(new ResourceLocation(FantasyTable.ID, FStrings.TAG_DICE + '/' + typeName));
 
