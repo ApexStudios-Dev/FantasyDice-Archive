@@ -1,7 +1,6 @@
 package xyz.apex.forge.fantasytable;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.NonNullLazyValue;
 import net.minecraft.command.CommandSource;
@@ -24,6 +23,7 @@ import xyz.apex.forge.fantasytable.command.RollCommand;
 import xyz.apex.forge.fantasytable.config.ServerConfig;
 import xyz.apex.forge.fantasytable.init.*;
 import xyz.apex.forge.fantasytable.item.FantasyTableItemGroup;
+import xyz.apex.forge.fantasytable.util.registrate.CustomRegistrate;
 
 @Mod(FantasyTable.ID)
 public final class FantasyTable
@@ -39,7 +39,7 @@ public final class FantasyTable
 	public static final ItemGroup ITEM_GROUP = new FantasyTableItemGroup();
 
 	public static final ResourceLocation COIN_PREDICATE_NAME = new ResourceLocation(FantasyTable.ID, "coin_stack");
-	private static final NonNullLazyValue<Registrate> REGISTRATE_LAZY = new NonNullLazyValue<>(() -> Registrate.create(ID));
+	private static final NonNullLazyValue<CustomRegistrate> REGISTRATE_LAZY = CustomRegistrate.create(ID);
 
 	public FantasyTable()
 	{
@@ -99,7 +99,7 @@ public final class FantasyTable
 		}
 	}
 
-	public static Registrate registrate()
+	public static CustomRegistrate registrate()
 	{
 		return REGISTRATE_LAZY.get();
 	}

@@ -1,6 +1,5 @@
 package xyz.apex.forge.fantasytable.init;
 
-import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
@@ -22,6 +21,7 @@ import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.item.DiceItem;
 import xyz.apex.forge.fantasytable.item.DyeableDiceItem;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
+import xyz.apex.forge.fantasytable.util.registrate.CustomRegistrate;
 
 import java.util.Arrays;
 
@@ -57,7 +57,7 @@ public enum Dice
 		tag = ItemTags.createOptional(new ResourceLocation(FantasyTable.ID, DStrings.TAG_DICE + '/' + typeName));
 
 		// formatter:off
-		ItemBuilder<DiceItem, Registrate> sixSidedDieBuilder = register(
+		ItemBuilder<DiceItem, CustomRegistrate> sixSidedDieBuilder = register(
 				this,
 				DStrings.ITEM_SIX_SIDED_DIE,
 				6,
@@ -65,7 +65,7 @@ public enum Dice
 				DTags.Items.DICE_SIX_SIDED
 		);
 
-		ItemBuilder<DiceItem, Registrate> twentySidedDieBuilder = register(
+		ItemBuilder<DiceItem, CustomRegistrate> twentySidedDieBuilder = register(
 				this,
 				DStrings.ITEM_TWENTY_SIDED_DIE,
 				20,
@@ -101,7 +101,7 @@ public enum Dice
 		twenty_sided_die = twentySidedDieBuilder.register();
 	}
 
-	private ItemBuilder<DiceItem, Registrate> registerRecipe(ItemBuilder<DiceItem, Registrate> itemBuilder, String itemName, NonNullUnaryOperator<ShapedRecipeBuilder> recipePattern)
+	private ItemBuilder<DiceItem, CustomRegistrate> registerRecipe(ItemBuilder<DiceItem, CustomRegistrate> itemBuilder, String itemName, NonNullUnaryOperator<ShapedRecipeBuilder> recipePattern)
 	{
 		return itemBuilder.recipe((ctx, provider) -> recipePattern
 			// create the recipe builder
@@ -179,12 +179,12 @@ public enum Dice
 		return Arrays.stream(Dice.TYPES).filter(dice -> stack.getItem().is(dice.tag)).findFirst().orElse(BONE);
 	}
 
-	private static Registrate base(Dice dice, String itemName)
+	private static CustomRegistrate base(Dice dice, String itemName)
 	{
 		return FantasyTable.registrate().object(dice.typeName + '_' + itemName);
 	}
 
-	private static ItemBuilder<DiceItem, Registrate> dyeable(Dice dice, String itemName)
+	private static ItemBuilder<DiceItem, CustomRegistrate> dyeable(Dice dice, String itemName)
 	{
 		// formatter:off
 		return base(dice, itemName)
@@ -197,12 +197,12 @@ public enum Dice
 		// formatter:on
 	}
 
-	private static ItemBuilder<DiceItem, Registrate> generic(Dice dice, String itemName)
+	private static ItemBuilder<DiceItem, CustomRegistrate> generic(Dice dice, String itemName)
 	{
 		return base(dice, itemName).item(DiceItem::new);
 	}
 
-	private static ItemBuilder<DiceItem, Registrate> register(Dice dice, String itemName, int sides, boolean dyeable, ITag.INamedTag<Item> sidedTag)
+	private static ItemBuilder<DiceItem, CustomRegistrate> register(Dice dice, String itemName, int sides, boolean dyeable, ITag.INamedTag<Item> sidedTag)
 	{
 		// formatter:off
 		// ternary to create item based on if dyeable or not

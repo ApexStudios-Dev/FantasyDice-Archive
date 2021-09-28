@@ -1,5 +1,6 @@
 {
   "block.fantasytable.gambling_table": "Gambling Table",
+  "entity.minecraft.villager.fantasytable.gambler": "Gambler",
   "fantasytable.dice.roll": "%s rolls %s",
   "fantasytable.dice.roll.desc": "Rolls a random number between %s & %s",
   "fantasytable.dice.using": "Using a %s",
