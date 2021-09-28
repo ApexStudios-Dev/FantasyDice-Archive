@@ -1,18 +1,18 @@
 modLoader="javafml"
 loaderVersion="[36,)"
 license="GNU"
-# issueTrackerURL="https://github.com/ApexModder/DiceMod/issues"
+issueTrackerURL="https://github.com/ApexModder/FantasyTable/issues"
 
 [[mods]]
 modId="fantasytable"
 version="${file.jarVersion}"
-displayName="Fantasy's TableTop"
+displayName="Fantasy's Tabletop"
 # updateJSONURL="https://raw.githubusercontent.com/ApexModder/DiceMod/main/update.json"
 # displayURL="https://www.curseforge.com/minecraft/mc-mods/dicemod"
 # logoFile="logo.png"
 credits="ApexSPG (ApexModder) - Programming, Testing\nFantasyGaming - Mod Requester, Textures, Testing\nTobiSPG - Testing\nTTerrag - Registrate\n\n"
 authors="ApexModder, FantasyGaming"
-description="TableTop mod requested by a friend (FantasyGaming).\nThis mod adds various tabletop elements into the game from a variety of dice to playing cards and even board games.\n\nThis mod makes use of Registrate and comes with a version repackaged under `xyz.apex.forge.fantasytable.repack.repack.com.tterrag.registrate`.\n"
+description="Tabletop mod which adds various Tabletop esque elements into the game.\nThis mod was requested by FantasyGaming.\n\nThis mod makes use of Registrate and comes with a version repackaged under `xyz.apex.forge.fantasytable.repack.repack.com.tterrag.registrate`."
 
 [[dependencies.dicemod]]
     modId="forge"

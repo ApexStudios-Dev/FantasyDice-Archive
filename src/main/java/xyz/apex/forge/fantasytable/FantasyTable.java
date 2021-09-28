@@ -48,7 +48,7 @@ public final class FantasyTable
 		registrate()
 				.itemGroup(() -> ITEM_GROUP)
 				.addDataGenerator(ProviderType.LANG, provider -> {
-					provider.add(ITEM_GROUP, "Fantasy's TableTop");
+					provider.add(ITEM_GROUP, "Fantasy's Tabletop");
 					provider.add(DICE_ROLL_KEY, "%s rolls %s");
 					provider.add(DICE_ROLL_USING_KEY, "Using a %s");
 					provider.add(DICE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
