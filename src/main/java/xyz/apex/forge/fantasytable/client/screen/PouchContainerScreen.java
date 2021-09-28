@@ -10,12 +10,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.container.PouchContainer;
-import xyz.apex.forge.fantasytable.init.DStrings;
+import xyz.apex.forge.fantasytable.init.FStrings;
 
 @OnlyIn(Dist.CLIENT)
 public class PouchContainerScreen extends ContainerScreen<PouchContainer>
 {
-	private static final ResourceLocation CONTAINER_LOCATION = new ResourceLocation(FantasyTable.ID, DStrings.CONTAINER_POUCH_TEXTURE);
+	private static final ResourceLocation CONTAINER_LOCATION = new ResourceLocation(FantasyTable.ID, FStrings.CONTAINER_POUCH_TEXTURE);
 
 	public PouchContainerScreen(PouchContainer container, PlayerInventory playerInventory, ITextComponent textComponent)
 	{

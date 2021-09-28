@@ -20,8 +20,8 @@ import xyz.apex.forge.fantasytable.item.CoinItem;
 
 public enum Coins
 {
-	IRON(DStrings.COIN_IRON, TextFormatting.WHITE, Tags.Items.NUGGETS_IRON),
-	GOLD(DStrings.COIN_GOLD, TextFormatting.YELLOW, Tags.Items.NUGGETS_GOLD),
+	IRON(FStrings.COIN_IRON, TextFormatting.WHITE, Tags.Items.NUGGETS_IRON),
+	GOLD(FStrings.COIN_GOLD, TextFormatting.YELLOW, Tags.Items.NUGGETS_GOLD),
 	;
 
 	public static final Coins[] TYPES = values();
@@ -45,7 +45,7 @@ public enum Coins
 				.object("coin_" + name)
 				.item(CoinItem::new)
 				.lang(RegistrateLangProvider.toEnglishName(name) + " Coin")
-				.tag(DTags.Items.COINS)
+				.tag(FTags.Items.COINS)
 				.properties(properties -> properties.rarity(rarity).stacksTo(12))
 				.model((ctx, provider) ->
 						provider.getBuilder(provider.name(ctx))

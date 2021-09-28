@@ -1,6 +1,6 @@
 package xyz.apex.forge.fantasytable.init;
 
-public final class DStrings
+public final class FStrings
 {
 	public static final String ITEM_POUCH = "pouch";
 	public static final String CONTAINER_POUCH = ITEM_POUCH;

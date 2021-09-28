@@ -9,12 +9,12 @@ import net.minecraftforge.common.Tags;
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.item.PouchItem;
 
-public final class DItems
+public final class FItems
 {
 	// formatter:off
 	public static final RegistryEntry<PouchItem> POUCH_ITEM = FantasyTable
 			.registrate()
-			.object(DStrings.ITEM_POUCH)
+			.object(FStrings.ITEM_POUCH)
 			.item(PouchItem::new)
 				.recipe(
 						(ctx, provider) -> ShapedRecipeBuilder

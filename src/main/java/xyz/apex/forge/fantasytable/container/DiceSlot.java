@@ -3,7 +3,7 @@ package xyz.apex.forge.fantasytable.container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import xyz.apex.forge.fantasytable.init.DTags;
+import xyz.apex.forge.fantasytable.init.FTags;
 
 public final class DiceSlot extends Slot
 {
@@ -15,6 +15,6 @@ public final class DiceSlot extends Slot
 	@Override
 	public boolean mayPlace(ItemStack stack)
 	{
-		return stack.getItem().is(DTags.Items.DICE);
+		return stack.getItem().is(FTags.Items.DICE);
 	}
 }

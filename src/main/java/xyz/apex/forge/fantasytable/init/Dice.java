@@ -29,12 +29,12 @@ import static net.minecraftforge.client.model.generators.ModelProvider.ITEM_FOLD
 
 public enum Dice
 {
-	PAPER(DStrings.DICE_PAPER, TextFormatting.WHITE, true, false, DTags.Items.PAPER),
-	BONE(DStrings.DICE_BONE, TextFormatting.WHITE, false, false, Tags.Items.BONES),
-	IRON(DStrings.DICE_IRON, TextFormatting.GRAY, false, true, Tags.Items.INGOTS_IRON),
-	GOLD(DStrings.DICE_GOLD, TextFormatting.YELLOW, false, true, Tags.Items.INGOTS_GOLD),
-	DIAMOND(DStrings.DICE_DIAMOND, TextFormatting.AQUA, false, true, Tags.Items.GEMS_DIAMOND),
-	EMERALD(DStrings.DICE_EMERALD, TextFormatting.GREEN, false, true, Tags.Items.GEMS_EMERALD),
+	PAPER(FStrings.DICE_PAPER, TextFormatting.WHITE, true, false, FTags.Items.PAPER),
+	BONE(FStrings.DICE_BONE, TextFormatting.WHITE, false, false, Tags.Items.BONES),
+	IRON(FStrings.DICE_IRON, TextFormatting.GRAY, false, true, Tags.Items.INGOTS_IRON),
+	GOLD(FStrings.DICE_GOLD, TextFormatting.YELLOW, false, true, Tags.Items.INGOTS_GOLD),
+	DIAMOND(FStrings.DICE_DIAMOND, TextFormatting.AQUA, false, true, Tags.Items.GEMS_DIAMOND),
+	EMERALD(FStrings.DICE_EMERALD, TextFormatting.GREEN, false, true, Tags.Items.GEMS_EMERALD),
 	;
 
 	public static final Dice[] TYPES = values();
@@ -54,23 +54,23 @@ public enum Dice
 		this.craftingItem = craftingItem;
 		this.rarity = Rarity.create(FantasyTable.ID + ':' + typeName, typeColor);
 
-		tag = ItemTags.createOptional(new ResourceLocation(FantasyTable.ID, DStrings.TAG_DICE + '/' + typeName));
+		tag = ItemTags.createOptional(new ResourceLocation(FantasyTable.ID, FStrings.TAG_DICE + '/' + typeName));
 
 		// formatter:off
 		ItemBuilder<DiceItem, CustomRegistrate> sixSidedDieBuilder = register(
 				this,
-				DStrings.ITEM_SIX_SIDED_DIE,
+				FStrings.ITEM_SIX_SIDED_DIE,
 				6,
 				dyeable,
-				DTags.Items.DICE_SIX_SIDED
+				FTags.Items.DICE_SIX_SIDED
 		);
 
 		ItemBuilder<DiceItem, CustomRegistrate> twentySidedDieBuilder = register(
 				this,
-				DStrings.ITEM_TWENTY_SIDED_DIE,
+				FStrings.ITEM_TWENTY_SIDED_DIE,
 				20,
 				dyeable,
-				DTags.Items.DICE_TWENTY_SIDED
+				FTags.Items.DICE_TWENTY_SIDED
 		);
 		// formatter:on
 
@@ -79,7 +79,7 @@ public enum Dice
 			// formatter:off
 			sixSidedDieBuilder = registerRecipe(
 					sixSidedDieBuilder,
-					DStrings.ITEM_SIX_SIDED_DIE,
+					FStrings.ITEM_SIX_SIDED_DIE,
 					recipe -> recipe
 							.pattern("II ")
 							.pattern("II ")
@@ -88,7 +88,7 @@ public enum Dice
 
 			twentySidedDieBuilder = registerRecipe(
 					twentySidedDieBuilder,
-					DStrings.ITEM_TWENTY_SIDED_DIE,
+					FStrings.ITEM_TWENTY_SIDED_DIE,
 					recipe -> recipe
 							.pattern(" I ")
 							.pattern("III")

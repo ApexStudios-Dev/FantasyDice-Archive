@@ -21,16 +21,16 @@ public final class DVillagers
 	// @formatter:off
 	public static final RegistryEntry<PointOfInterestType> GAMBLER_POI = FantasyTable
 			.registrate()
-			.object(DStrings.POI_GAMBLER)
+			.object(FStrings.POI_GAMBLER)
 			.pointOfInterestType()
-				.matchingBlock(DBlocks.GAMBLING_TABLE::get)
+				.matchingBlock(FBlocks.GAMBLING_TABLE::get)
 				.maxTickets(1)
 				.validRange(1)
 			.register();
 
 	public static final VillagerProfessionEntry<VillagerProfession> GAMBLER_PROFESSION = FantasyTable
 			.registrate()
-			.object(DStrings.POI_GAMBLER)
+			.object(FStrings.POI_GAMBLER)
 			.villagerProfession()
 				.villagerTrades((profession, trades) ->trades
 						.one(

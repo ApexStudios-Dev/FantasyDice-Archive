@@ -55,8 +55,8 @@ public final class FantasyTable
 					provider.add(POUCH_SCREEN_TITLE_KEY, "Dice Pouch");
 				})
 				.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
-					provider.tag(DTags.Items.PAPER).add(Items.PAPER);
-					TagsProvider.Builder<Item> diceBuilder = provider.tag(DTags.Items.DICE).addTags(DTags.Items.DICE_SIX_SIDED, DTags.Items.DICE_TWENTY_SIDED);
+					provider.tag(FTags.Items.PAPER).add(Items.PAPER);
+					TagsProvider.Builder<Item> diceBuilder = provider.tag(FTags.Items.DICE).addTags(FTags.Items.DICE_SIX_SIDED, FTags.Items.DICE_TWENTY_SIDED);
 
 					for(Dice dice : Dice.TYPES)
 					{
@@ -64,10 +64,10 @@ public final class FantasyTable
 					}
 				});
 
-		DTags.register();
-		DContainers.register();
-		DBlocks.register();
-		DItems.register();
+		FTags.register();
+		FContainers.register();
+		FBlocks.register();
+		FItems.register();
 		Dice.register();
 		Coins.register();
 		DVillagers.register();

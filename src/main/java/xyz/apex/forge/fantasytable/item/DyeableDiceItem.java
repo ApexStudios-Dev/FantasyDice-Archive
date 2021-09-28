@@ -4,7 +4,7 @@ import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.Constants;
-import xyz.apex.forge.fantasytable.init.DStrings;
+import xyz.apex.forge.fantasytable.init.FStrings;
 
 public class DyeableDiceItem extends DiceItem implements IDyeableArmorItem
 {
@@ -16,8 +16,8 @@ public class DyeableDiceItem extends DiceItem implements IDyeableArmorItem
 	// allows stacks to override the default color
 	protected int getDefaultColor(ItemStack stack)
 	{
-		CompoundNBT displayTag = stack.getTagElement(DStrings.NBT_DISPLAY);
-		return displayTag != null && displayTag.contains(DStrings.NBT_COLOR_DEFAULT, Constants.NBT.TAG_ANY_NUMERIC) ? displayTag.getInt(DStrings.NBT_COLOR_DEFAULT) : getDefaultColor();
+		CompoundNBT displayTag = stack.getTagElement(FStrings.NBT_DISPLAY);
+		return displayTag != null && displayTag.contains(FStrings.NBT_COLOR_DEFAULT, Constants.NBT.TAG_ANY_NUMERIC) ? displayTag.getInt(FStrings.NBT_COLOR_DEFAULT) : getDefaultColor();
 	}
 
 	protected int getDefaultColor()
@@ -29,10 +29,10 @@ public class DyeableDiceItem extends DiceItem implements IDyeableArmorItem
 	@Override
 	public int getColor(ItemStack stack)
 	{
-		CompoundNBT displayTag = stack.getTagElement(DStrings.NBT_DISPLAY);
+		CompoundNBT displayTag = stack.getTagElement(FStrings.NBT_DISPLAY);
 		// exactly the same as default implementation from IDyeableArmorItem
 		// just changed the default color from leather armor brown `10511680`
 		// to be generic white / greyscale
-		return displayTag != null && displayTag.contains(DStrings.NBT_COLOR, Constants.NBT.TAG_ANY_NUMERIC) ? displayTag.getInt(DStrings.NBT_COLOR) : getDefaultColor(stack);
+		return displayTag != null && displayTag.contains(FStrings.NBT_COLOR, Constants.NBT.TAG_ANY_NUMERIC) ? displayTag.getInt(FStrings.NBT_COLOR) : getDefaultColor(stack);
 	}
 }

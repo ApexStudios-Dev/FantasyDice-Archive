@@ -11,18 +11,18 @@ import xyz.apex.forge.fantasytable.container.GamblingTableContainer;
 import xyz.apex.forge.fantasytable.container.PouchContainer;
 import xyz.apex.forge.fantasytable.item.PouchItem;
 
-public final class DContainers
+public final class FContainers
 {
 	// formatter:off
 	public static final ContainerEntry<PouchContainer> POUCH_CONTAINER = FantasyTable
 			.registrate()
-			.object(DStrings.CONTAINER_POUCH)
+			.object(FStrings.CONTAINER_POUCH)
 			.container((type, windowId, inv) -> new PouchContainer(type, windowId, inv, findPouch(inv.player)), () -> PouchContainerScreen::new)
 			.register();
 
 	public static final ContainerEntry<GamblingTableContainer> GAMBLING_TABLE = FantasyTable
 			.registrate()
-			.object(DStrings.BLOCK_GAMBLING_TABLE)
+			.object(FStrings.BLOCK_GAMBLING_TABLE)
 			.container((type, windowId, inv) -> new GamblingTableContainer(type, windowId), () -> GamblingTableScreen::new)
 			.register();
 	// formatter:on
@@ -36,7 +36,7 @@ public final class DContainers
 		{
 			ItemStack stack = player.getItemInHand(hand);
 
-			if(DItems.POUCH_ITEM.is(stack.getItem()))
+			if(FItems.POUCH_ITEM.is(stack.getItem()))
 				return new PouchItem.Inv(stack);
 		}
 

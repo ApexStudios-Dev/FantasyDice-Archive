@@ -8,12 +8,12 @@ import net.minecraft.util.ResourceLocation;
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.block.GamblingTableBlock;
 
-public final class DBlocks
+public final class FBlocks
 {
 	// @formatter:off
 	public static final BlockEntry<GamblingTableBlock> GAMBLING_TABLE = FantasyTable
 			.registrate()
-			.object(DStrings.BLOCK_GAMBLING_TABLE)
+			.object(FStrings.BLOCK_GAMBLING_TABLE)
 			.block(GamblingTableBlock::new)
 
 			.initialProperties(Material.WOOD, MaterialColor.COLOR_BROWN)

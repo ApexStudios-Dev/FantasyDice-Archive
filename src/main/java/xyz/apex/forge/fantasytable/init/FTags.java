@@ -7,7 +7,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.versions.forge.ForgeVersion;
 import xyz.apex.forge.fantasytable.FantasyTable;
 
-public final class DTags
+public final class FTags
 {
 	@Deprecated // internal use only
 	public static void register()
@@ -28,10 +28,10 @@ public final class DTags
 
 	public static final class Names
 	{
-		public static final ResourceLocation DICE = new ResourceLocation(FantasyTable.ID, DStrings.TAG_DICE);
-		public static final ResourceLocation DICE_SIX_SIDED = new ResourceLocation(FantasyTable.ID, DStrings.TAG_SIX_SIDED);
-		public static final ResourceLocation DICE_TWENTY_SIDED = new ResourceLocation(FantasyTable.ID, DStrings.TAG_TWENTY_SIDED);
-		public static final ResourceLocation PAPER = new ResourceLocation(ForgeVersion.MOD_ID, DStrings.TAG_PAPER);
-		public static final ResourceLocation COINS = new ResourceLocation(FantasyTable.ID, DStrings.TAG_COINS);
+		public static final ResourceLocation DICE = new ResourceLocation(FantasyTable.ID, FStrings.TAG_DICE);
+		public static final ResourceLocation DICE_SIX_SIDED = new ResourceLocation(FantasyTable.ID, FStrings.TAG_SIX_SIDED);
+		public static final ResourceLocation DICE_TWENTY_SIDED = new ResourceLocation(FantasyTable.ID, FStrings.TAG_TWENTY_SIDED);
+		public static final ResourceLocation PAPER = new ResourceLocation(ForgeVersion.MOD_ID, FStrings.TAG_PAPER);
+		public static final ResourceLocation COINS = new ResourceLocation(FantasyTable.ID, FStrings.TAG_COINS);
 	}
 }

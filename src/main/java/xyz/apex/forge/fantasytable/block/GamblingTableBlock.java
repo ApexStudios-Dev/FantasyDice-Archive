@@ -9,7 +9,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import xyz.apex.forge.fantasytable.init.DContainers;
+import xyz.apex.forge.fantasytable.init.FContainers;
 
 public class GamblingTableBlock extends Block
 {
@@ -23,7 +23,7 @@ public class GamblingTableBlock extends Block
 	{
 		if(player instanceof ServerPlayerEntity)
 		{
-			DContainers.GAMBLING_TABLE.open(
+			FContainers.GAMBLING_TABLE.open(
 					(ServerPlayerEntity) player,
 					getName()
 			);

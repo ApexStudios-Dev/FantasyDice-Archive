@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.container.PouchContainer;
-import xyz.apex.forge.fantasytable.init.DContainers;
-import xyz.apex.forge.fantasytable.init.DStrings;
+import xyz.apex.forge.fantasytable.init.FContainers;
+import xyz.apex.forge.fantasytable.init.FStrings;
 
 public class PouchItem extends Item implements IDyeableArmorItem
 {
@@ -32,10 +32,10 @@ public class PouchItem extends Item implements IDyeableArmorItem
 
 		if(player instanceof ServerPlayerEntity)
 		{
-			DContainers.POUCH_CONTAINER.open(
+			FContainers.POUCH_CONTAINER.open(
 					(ServerPlayerEntity) player,
 					pouch.hasCustomHoverName() ? pouch.getHoverName() : new TranslationTextComponent(FantasyTable.POUCH_SCREEN_TITLE_KEY),
-					(windowId, playerInventory, plr) -> new PouchContainer(DContainers.POUCH_CONTAINER.get(), windowId, playerInventory, new Inv(pouch))
+					(windowId, playerInventory, plr) -> new PouchContainer(FContainers.POUCH_CONTAINER.get(), windowId, playerInventory, new Inv(pouch))
 			);
 		}
 
@@ -56,16 +56,16 @@ public class PouchItem extends Item implements IDyeableArmorItem
 		@Override
 		public void startOpen(PlayerEntity player)
 		{
-			CompoundNBT invTag = pouch.getTagElement(DStrings.NBT_POUCH_INVENTORY);
+			CompoundNBT invTag = pouch.getTagElement(FStrings.NBT_POUCH_INVENTORY);
 
 			if(invTag != null)
 			{
-				ListNBT slotTag = invTag.getList(DStrings.NBT_ITEMS, Constants.NBT.TAG_COMPOUND);
+				ListNBT slotTag = invTag.getList(FStrings.NBT_ITEMS, Constants.NBT.TAG_COMPOUND);
 
 				for(int i = 0; i < slotTag.size(); i++)
 				{
 					CompoundNBT itemTag = slotTag.getCompound(i);
-					int slotIndex = itemTag.getByte(DStrings.NBT_SLOT) & 255;
+					int slotIndex = itemTag.getByte(FStrings.NBT_SLOT) & 255;
 
 					if(slotIndex >= 0 && slotIndex < getContainerSize())
 						setItem(slotIndex, ItemStack.of(itemTag));
@@ -86,14 +86,14 @@ public class PouchItem extends Item implements IDyeableArmorItem
 				if(!stack.isEmpty())
 				{
 					CompoundNBT itemTag = new CompoundNBT();
-					itemTag.putByte(DStrings.NBT_SLOT, (byte) i);
+					itemTag.putByte(FStrings.NBT_SLOT, (byte) i);
 					stack.save(itemTag);
 					slotTag.add(itemTag);
 				}
 			}
 
-			invTag.put(DStrings.NBT_ITEMS, slotTag);
-			pouch.addTagElement(DStrings.NBT_POUCH_INVENTORY, invTag);
+			invTag.put(FStrings.NBT_ITEMS, slotTag);
+			pouch.addTagElement(FStrings.NBT_POUCH_INVENTORY, invTag);
 		}
 	}
 }

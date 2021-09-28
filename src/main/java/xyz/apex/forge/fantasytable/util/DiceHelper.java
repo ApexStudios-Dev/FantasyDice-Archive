@@ -7,7 +7,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import xyz.apex.forge.fantasytable.FantasyTable;
-import xyz.apex.forge.fantasytable.init.DTags;
+import xyz.apex.forge.fantasytable.init.FTags;
 import xyz.apex.forge.fantasytable.init.Dice;
 
 import java.util.Random;
@@ -41,9 +41,9 @@ public final class DiceHelper
 
 	public static int getSides(ItemStack stack)
 	{
-		if(stack.getItem().is(DTags.Items.DICE_TWENTY_SIDED))
+		if(stack.getItem().is(FTags.Items.DICE_TWENTY_SIDED))
 			return 20;
-		if(stack.getItem().is(DTags.Items.DICE_SIX_SIDED))
+		if(stack.getItem().is(FTags.Items.DICE_SIX_SIDED))
 			return 6;
 		return 6;
 	}
@@ -52,7 +52,7 @@ public final class DiceHelper
 	{
 		ItemStack die = thrower.getItemInHand(hand);
 
-		if(die.getItem().is(DTags.Items.DICE))
+		if(die.getItem().is(FTags.Items.DICE))
 		{
 			if(throwDice(world, thrower, hand, die, min))
 			{
