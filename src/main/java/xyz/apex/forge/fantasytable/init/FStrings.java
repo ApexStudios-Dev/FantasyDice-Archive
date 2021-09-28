@@ -20,7 +20,6 @@ public final class FStrings
 	public static final String DICE_GOLD = "gold";
 	public static final String DICE_DIAMOND = "diamond";
 	public static final String DICE_EMERALD = "emerald";
-	public static final String DICE_LAPIS_LAZULI = "lapis_lazuli";
 
 	public static final String COIN_IRON = "iron";
 	public static final String COIN_GOLD = "gold";

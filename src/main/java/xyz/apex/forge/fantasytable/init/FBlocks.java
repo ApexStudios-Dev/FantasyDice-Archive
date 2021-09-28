@@ -1,20 +1,20 @@
 package xyz.apex.forge.fantasytable.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.ResourceLocation;
 import xyz.apex.forge.fantasytable.FantasyTable;
-import xyz.apex.forge.fantasytable.block.GamblingTableBlock;
 
 public final class FBlocks
 {
 	// @formatter:off
-	public static final BlockEntry<GamblingTableBlock> GAMBLING_TABLE = FantasyTable
+	public static final BlockEntry<Block> GAMBLING_TABLE = FantasyTable
 			.registrate()
 			.object(FStrings.BLOCK_GAMBLING_TABLE)
-			.block(GamblingTableBlock::new)
+			.block(Block::new)
 
 			.initialProperties(Material.WOOD, MaterialColor.COLOR_BROWN)
 			.properties(properties -> properties.strength(2.5F).sound(SoundType.WOOD))
