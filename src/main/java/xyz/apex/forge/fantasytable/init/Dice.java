@@ -31,12 +31,12 @@ import static net.minecraftforge.client.model.generators.ModelProvider.ITEM_FOLD
 
 public enum Dice
 {
-	PAPER(FStrings.DICE_PAPER, TextFormatting.WHITE, false, FTags.Items.PAPER),
+	PAPER(FStrings.DICE_PAPER, TextFormatting.WHITE, true, FTags.Items.PAPER),
 	BONE(FStrings.DICE_BONE, TextFormatting.WHITE, false, Tags.Items.BONES),
-	IRON(FStrings.DICE_IRON, TextFormatting.GRAY, true, Tags.Items.INGOTS_IRON),
-	GOLD(FStrings.DICE_GOLD, TextFormatting.YELLOW, true, Tags.Items.INGOTS_GOLD),
-	DIAMOND(FStrings.DICE_DIAMOND, TextFormatting.AQUA, true, Tags.Items.GEMS_DIAMOND),
-	EMERALD(FStrings.DICE_EMERALD, TextFormatting.GREEN, true, Tags.Items.GEMS_EMERALD),
+	IRON(FStrings.DICE_IRON, TextFormatting.GRAY, false, Tags.Items.INGOTS_IRON),
+	GOLD(FStrings.DICE_GOLD, TextFormatting.YELLOW, false, Tags.Items.INGOTS_GOLD),
+	DIAMOND(FStrings.DICE_DIAMOND, TextFormatting.AQUA, false, Tags.Items.GEMS_DIAMOND),
+	EMERALD(FStrings.DICE_EMERALD, TextFormatting.GREEN, false, Tags.Items.GEMS_EMERALD)
 	;
 
 	public static final Dice[] TYPES = values();
