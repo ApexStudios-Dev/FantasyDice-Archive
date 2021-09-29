@@ -4,13 +4,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import xyz.apex.forge.fantasytable.FantasyTable;
-import xyz.apex.forge.fantasytable.init.FTags;
+import xyz.apex.forge.fantasytable.init.Coins;
 import xyz.apex.forge.fantasytable.init.Dice;
+import xyz.apex.forge.fantasytable.init.FTags;
 
+import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 public final class DiceHelper
 {
@@ -41,6 +45,8 @@ public final class DiceHelper
 
 	public static int getSides(ItemStack stack)
 	{
+		if(stack.getItem().is(FTags.Items.COINS))
+			return 2;
 		if(stack.getItem().is(FTags.Items.DICE_TWENTY_SIDED))
 			return 20;
 		if(stack.getItem().is(FTags.Items.DICE_SIX_SIDED))
@@ -48,42 +54,53 @@ public final class DiceHelper
 		return 6;
 	}
 
-	public static boolean throwDice(World world, PlayerEntity thrower, Hand hand, int min)
-	{
-		ItemStack die = thrower.getItemInHand(hand);
-
-		if(die.getItem().is(FTags.Items.DICE))
-		{
-			if(throwDice(world, thrower, hand, die, min))
-			{
-				thrower.getCooldowns().addCooldown(die.getItem(), FantasyTable.SERVER_CONFIG.getDiceCooldown());
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static boolean throwDice(World world, PlayerEntity thrower, Hand hand, ItemStack die, int min)
+	public static boolean throwDice(World world, PlayerEntity thrower, Hand hand, ItemStack die, int min, int sides)
 	{
 		if(die.isEmpty())
 			return false;
 		if(world.isClientSide)
 			return true;
 
-		Dice dice = Dice.byItem(die);
-		int sides = getSides(die);
-		int totalRolls = 0;
-
-		for(int i = 0; i < die.getCount(); i++)
-		{
-			int roll = roll(world.random, min, sides);
-			// DiceMod.sendMessageToPlayers(thrower, dice.createTextComponent(thrower, roll, min, sides));
-			totalRolls += roll;
-		}
-
-		sendMessageToPlayers(thrower, dice.createTextComponent(thrower, die, totalRolls));
+		int[] rolls = IntStream.range(0, die.getCount()).map(i -> roll(world.random, min, sides)).toArray();
+		sendMessageToPlayers(thrower, createTextComponent(thrower, die, rolls, min, sides));
 		return true;
+	}
+
+	public static IFormattableTextComponent createTextComponent(PlayerEntity thrower, ItemStack die, int[] rolls, int min, int sides)
+	{
+		if(die.getItem().is(FTags.Items.COINS))
+		{
+			Coins coin = Coins.byItem(die);
+			return coin.createTextComponent(thrower, die, rolls);
+		}
+		else
+		{
+			int totalRolls = Arrays.stream(rolls).sum();
+
+			if(die.getItem().is(FTags.Items.DICE))
+			{
+				Dice dice = Dice.byItem(die);
+				return dice.createTextComponent(thrower, die, totalRolls);
+			}
+			else
+				return Dice.PAPER.createTextComponent(thrower, die, totalRolls);
+		}
+	}
+
+	public static IFormattableTextComponent createItemTooltipComponent(ItemStack die, int min, int sides)
+	{
+		if(die.getItem().is(FTags.Items.COINS))
+		{
+			Coins coin = Coins.byItem(die);
+			return coin.createItemTooltipComponent(die, min, sides);
+		}
+		else if(die.getItem().is(FTags.Items.DICE))
+		{
+			Dice dice = Dice.byItem(die);
+			return dice.createItemTooltipComponent(die, min, sides);
+		}
+		else
+			return Dice.PAPER.createItemTooltipComponent(die, min, sides);
 	}
 
 	public static void sendMessageToPlayers(PlayerEntity thrower, ITextComponent component)

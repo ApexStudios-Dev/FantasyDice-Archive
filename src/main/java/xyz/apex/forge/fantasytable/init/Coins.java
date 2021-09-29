@@ -4,19 +4,26 @@ import com.tterrag.registrate.providers.RegistrateLangProvider;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.DistExecutor;
 import xyz.apex.forge.fantasytable.FantasyTable;
-import xyz.apex.forge.fantasytable.item.CoinItem;
+import xyz.apex.forge.fantasytable.item.DiceItem;
+
+import java.util.Arrays;
 
 public enum Coins
 {
@@ -27,7 +34,7 @@ public enum Coins
 	public static final Coins[] TYPES = values();
 
 	public final ITag<Item> craftingItem;
-	public final ItemEntry<CoinItem> item;
+	public final ItemEntry<DiceItem> item;
 	public final String name;
 	public final TextFormatting color;
 	public final Rarity rarity;
@@ -43,7 +50,7 @@ public enum Coins
 		item = FantasyTable
 				.registrate()
 				.object("coin_" + name)
-				.item(CoinItem::new)
+				.item(DiceItem::new)
 				.lang(RegistrateLangProvider.toEnglishName(name) + " Coin")
 				.tag(FTags.Items.COINS)
 				.properties(properties -> properties.rarity(rarity).stacksTo(12))
@@ -97,7 +104,7 @@ public enum Coins
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private void postRegisterClient(CoinItem item)
+	private void postRegisterClient(DiceItem item)
 	{
 		ItemModelsProperties.register(item, FantasyTable.COIN_PREDICATE_NAME, (stack, world, entity) -> {
 			int count = stack.getCount();
@@ -112,6 +119,79 @@ public enum Coins
 				return .5F;
 			return 1F;
 		});
+	}
+
+	public IFormattableTextComponent createTextComponent(PlayerEntity thrower, ItemStack coin, int[] rolls)
+	{
+		int heads = 0;
+		int tails = 0;
+
+		for(int roll : rolls)
+		{
+			if(roll > 1)
+				heads++;
+			else
+				tails++;
+		}
+
+		// @formatter:off
+		return new TranslationTextComponent(
+				FantasyTable.COIN_FLIP_KEY,
+				thrower.getDisplayName(),
+				buildHeadsTailsComponent(heads, tails).withStyle(style -> style.withItalic(true).withColor(color)),
+				coin.getCount()
+		)
+				.withStyle(style ->
+						style.withHoverEvent(
+								new HoverEvent(
+										HoverEvent.Action.SHOW_TEXT,
+										new TranslationTextComponent(FantasyTable.COIN_FLIP_USING_KEY, coin.getHoverName()).withStyle(hoverStyle -> style.withColor(color))
+								)
+						)
+				);
+		// @formatter:on
+	}
+
+	public IFormattableTextComponent createItemTooltipComponent(ItemStack die, int min, int sides)
+	{
+		return new TranslationTextComponent(FantasyTable.COIN_FLIP_DESC_KEY).withStyle(style -> style.withColor(TextFormatting.DARK_GRAY).withItalic(true));
+	}
+
+	private static IFormattableTextComponent buildHeadsTailsComponent(int heads, int tails)
+	{
+		/*
+		provider.add(COIN_FLIP_HEADS_KEY, "%s Heads");
+		provider.add(COIN_FLIP_HEADS_SINGLE_KEY, "Heads");
+
+		provider.add(COIN_FLIP_TAILS_KEY, "%s Tails");
+		provider.add(COIN_FLIP_TAILS_SINGLE_KEY, "Tails");
+
+		provider.add(COIN_FLIP_HEADS_AND_TAILS_KEY, "%s Heads and %s Tails");
+		*/
+
+		// FantasyTable.LOGGER.info("Heads: {}, Tails: {}", heads, tails);
+
+		// heads is plural & no tails
+		if(heads != 1 && tails == 0)
+			return new TranslationTextComponent(FantasyTable.COIN_FLIP_HEADS_KEY, heads);
+		// tails is plural & no heads
+		if(tails != 1 && heads == 0)
+			return new TranslationTextComponent(FantasyTable.COIN_FLIP_TAILS_KEY, tails);
+
+		// heads in singular & no tails
+		if(heads == 1 && tails == 0)
+			return new TranslationTextComponent(FantasyTable.COIN_FLIP_HEADS_SINGLE_KEY);
+		// tails is singular & no heads
+		if(tails == 1 && heads == 0)
+			return new TranslationTextComponent(FantasyTable.COIN_FLIP_TAILS_SINGLE_KEY);
+
+		// display both values
+		return new TranslationTextComponent(FantasyTable.COIN_FLIP_HEADS_AND_TAILS_KEY, heads, tails);
+	}
+
+	public static Coins byItem(ItemStack stack)
+	{
+		return Arrays.stream(TYPES).filter(coin -> coin.item.isIn(stack)).findFirst().orElse(IRON);
 	}
 
 	@Deprecated // internal use only

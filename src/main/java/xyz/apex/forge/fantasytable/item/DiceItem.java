@@ -8,7 +8,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import xyz.apex.forge.fantasytable.init.Dice;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
 
 import javax.annotation.Nullable;
@@ -24,11 +23,14 @@ public class DiceItem extends Item
 	@Override
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		if(DiceHelper.throwDice(world, player, hand, 0))
-			return ActionResult.sidedSuccess(player.getItemInHand(hand), world.isClientSide);
+		ItemStack die = player.getItemInHand(hand);
+		int sides = DiceHelper.getSides(die);
+
+		if(DiceHelper.throwDice(world, player, hand, die, 0, sides))
+			return ActionResult.sidedSuccess(die, world.isClientSide);
 		if(!world.isClientSide)
-			return ActionResult.pass(player.getItemInHand(hand));
-		return ActionResult.fail(player.getItemInHand(hand));
+			return ActionResult.pass(die);
+		return ActionResult.fail(die);
 	}
 
 	@Override
@@ -42,8 +44,8 @@ public class DiceItem extends Item
 		// world is only none null after this process
 		if(world != null)
 		{
-			Dice dice = Dice.byItem(stack);
-			tooltip.add(dice.createItemTooltipComponent(stack));
+			int sides = DiceHelper.getSides(stack);
+			tooltip.add(DiceHelper.createItemTooltipComponent(stack, 1, sides));
 		}
 	}
 }

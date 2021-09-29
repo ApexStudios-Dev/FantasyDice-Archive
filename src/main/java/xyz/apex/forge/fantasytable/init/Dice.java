@@ -130,7 +130,7 @@ public enum Dice
 		);
 	}
 
-	public Style getTextComponentStyleColor(ItemStack die, Style style)
+	private Style getTextComponentStyleColor(ItemStack die, Style style)
 	{
 		if(die.getItem() instanceof IDyeableArmorItem)
 			return style.withColor(Color.fromRgb(((IDyeableArmorItem) die.getItem()).getColor(die)));
@@ -138,27 +138,20 @@ public enum Dice
 			return style.withColor(typeColor);
 	}
 
-	public Style getTextComponentStyle(ItemStack die, Style style)
+	private Style getTextComponentStyle(ItemStack die, Style style)
 	{
 		return getTextComponentStyleColor(die, style).withItalic(true);
 	}
 
-	public IFormattableTextComponent createItemTooltipComponent(ItemStack die, int min)
+	public IFormattableTextComponent createItemTooltipComponent(ItemStack die, int min, int sides)
 	{
-		int sides = DiceHelper.getSides(die);
-
-		// formatter:off
+		// @formatter:off
 		return new TranslationTextComponent(
 				FantasyTable.DICE_ROLL_DESC_KEY,
 				new StringTextComponent("" + min).withStyle(style -> style.withColor(TextFormatting.DARK_GRAY).withItalic(true)),
 				new StringTextComponent("" + sides).withStyle(style -> style.withColor(TextFormatting.DARK_GRAY).withItalic(true))
 		).withStyle(style -> style.withColor(TextFormatting.DARK_GRAY));
-		// formatter:on
-	}
-
-	public IFormattableTextComponent createItemTooltipComponent(ItemStack die)
-	{
-		return createItemTooltipComponent(die, 1);
+		// @formatter:on
 	}
 
 	public IFormattableTextComponent createTextComponent(PlayerEntity thrower, ItemStack die, int roll)

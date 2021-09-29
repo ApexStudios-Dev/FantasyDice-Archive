@@ -30,16 +30,26 @@ import xyz.apex.forge.fantasytable.util.registrate.CustomRegistrate;
 public final class FantasyTable
 {
 	public static final String ID = "fantasytable";
-	public static final String DICE_ROLL_KEY = FantasyTable.ID + ".dice.roll";
-	public static final String DICE_ROLL_USING_KEY = FantasyTable.ID + ".dice.using";
-	public static final String DICE_ROLL_DESC_KEY = FantasyTable.ID + ".dice.roll.desc";
-	public static final String POUCH_SCREEN_TITLE_KEY = FantasyTable.ID + ".pouch.title"; // narrator message for pouch screen
+
+	public static final String DICE_ROLL_KEY = ID + ".dice.roll";
+	public static final String DICE_ROLL_USING_KEY = ID + ".dice.using";
+	public static final String DICE_ROLL_DESC_KEY = ID + ".dice.roll.desc";
+	public static final String COIN_FLIP_HEADS_KEY = ID + ".coin.flip.heads";
+	public static final String COIN_FLIP_HEADS_SINGLE_KEY = ID + ".coin.flip.heads.single";
+	public static final String COIN_FLIP_TAILS_KEY = ID + ".coin.flip.tails";
+	public static final String COIN_FLIP_TAILS_SINGLE_KEY = ID + ".coin.flip.tails.single";
+	public static final String COIN_FLIP_HEADS_AND_TAILS_KEY = ID + ".coin.flip.heads_tails";
+	public static final String COIN_FLIP_KEY = ID + ".coin.flip";
+	public static final String COIN_FLIP_USING_KEY = ID + ".coin.using";
+	public static final String COIN_FLIP_DESC_KEY = ID + ".coin.flip.desc";
+
+	public static final String POUCH_SCREEN_TITLE_KEY = ID + ".pouch.title"; // narrator message for pouch screen
 
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final ServerConfig SERVER_CONFIG = new ServerConfig();
 	public static final ItemGroup ITEM_GROUP = new FantasyTableItemGroup();
 
-	public static final ResourceLocation COIN_PREDICATE_NAME = new ResourceLocation(FantasyTable.ID, "coin_stack");
+	public static final ResourceLocation COIN_PREDICATE_NAME = new ResourceLocation(ID, "coin_stack");
 	private static final NonNullLazyValue<CustomRegistrate> REGISTRATE_LAZY = CustomRegistrate.create(ID);
 
 	public FantasyTable()
@@ -53,6 +63,14 @@ public final class FantasyTable
 					provider.add(DICE_ROLL_KEY, "%s rolls %s");
 					provider.add(DICE_ROLL_USING_KEY, "Using a %s");
 					provider.add(DICE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
+					provider.add(COIN_FLIP_HEADS_KEY, "%s Heads");
+					provider.add(COIN_FLIP_HEADS_SINGLE_KEY, "Heads");
+					provider.add(COIN_FLIP_TAILS_KEY, "%s Tails");
+					provider.add(COIN_FLIP_TAILS_SINGLE_KEY, "Tails");
+					provider.add(COIN_FLIP_HEADS_AND_TAILS_KEY, "%s Heads and %s Tails");
+					provider.add(COIN_FLIP_KEY, "%s flipped %s (%s coins)");
+					provider.add(COIN_FLIP_USING_KEY, "Using a %s");
+					provider.add(COIN_FLIP_DESC_KEY, "Flip it and see if you will get Heads or Tails");
 					provider.add(POUCH_SCREEN_TITLE_KEY, "Dice Pouch");
 				})
 				.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
