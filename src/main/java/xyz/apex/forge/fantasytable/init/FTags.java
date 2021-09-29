@@ -20,8 +20,12 @@ public final class FTags
 		public static final Tags.IOptionalNamedTag<Item> DICE = ItemTags.createOptional(Names.DICE);
 		public static final Tags.IOptionalNamedTag<Item> DICE_SIX_SIDED = ItemTags.createOptional(Names.DICE_SIX_SIDED);
 		public static final Tags.IOptionalNamedTag<Item> DICE_TWENTY_SIDED = ItemTags.createOptional(Names.DICE_TWENTY_SIDED);
-		public static final Tags.IOptionalNamedTag<Item> PAPER = ItemTags.createOptional(Names.PAPER); // does not exist by default
 		public static final Tags.IOptionalNamedTag<Item> COINS = ItemTags.createOptional(Names.COINS);
+
+		// these do not exist by default
+		public static final Tags.IOptionalNamedTag<Item> PAPER = ItemTags.createOptional(Names.PAPER);
+		public static final Tags.IOptionalNamedTag<Item> BUTTONS_STONE = ItemTags.createOptional(Names.BUTTONS_STONE);
+		public static final Tags.IOptionalNamedTag<Item> STONE_BUTTONS = ItemTags.createOptional(Names.STONE_BUTTONS);
 
 		private static void register() { }
 	}
@@ -33,5 +37,7 @@ public final class FTags
 		public static final ResourceLocation DICE_TWENTY_SIDED = new ResourceLocation(FantasyTable.ID, FStrings.TAG_TWENTY_SIDED);
 		public static final ResourceLocation PAPER = new ResourceLocation(ForgeVersion.MOD_ID, FStrings.TAG_PAPER);
 		public static final ResourceLocation COINS = new ResourceLocation(FantasyTable.ID, FStrings.TAG_COINS);
+		public static final ResourceLocation BUTTONS_STONE = new ResourceLocation(ForgeVersion.MOD_ID, FStrings.TAG_BUTTONS_STONE);
+		public static final ResourceLocation STONE_BUTTONS = new ResourceLocation(ForgeVersion.MOD_ID, FStrings.TAG_STONE_BUTTONS);
 	}
 }

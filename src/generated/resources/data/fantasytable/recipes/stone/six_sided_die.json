@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "dice/stone",
+  "pattern": [
+    "II ",
+    "II ",
+    "   "
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:stone_buttons"
+    }
+  },
+  "result": {
+    "item": "fantasytable:stone_six_sided_die",
+    "count": 8
+  }
+}

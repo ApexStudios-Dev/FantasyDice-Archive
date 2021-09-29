@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.MinecraftForge;
@@ -56,6 +57,10 @@ public final class FantasyTable
 				})
 				.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
 					provider.tag(FTags.Items.PAPER).add(Items.PAPER);
+					provider.tag(FTags.Items.BUTTONS_STONE).add(Items.POLISHED_BLACKSTONE_BUTTON, Items.STONE_BUTTON);
+					provider.tag(FTags.Items.STONE_BUTTONS).add(Items.POLISHED_BLACKSTONE_BUTTON, Items.STONE_BUTTON);
+					provider.tag(ItemTags.BUTTONS).addTags(FTags.Items.BUTTONS_STONE, FTags.Items.STONE_BUTTONS);
+
 					TagsProvider.Builder<Item> diceBuilder = provider.tag(FTags.Items.DICE).addTags(FTags.Items.DICE_SIX_SIDED, FTags.Items.DICE_TWENTY_SIDED);
 
 					for(Dice dice : Dice.TYPES)

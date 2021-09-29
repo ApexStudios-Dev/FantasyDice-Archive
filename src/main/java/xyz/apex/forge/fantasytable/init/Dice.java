@@ -14,6 +14,7 @@ import net.minecraft.item.Rarity;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.*;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.common.Tags;
@@ -31,12 +32,15 @@ import static net.minecraftforge.client.model.generators.ModelProvider.ITEM_FOLD
 
 public enum Dice
 {
+	WOOD(FStrings.DICE_WOOD, TextFormatting.WHITE, false, ItemTags.WOODEN_BUTTONS),
+	STONE(FStrings.DICE_STONE, TextFormatting.WHITE, false, FTags.Items.STONE_BUTTONS),
 	PAPER(FStrings.DICE_PAPER, TextFormatting.WHITE, true, FTags.Items.PAPER),
 	BONE(FStrings.DICE_BONE, TextFormatting.WHITE, false, Tags.Items.BONES),
-	IRON(FStrings.DICE_IRON, TextFormatting.GRAY, false, Tags.Items.INGOTS_IRON),
-	GOLD(FStrings.DICE_GOLD, TextFormatting.YELLOW, false, Tags.Items.INGOTS_GOLD),
-	DIAMOND(FStrings.DICE_DIAMOND, TextFormatting.AQUA, false, Tags.Items.GEMS_DIAMOND),
-	EMERALD(FStrings.DICE_EMERALD, TextFormatting.GREEN, false, Tags.Items.GEMS_EMERALD)
+	IRON(FStrings.DICE_IRON, TextFormatting.GRAY, false, null),
+	GOLD(FStrings.DICE_GOLD, TextFormatting.YELLOW, false, null),
+	DIAMOND(FStrings.DICE_DIAMOND, TextFormatting.AQUA, false, null),
+	EMERALD(FStrings.DICE_EMERALD, TextFormatting.GREEN, false, null),
+	CREATIVE(FStrings.DICE_CREATIVE, TextFormatting.LIGHT_PURPLE, false, null)
 	;
 
 	public static final Dice[] TYPES = values();
@@ -64,7 +68,7 @@ public enum Dice
 
 		tag = ItemTags.createOptional(new ResourceLocation(FantasyTable.ID, FStrings.TAG_DICE + '/' + typeName));
 
-		// formatter:off
+		// @formatter:off
 		ItemBuilder<DiceItem, CustomRegistrate> sixSidedDieBuilder = register(
 				this,
 				FStrings.ITEM_SIX_SIDED_DIE,
@@ -80,11 +84,11 @@ public enum Dice
 				dyeable,
 				FTags.Items.DICE_TWENTY_SIDED
 		);
-		// formatter:on
+		// @formatter:on
 
 		if(craftingItem != null)
 		{
-			// formatter:off
+			// @formatter:off
 			sixSidedDieBuilder = registerRecipe(
 					sixSidedDieBuilder,
 					FStrings.ITEM_SIX_SIDED_DIE,
@@ -104,7 +108,7 @@ public enum Dice
 							.pattern("III")
 							.pattern(" I ")
 			);
-			// formatter:on
+			// @formatter:on
 		}
 
 		six_sided_die = sixSidedDieBuilder.register();
@@ -166,7 +170,7 @@ public enum Dice
 			strAmount += die.getCount();
 
 		// formatter:off
-		return new TranslationTextComponent(
+		IFormattableTextComponent component = new TranslationTextComponent(
 				FantasyTable.DICE_ROLL_KEY,
 				thrower.getDisplayName(),
 				// TODO: Should this component be localized?
@@ -182,6 +186,10 @@ public enum Dice
 						)
 				);
 		// formatter:on
+
+		if(this == CREATIVE)
+			return rainbowifyComponent(component);
+		return component;
 	}
 
 	public static Dice byItem(ItemStack stack)
@@ -253,6 +261,33 @@ public enum Dice
 					// into `<modid>:textures/item/dice/<dice_type>/<item_name>.png`
 					.model((ctx, provider) -> provider.generated(ctx, new ResourceLocation(FantasyTable.ID, ITEM_FOLDER + "/dice/" + dice.typeName + '/' + itemName)));
 		// formatter:on
+	}
+
+	// TODO: Maybe move this to some utility class
+	private static final TextFormatting[] RAINBOW_COLORS = new TextFormatting[] {
+			TextFormatting.RED,
+			TextFormatting.YELLOW,
+			TextFormatting.GREEN,
+			TextFormatting.AQUA,
+			TextFormatting.LIGHT_PURPLE
+	};
+
+	public static IFormattableTextComponent rainbowifyComponent(IFormattableTextComponent component)
+	{
+		String msg = component.getString();
+		IFormattableTextComponent result = new StringTextComponent("");
+		int offset = MathHelper.floor(Math.random() * msg.length());
+
+		for(int i = 0; i < msg.length(); i++)
+		{
+			final int color = i + offset; // must be effectively final to be used in lambda
+			result.append(new StringTextComponent(String.valueOf(msg.charAt(i))).withStyle(style -> {
+				TextFormatting rainbow_color = RAINBOW_COLORS[color % RAINBOW_COLORS.length];
+				return style.withColor(rainbow_color);
+			}));
+		}
+
+		return result;
 	}
 
 	@Deprecated // internal use only

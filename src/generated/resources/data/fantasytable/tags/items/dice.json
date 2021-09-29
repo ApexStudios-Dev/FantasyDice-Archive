@@ -3,11 +3,14 @@
   "values": [
     "#fantasytable:dice/six_sided",
     "#fantasytable:dice/twenty_sided",
+    "#fantasytable:dice/wood",
+    "#fantasytable:dice/stone",
     "#fantasytable:dice/paper",
     "#fantasytable:dice/bone",
     "#fantasytable:dice/iron",
     "#fantasytable:dice/gold",
     "#fantasytable:dice/diamond",
-    "#fantasytable:dice/emerald"
+    "#fantasytable:dice/emerald",
+    "#fantasytable:dice/creative"
   ]
 }

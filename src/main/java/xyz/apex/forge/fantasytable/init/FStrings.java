@@ -14,12 +14,15 @@ public final class FStrings
 
 	public static final String POI_GAMBLER = "gambler";
 
+	public static final String DICE_WOOD = "wood";
+	public static final String DICE_STONE = "stone";
 	public static final String DICE_PAPER = "paper";
 	public static final String DICE_BONE = "bone";
 	public static final String DICE_IRON = "iron";
 	public static final String DICE_GOLD = "gold";
 	public static final String DICE_DIAMOND = "diamond";
 	public static final String DICE_EMERALD = "emerald";
+	public static final String DICE_CREATIVE = "creative";
 
 	public static final String COIN_IRON = "iron";
 	public static final String COIN_GOLD = "gold";
@@ -29,6 +32,10 @@ public final class FStrings
 	public static final String TAG_COINS = "coins";
 	public static final String TAG_SIX_SIDED = TAG_DICE + "/six_sided";
 	public static final String TAG_TWENTY_SIDED = TAG_DICE + "/twenty_sided";
+
+	// forge & vanilla style
+	public static final String TAG_BUTTONS_STONE = "buttons/stone";
+	public static final String TAG_STONE_BUTTONS = "stone_buttons";
 
 	public static final String CMD_ROLL = "roll";
 	public static final String CMD_ARG_MAX = "max";

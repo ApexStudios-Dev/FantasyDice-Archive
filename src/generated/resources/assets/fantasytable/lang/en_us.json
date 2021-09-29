@@ -9,6 +9,8 @@
   "item.fantasytable.bone_twenty_sided_die": "Bone d20",
   "item.fantasytable.coin_gold": "Gold Coin",
   "item.fantasytable.coin_iron": "Iron Coin",
+  "item.fantasytable.creative_six_sided_die": "Creative d6",
+  "item.fantasytable.creative_twenty_sided_die": "Creative d20",
   "item.fantasytable.diamond_six_sided_die": "Diamond d6",
   "item.fantasytable.diamond_twenty_sided_die": "Diamond d20",
   "item.fantasytable.emerald_six_sided_die": "Emerald d6",
@@ -20,5 +22,9 @@
   "item.fantasytable.paper_six_sided_die": "Paper d6",
   "item.fantasytable.paper_twenty_sided_die": "Paper d20",
   "item.fantasytable.pouch": "Dice Pouch",
+  "item.fantasytable.stone_six_sided_die": "Stone d6",
+  "item.fantasytable.stone_twenty_sided_die": "Stone d20",
+  "item.fantasytable.wood_six_sided_die": "Wood d6",
+  "item.fantasytable.wood_twenty_sided_die": "Wood d20",
   "itemGroup.fantasytable": "Fantasy's Tabletop"
 }
