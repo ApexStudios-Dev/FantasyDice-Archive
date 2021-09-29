@@ -32,8 +32,8 @@ import static net.minecraftforge.client.model.generators.ModelProvider.ITEM_FOLD
 
 public enum Dice
 {
-	WOOD(FStrings.DICE_WOOD, TextFormatting.WHITE, false, ItemTags.WOODEN_BUTTONS),
-	STONE(FStrings.DICE_STONE, TextFormatting.WHITE, false, FTags.Items.STONE_BUTTONS),
+	WOOD(FStrings.DICE_WOOD, Color.fromRgb(0x502200), TextFormatting.WHITE, false, ItemTags.WOODEN_BUTTONS),
+	STONE(FStrings.DICE_STONE, TextFormatting.GRAY, false, FTags.Items.STONE_BUTTONS),
 	PAPER(FStrings.DICE_PAPER, TextFormatting.WHITE, true, FTags.Items.PAPER),
 	BONE(FStrings.DICE_BONE, TextFormatting.WHITE, false, Tags.Items.BONES),
 	IRON(FStrings.DICE_IRON, TextFormatting.GRAY, false, null),
@@ -42,7 +42,7 @@ public enum Dice
 	EMERALD(FStrings.DICE_EMERALD, TextFormatting.GREEN, false, null),
 	CREATIVE(FStrings.DICE_CREATIVE, TextFormatting.LIGHT_PURPLE, false, null),
 
-	FANTASY(FStrings.DICE_FANTASY, TextFormatting.LIGHT_PURPLE, false, null)
+	FANTASY(FStrings.DICE_FANTASY, Color.fromRgb(0xF3C8D9), TextFormatting.WHITE, false, null)
 	;
 
 	public static final Dice[] TYPES = values();

@@ -72,7 +72,7 @@ public class DiceItem extends Item
 		if(stack.getItem().is(FTags.Items.DICE))
 		{
 			Dice dice = Dice.byItem(stack);
-			return dice == Dice.FANTASY || dice == Dice.CREATIVE;
+			return dice == Dice.CREATIVE;
 		}
 
 		return super.isFoil(stack);
