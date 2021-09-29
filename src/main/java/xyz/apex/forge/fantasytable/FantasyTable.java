@@ -99,7 +99,7 @@ public final class FantasyTable
 		FItems.register();
 		Dice.register();
 		Coins.register();
-		DVillagers.register();
+		FVillagers.register();
 
 		MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG.spec);

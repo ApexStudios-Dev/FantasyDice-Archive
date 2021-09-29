@@ -9,7 +9,7 @@ import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
 import xyz.apex.forge.fantasytable.util.registrate.entry.VillagerProfessionEntry;
 
-public final class DVillagers
+public final class FVillagers
 {
 	// @formatter:off
 	public static final RegistryEntry<PointOfInterestType> GAMBLER_POI = FantasyTable
