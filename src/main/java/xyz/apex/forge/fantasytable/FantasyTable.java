@@ -26,9 +26,15 @@ import xyz.apex.forge.fantasytable.init.*;
 import xyz.apex.forge.fantasytable.item.FantasyTableItemGroup;
 import xyz.apex.forge.fantasytable.util.registrate.CustomRegistrate;
 
+import java.util.UUID;
+
 @Mod(FantasyTable.ID)
 public final class FantasyTable
 {
+	public static final UUID APEX_ID = UUID.fromString("43fd393b-879d-45ec-b2d5-ce8c4688ab66");
+	public static final UUID FANTASY_ID = UUID.fromString("598535bd-f330-4123-b4d0-c6e618390477");
+	public static final UUID TOBI_ID = UUID.fromString("ae3f6ca6-b28c-479b-9c97-4be7df600041");
+
 	public static final String ID = "fantasytable";
 
 	public static final String DICE_ROLL_KEY = ID + ".dice.roll";

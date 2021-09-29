@@ -14,7 +14,6 @@ import net.minecraft.item.Rarity;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.*;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.common.Tags;
@@ -23,6 +22,7 @@ import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.item.DiceItem;
 import xyz.apex.forge.fantasytable.item.DyeableDiceItem;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
+import xyz.apex.forge.fantasytable.util.RainbowHelper;
 import xyz.apex.forge.fantasytable.util.registrate.CustomRegistrate;
 
 import javax.annotation.Nullable;
@@ -40,7 +40,9 @@ public enum Dice
 	GOLD(FStrings.DICE_GOLD, TextFormatting.YELLOW, false, null),
 	DIAMOND(FStrings.DICE_DIAMOND, TextFormatting.AQUA, false, null),
 	EMERALD(FStrings.DICE_EMERALD, TextFormatting.GREEN, false, null),
-	CREATIVE(FStrings.DICE_CREATIVE, TextFormatting.LIGHT_PURPLE, false, null)
+	CREATIVE(FStrings.DICE_CREATIVE, TextFormatting.LIGHT_PURPLE, false, null),
+
+	FANTASY(FStrings.DICE_FANTASY, TextFormatting.LIGHT_PURPLE, false, null)
 	;
 
 	public static final Dice[] TYPES = values();
@@ -180,8 +182,8 @@ public enum Dice
 				);
 		// formatter:on
 
-		if(this == CREATIVE)
-			return rainbowifyComponent(component);
+		if(this == CREATIVE || this == FANTASY)
+			return RainbowHelper.rainbowifyComponent(component, this == FANTASY);
 		return component;
 	}
 
@@ -228,7 +230,8 @@ public enum Dice
 		//      method `IDyeableArmorItem` has, to obtain the color from the ItemStack
 		return (dyeable ? dyeable(dice, itemName) : generic(dice, itemName))
 
-					.lang(RegistrateLangProvider.toEnglishName(dice.typeName) + " d" + sides)
+					// .lang(RegistrateLangProvider.toEnglishName(dice.typeName) + " d" + sides)
+					.lang(dice.typeName.equals(FStrings.DICE_FANTASY) ? "Fantasy's Lucky Dice (d" + sides + ")" : RegistrateLangProvider.toEnglishName(dice.typeName) + " d" + sides)
 					/*
 					.lang(item -> {
 						// splits by all underscores `_` and capitalizes first letter of each token
@@ -254,33 +257,6 @@ public enum Dice
 					// into `<modid>:textures/item/dice/<dice_type>/<item_name>.png`
 					.model((ctx, provider) -> provider.generated(ctx, new ResourceLocation(FantasyTable.ID, ITEM_FOLDER + "/dice/" + dice.typeName + '/' + itemName)));
 		// formatter:on
-	}
-
-	// TODO: Maybe move this to some utility class
-	private static final TextFormatting[] RAINBOW_COLORS = new TextFormatting[] {
-			TextFormatting.RED,
-			TextFormatting.YELLOW,
-			TextFormatting.GREEN,
-			TextFormatting.AQUA,
-			TextFormatting.LIGHT_PURPLE
-	};
-
-	public static IFormattableTextComponent rainbowifyComponent(IFormattableTextComponent component)
-	{
-		String msg = component.getString();
-		IFormattableTextComponent result = new StringTextComponent("");
-		int offset = MathHelper.floor(Math.random() * msg.length());
-
-		for(int i = 0; i < msg.length(); i++)
-		{
-			final int color = i + offset; // must be effectively final to be used in lambda
-			result.append(new StringTextComponent(String.valueOf(msg.charAt(i))).withStyle(style -> {
-				TextFormatting rainbow_color = RAINBOW_COLORS[color % RAINBOW_COLORS.length];
-				return style.withColor(rainbow_color);
-			}));
-		}
-
-		return result;
 	}
 
 	@Deprecated // internal use only

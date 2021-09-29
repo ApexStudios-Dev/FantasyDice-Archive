@@ -11,6 +11,7 @@
     "#fantasytable:dice/gold",
     "#fantasytable:dice/diamond",
     "#fantasytable:dice/emerald",
-    "#fantasytable:dice/creative"
+    "#fantasytable:dice/creative",
+    "#fantasytable:dice/fantasy"
   ]
 }

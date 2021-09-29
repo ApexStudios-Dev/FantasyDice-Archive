@@ -14,6 +14,7 @@ import xyz.apex.forge.fantasytable.init.FTags;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 public final class DiceHelper
@@ -62,6 +63,7 @@ public final class DiceHelper
 			return true;
 
 		int[] rolls = IntStream.range(0, die.getCount()).map(i -> roll(world.random, min, sides)).toArray();
+		rolls = applySpecialDice(thrower, die, min, sides, rolls);
 		sendMessageToPlayers(thrower, createTextComponent(thrower, die, rolls, min, sides));
 		return true;
 	}
@@ -101,6 +103,24 @@ public final class DiceHelper
 		}
 		else
 			return Dice.PAPER.createItemTooltipComponent(die, min, sides);
+	}
+
+	public static int[] applySpecialDice(PlayerEntity thrower, ItemStack die, int min, int sides, int[] rolls)
+	{
+		UUID throwerID = thrower.getUUID();
+
+		if(die.getItem().is(FTags.Items.DICE))
+		{
+			Dice dice = Dice.byItem(die);
+
+			if(dice == Dice.FANTASY)
+			{
+				int fill = throwerID.equals(FantasyTable.FANTASY_ID) ? sides : min + 1;
+				Arrays.fill(rolls, fill);
+			}
+		}
+
+		return rolls;
 	}
 
 	public static void sendMessageToPlayers(PlayerEntity thrower, ITextComponent component)

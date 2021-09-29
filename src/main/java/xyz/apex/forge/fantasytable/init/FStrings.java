@@ -24,6 +24,8 @@ public final class FStrings
 	public static final String DICE_EMERALD = "emerald";
 	public static final String DICE_CREATIVE = "creative";
 
+	public static final String DICE_FANTASY = "fantasy";
+
 	public static final String COIN_IRON = "iron";
 	public static final String COIN_GOLD = "gold";
 
