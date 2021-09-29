@@ -24,7 +24,7 @@ public final class RollCommand
 								        .executes(ctx -> {
 											ServerPlayerEntity thrower = ctx.getSource().getPlayerOrException();
 											int max = IntegerArgumentType.getInteger(ctx, FStrings.CMD_ARG_MAX);
-											int roll = DiceHelper.roll(thrower.getRandom(), 1, max);
+											int roll = DiceHelper.roll(thrower.getRandom(), 1, max, false);
 
 											TextComponent component = new TranslationTextComponent(
 													FantasyTable.DICE_ROLL_KEY,

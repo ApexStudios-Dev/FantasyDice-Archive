@@ -2,14 +2,17 @@ package xyz.apex.forge.fantasytable.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.init.Coins;
 import xyz.apex.forge.fantasytable.init.Dice;
+import xyz.apex.forge.fantasytable.init.FStrings;
 import xyz.apex.forge.fantasytable.init.FTags;
 
 import java.util.Arrays;
@@ -19,7 +22,31 @@ import java.util.stream.IntStream;
 
 public final class DiceHelper
 {
-	public static int roll(Random rng, int min, int max)
+	public static ItemStack setLoadedState(ItemStack die, boolean loaded)
+	{
+		// since coins under hood are simple just 2 sided dice
+		// we have this so that you cant load a coin
+		if(die.getItem().is(FTags.Items.DICE))
+		{
+			CompoundNBT tag = die.getOrCreateTag();
+			tag.putBoolean(FStrings.NBT_DIE_LOADED, loaded);
+		}
+
+		return die;
+	}
+
+	public static boolean isDieLoaded(ItemStack die)
+	{
+		// since coins under hood are simple just 2 sided dice
+		// we have this so that you cant load a coin
+		if(!die.getItem().is(FTags.Items.DICE))
+			return false;
+
+		CompoundNBT tag = die.getOrCreateTag();
+		return tag.contains(FStrings.NBT_DIE_LOADED, Constants.NBT.TAG_ANY_NUMERIC) && tag.getBoolean(FStrings.NBT_DIE_LOADED);
+	}
+
+	public static int roll(Random rng, int min, int max, boolean loaded)
 	{
 		if(max < min)
 		{
@@ -30,6 +57,9 @@ public final class DiceHelper
 
 		min = Math.max(min, 0);
 		max = Math.max(max, 1);
+
+		if(loaded)
+			min = Math.max(1, max / 2);
 
 		int roll = rng.nextInt(max) + 1;
 
@@ -62,7 +92,8 @@ public final class DiceHelper
 		if(world.isClientSide)
 			return true;
 
-		int[] rolls = IntStream.range(0, die.getCount()).map(i -> roll(world.random, min, sides)).toArray();
+		boolean loaded = isDieLoaded(die);
+		int[] rolls = IntStream.range(0, die.getCount()).map(i -> roll(world.random, min, sides, loaded)).toArray();
 		rolls = applySpecialDice(thrower, die, min, sides, rolls);
 		sendMessageToPlayers(thrower, createTextComponent(thrower, die, rolls, min, sides));
 		return true;

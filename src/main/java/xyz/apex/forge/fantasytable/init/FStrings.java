@@ -28,6 +28,7 @@ public final class FStrings
 
 	public static final String COIN_IRON = "iron";
 	public static final String COIN_GOLD = "gold";
+	public static final String COIN_EMERALD = "emerald";
 
 	public static final String TAG_PAPER = "paper";
 	public static final String TAG_DICE = "dice";
@@ -52,4 +53,5 @@ public final class FStrings
 
 	public static final String NBT_POUCH_INVENTORY = "PouchInventory";
 	public static final String NBT_COLOR_DEFAULT = "color_default";
+	public static final String NBT_DIE_LOADED = "DieLoaded";
 }

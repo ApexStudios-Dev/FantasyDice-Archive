@@ -169,7 +169,7 @@ public class VillagerProfessionBuilder<T extends VillagerProfession, P> extends 
 
 	public enum TradeLevel
 	{
-		ONE, TWO, THREE, FOUR, FIVE, SIX;
+		ONE, TWO, THREE, FOUR, FIVE;
 
 		public static final TradeLevel[] LEVELS = values();
 
@@ -313,23 +313,6 @@ public class VillagerProfessionBuilder<T extends VillagerProfession, P> extends 
 		public VillagerTradesRegistrar<T> five(Collection<VillagerTrades.ITrade> trades)
 		{
 			return register(TradeLevel.FIVE, trades);
-		}
-		// endregion
-
-		// region: Level Six
-		public VillagerTradesRegistrar<T> six(VillagerTrades.ITrade trade)
-		{
-			return register(TradeLevel.SIX, trade);
-		}
-
-		public VillagerTradesRegistrar<T> six(VillagerTrades.ITrade... trades)
-		{
-			return register(TradeLevel.SIX, trades);
-		}
-
-		public VillagerTradesRegistrar<T> six(Collection<VillagerTrades.ITrade> trades)
-		{
-			return register(TradeLevel.SIX, trades);
 		}
 		// endregion
 		// endregion

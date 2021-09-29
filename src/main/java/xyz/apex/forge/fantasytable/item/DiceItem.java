@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
 
@@ -26,6 +28,16 @@ public class DiceItem extends Item
 		ItemStack die = player.getItemInHand(hand);
 		int sides = DiceHelper.getSides(die);
 
+		// Debug code to cycle loaded state with sneak+right click
+		/*if(die.getItem().is(FTags.Items.DICE) && player.isShiftKeyDown())
+		{
+			boolean wasLoaded = DiceHelper.isDieLoaded(die);
+			boolean nowLoaded = !wasLoaded;
+			DiceHelper.setLoadedState(die, nowLoaded);
+			player.displayClientMessage(new StringTextComponent("Loaded: " + (nowLoaded ? "Yes" : "No")), true);
+			return ActionResult.sidedSuccess(die, world.isClientSide);
+		}*/
+
 		if(DiceHelper.throwDice(world, player, hand, die, 0, sides))
 			return ActionResult.sidedSuccess(die, world.isClientSide);
 		if(!world.isClientSide)
@@ -44,6 +56,9 @@ public class DiceItem extends Item
 		// world is only none null after this process
 		if(world != null)
 		{
+			if(DiceHelper.isDieLoaded(stack))
+				tooltip.add(new StringTextComponent("Loaded").withStyle(style -> style.withItalic(true).withColor(TextFormatting.GRAY).withBold(true)));
+
 			int sides = DiceHelper.getSides(stack);
 			tooltip.add(DiceHelper.createItemTooltipComponent(stack, 1, sides));
 		}

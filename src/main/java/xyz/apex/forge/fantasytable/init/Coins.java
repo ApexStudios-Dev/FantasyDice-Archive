@@ -29,6 +29,7 @@ public enum Coins
 {
 	IRON(FStrings.COIN_IRON, TextFormatting.WHITE, Tags.Items.NUGGETS_IRON),
 	GOLD(FStrings.COIN_GOLD, TextFormatting.YELLOW, Tags.Items.NUGGETS_GOLD),
+	EMERALD(FStrings.COIN_EMERALD, TextFormatting.GREEN, Tags.Items.GEMS_EMERALD)
 	;
 
 	public static final Coins[] TYPES = values();
