@@ -1,5 +1,7 @@
 package xyz.apex.forge.fantasytable;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.mojang.brigadier.CommandDispatcher;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.NonNullLazyValue;
@@ -9,11 +11,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
+import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.RandomChance;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -26,7 +31,7 @@ import xyz.apex.forge.fantasytable.init.*;
 import xyz.apex.forge.fantasytable.item.FantasyTableItemGroup;
 import xyz.apex.forge.fantasytable.util.registrate.CustomRegistrate;
 
-import java.util.UUID;
+import java.util.*;
 
 @Mod(FantasyTable.ID)
 public final class FantasyTable
@@ -57,13 +62,31 @@ public final class FantasyTable
 
 	public static final ResourceLocation COIN_PREDICATE_NAME = new ResourceLocation(ID, "coin_stack");
 	private static final NonNullLazyValue<CustomRegistrate> REGISTRATE_LAZY = CustomRegistrate.create(ID);
+	private static final Map<ResourceLocation, Set<ResourceLocation>> INJECT_LOOTABLES = Maps.newHashMap();
+	private static final ResourceLocation END_CITY_INJECT_TABLE = new ResourceLocation(FantasyTable.ID, "inject/end_city_treasure");
 
 	public FantasyTable()
 	{
 		LOGGER.info("Initializing mod...");
 
+		// @formatter:off
 		registrate()
 				.itemGroup(() -> ITEM_GROUP)
+				.addDataGenerator(ProviderType.LOOT, provider -> {
+					provider.addLootAction(LootParameterSets.CHEST, consumer -> {
+						consumer.accept(
+								END_CITY_INJECT_TABLE,
+								LootTable.lootTable()
+								         .withPool(
+										         LootPool
+												         .lootPool()
+												         .setRolls(ConstantRange.exactly(1))
+												         .when(RandomChance.randomChance(.25F))
+												         .add(ItemLootEntry.lootTableItem(Coins.EMERALD.item::get))
+								         )
+						);
+					});
+				})
 				.addDataGenerator(ProviderType.LANG, provider -> {
 					provider.add(ITEM_GROUP, "Fantasy's Tabletop");
 					provider.add(DICE_ROLL_KEY, "%s rolls %s");
@@ -92,6 +115,7 @@ public final class FantasyTable
 						diceBuilder.addTag(dice.tag);
 					}
 				});
+		// @formatter:on
 
 		FTags.register();
 		FContainers.register();
@@ -101,8 +125,23 @@ public final class FantasyTable
 		Coins.register();
 		FVillagers.register();
 
+		FantasyTable.injectLootTable(LootTables.END_CITY_TREASURE, END_CITY_INJECT_TABLE);
+
 		MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
+		MinecraftForge.EVENT_BUS.addListener(this::onLootTableLoad);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG.spec);
+	}
+
+	private void onLootTableLoad(LootTableLoadEvent event)
+	{
+		Set<ResourceLocation> tables = INJECT_LOOTABLES.get(event.getName());
+
+		if(tables != null && !tables.isEmpty())
+		{
+			LootTable table = event.getTable();
+			tables.forEach(target -> table.addPool(LootPool.lootPool().add(TableLootEntry.lootTableReference(target)).name(table.toString()).build()));
+			event.setTable(table);
+		}
 	}
 
 	private void onRegisterCommands(RegisterCommandsEvent event)
@@ -131,5 +170,10 @@ public final class FantasyTable
 	public static CustomRegistrate registrate()
 	{
 		return REGISTRATE_LAZY.get();
+	}
+
+	public static void injectLootTable(ResourceLocation source, ResourceLocation... targets)
+	{
+		Collections.addAll(INJECT_LOOTABLES.computeIfAbsent(source, $ -> Sets.newHashSet()), targets);
 	}
 }
