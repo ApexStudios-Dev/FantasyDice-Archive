@@ -10,6 +10,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import xyz.apex.forge.fantasytable.init.Dice;
+import xyz.apex.forge.fantasytable.init.FTags;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
 
 import javax.annotation.Nullable;
@@ -62,5 +64,17 @@ public class DiceItem extends Item
 			int sides = DiceHelper.getSides(stack);
 			tooltip.add(DiceHelper.createItemTooltipComponent(stack, 1, sides));
 		}
+	}
+
+	@Override
+	public boolean isFoil(ItemStack stack)
+	{
+		if(stack.getItem().is(FTags.Items.DICE))
+		{
+			Dice dice = Dice.byItem(stack);
+			return dice == Dice.FANTASY || dice == Dice.CREATIVE;
+		}
+
+		return super.isFoil(stack);
 	}
 }
