@@ -1,0 +1,23 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "fantasytable:coin_stack": 0.0
+      },
+      "model": "fantasytable:item/coin_emerald_single"
+    },
+    {
+      "predicate": {
+        "fantasytable:coin_stack": 0.5
+      },
+      "model": "fantasytable:item/coin_emerald_double"
+    },
+    {
+      "predicate": {
+        "fantasytable:coin_stack": 1.0
+      },
+      "model": "fantasytable:item/coin_emerald_triple"
+    }
+  ]
+}

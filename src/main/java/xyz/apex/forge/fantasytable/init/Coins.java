@@ -1,15 +1,11 @@
 package xyz.apex.forge.fantasytable.init;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
-import net.minecraft.tags.ITag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -18,7 +14,6 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.DistExecutor;
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.item.DiceItem;
@@ -27,24 +22,22 @@ import java.util.Arrays;
 
 public enum Coins
 {
-	IRON(FStrings.COIN_IRON, TextFormatting.WHITE, Tags.Items.NUGGETS_IRON),
-	GOLD(FStrings.COIN_GOLD, TextFormatting.YELLOW, Tags.Items.NUGGETS_GOLD),
-	EMERALD(FStrings.COIN_EMERALD, TextFormatting.GREEN, Tags.Items.GEMS_EMERALD)
+	IRON(FStrings.COIN_IRON, TextFormatting.WHITE),
+	GOLD(FStrings.COIN_GOLD, TextFormatting.YELLOW),
+	EMERALD(FStrings.COIN_EMERALD, TextFormatting.GREEN)
 	;
 
 	public static final Coins[] TYPES = values();
 
-	public final ITag<Item> craftingItem;
 	public final ItemEntry<DiceItem> item;
 	public final String name;
 	public final TextFormatting color;
 	public final Rarity rarity;
 
-	Coins(String name, TextFormatting color, ITag<Item> craftingItem)
+	Coins(String name, TextFormatting color)
 	{
 		this.name = name;
 		this.color = color;
-		this.craftingItem = craftingItem;
 		rarity = Rarity.create(FantasyTable.ID + ':' + name, color);
 
 		// formatter:off
@@ -88,16 +81,6 @@ public enum Coins
 											        .texture("layer0", new ResourceLocation(FantasyTable.ID, "item/coin/" + name + "_3"))
 									)
 								.end()
-				)
-				.recipe((ctx, provider) ->
-						ShapelessRecipeBuilder.shapeless(ctx::get, 1)
-						                      .requires(craftingItem)
-								              .requires(craftingItem)
-								              .requires(craftingItem)
-								              .requires(craftingItem)
-								              .group("coins/" + name)
-								              .unlockedBy("has_nugget", RegistrateRecipeProvider.hasItem(craftingItem))
-								              .save(provider, new ResourceLocation(FantasyTable.ID, "coins/" + name))
 				)
 				.onRegister(item -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> postRegisterClient(item)))
 				.register();
