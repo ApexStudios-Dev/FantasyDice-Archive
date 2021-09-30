@@ -17,21 +17,27 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.gen.feature.template.ProcessorLists;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.apex.forge.fantasytable.command.RollCommand;
 import xyz.apex.forge.fantasytable.config.ServerConfig;
 import xyz.apex.forge.fantasytable.init.*;
 import xyz.apex.forge.fantasytable.item.FantasyTableItemGroup;
+import xyz.apex.forge.fantasytable.util.JigsawHelper;
 import xyz.apex.forge.fantasytable.util.registrate.CustomRegistrate;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 @Mod(FantasyTable.ID)
 public final class FantasyTable
@@ -129,7 +135,54 @@ public final class FantasyTable
 
 		MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
 		MinecraftForge.EVENT_BUS.addListener(this::onLootTableLoad);
+		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStart);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG.spec);
+	}
+
+	private void onServerAboutToStart(FMLServerAboutToStartEvent event)
+	{
+		// @formatter:off
+		// Plains
+		JigsawHelper.registerJigsaw(
+				event.getServer(),
+				new ResourceLocation("minecraft", "village/plains/houses"),
+				new ResourceLocation(FantasyTable.ID, "village/plains/houses/plains_gambler"),
+				ProcessorLists.MOSSIFY_10_PERCENT,
+				10
+		);
+
+		// Snowy
+		/*JigsawHelper.registerJigsaw(
+				event.getServer(),
+				new ResourceLocation("minecraft", "village/snowy/houses"),
+				new ResourceLocation(FantasyTable.ID, "village/snowy/houses/snowy_gambler"),
+				10
+		);*/
+
+		// Savanna
+		/*JigsawHelper.registerJigsaw(
+				event.getServer(),
+				new ResourceLocation("minecraft", "village/savanna/houses"),
+				new ResourceLocation(FantasyTable.ID, "village/savanna/houses/savanna_gambler"),
+				10
+		);*/
+
+		// Desert
+		/*JigsawHelper.registerJigsaw(
+				event.getServer(),
+				new ResourceLocation("minecraft", "village/desert/houses"),
+				new ResourceLocation(FantasyTable.ID, "village/desert/houses/desert_gambler"),
+				10
+		);*/
+
+		// Taiga
+		/*JigsawHelper.registerJigsaw(
+				event.getServer(),
+				new ResourceLocation("minecraft", "village/taiga/houses"),
+				new ResourceLocation(FantasyTable.ID, "village/taiga/houses/taiga_gambler"),
+				10
+		);*/
+		// @formatter:on
 	}
 
 	private void onLootTableLoad(LootTableLoadEvent event)
