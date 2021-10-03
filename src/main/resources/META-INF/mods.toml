@@ -14,14 +14,14 @@ credits="ApexSPG (ApexModder) - Programming, Testing\nFantasyGaming - Mod Reques
 authors="ApexModder, FantasyGaming"
 description="Tabletop mod which adds various Tabletop esque elements into the game.\nThis mod was requested by FantasyGaming.\n\nThis mod makes use of Registrate and comes with a version repackaged under `xyz.apex.forge.fantasytable.repack.repack.com.tterrag.registrate`."
 
-[[dependencies.dicemod]]
+[[dependencies.fantasytable]]
     modId="forge"
     mandatory=true
     versionRange="[36,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.dicemod]]
+[[dependencies.fantasytable]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.5,1.17]"
