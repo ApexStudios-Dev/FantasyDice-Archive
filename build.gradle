@@ -69,6 +69,24 @@ minecraft {
 			}
 		}
 
+		clientTobi {
+			parent runs.client
+
+			// args '-mixin.config=' + mod_id + '.mixins.json'
+
+			args '--uuid', 'ae3f6ca6-b28c-479b-9c97-4be7df600041'
+			args '--username', 'TroublesomeTobi'
+		}
+
+		clientFantasy {
+			parent runs.client
+
+			// args '-mixin.config=' + mod_id + '.mixins.json'
+
+			args '--uuid', '598535bd-f330-4123-b4d0-c6e618390477'
+			args '--username', 'FantasyGaming'
+		}
+
 		server {
 			workingDirectory project.file('run/server')
 
