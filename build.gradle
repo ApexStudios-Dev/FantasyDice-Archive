@@ -139,7 +139,7 @@ dependencies {
 
 	if(project.hasProperty('apex_local_deps') && project.getProperty('apex_local_deps')) {
 		// runtimeOnly fg.deobf("${apex_package}:devworld:${mc_version}-${devworld_version}")
-		// runtimeOnly fg.deobf("${apex_package}:smoothboot:${mc_version}-${smoothboot_version}")
+		runtimeOnly fg.deobf("${apex_package}:smoothboot:${mc_version}-${smoothboot_version}")
 	}
 }
 
