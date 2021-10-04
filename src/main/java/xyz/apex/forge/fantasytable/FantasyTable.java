@@ -24,13 +24,21 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import xyz.apex.forge.fantasytable.command.GameCommand;
 import xyz.apex.forge.fantasytable.command.RollCommand;
 import xyz.apex.forge.fantasytable.config.ServerConfig;
 import xyz.apex.forge.fantasytable.init.*;
 import xyz.apex.forge.fantasytable.item.FantasyTableItemGroup;
+import xyz.apex.forge.fantasytable.packets.CloseScreenPacket;
+import xyz.apex.forge.fantasytable.packets.TicTacToeGameStatePacket;
+import xyz.apex.forge.fantasytable.packets.TicTacToeOpenScreenPacket;
 import xyz.apex.forge.fantasytable.util.JigsawHelper;
 import xyz.apex.forge.fantasytable.util.registrate.CustomRegistrate;
 
@@ -65,6 +73,9 @@ public final class FantasyTable
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final ServerConfig SERVER_CONFIG = new ServerConfig();
 	public static final ItemGroup ITEM_GROUP = new FantasyTableItemGroup();
+
+	public static final String NETWORK_VERSION = "1";
+	public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(new ResourceLocation(ID, "main"), () -> NETWORK_VERSION, NETWORK_VERSION::equals, NETWORK_VERSION::equals);
 
 	public static final ResourceLocation COIN_PREDICATE_NAME = new ResourceLocation(ID, "coin_stack");
 	private static final NonNullLazyValue<CustomRegistrate> REGISTRATE_LAZY = CustomRegistrate.create(ID);
@@ -133,10 +144,16 @@ public final class FantasyTable
 
 		FantasyTable.injectLootTable(LootTables.END_CITY_TREASURE, END_CITY_INJECT_TABLE);
 
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onCommonSetup);
 		MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
 		MinecraftForge.EVENT_BUS.addListener(this::onLootTableLoad);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStart);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG.spec);
+	}
+
+	private void onCommonSetup(FMLCommonSetupEvent event)
+	{
+		event.enqueueWork(this::registerPackets);
 	}
 
 	private void onServerAboutToStart(FMLServerAboutToStartEvent event)
@@ -202,6 +219,42 @@ public final class FantasyTable
 		CommandDispatcher<CommandSource> dispatcher = event.getDispatcher();
 
 		RollCommand.register(dispatcher);
+		GameCommand.register(dispatcher);
+	}
+
+	private void registerPackets()
+	{
+		/*NETWORK.registerMessage(
+				0,
+				BasePacket.class,
+				BasePacket::encode,
+				BasePacket::new,
+				BasePacket::consume
+		);*/
+
+		NETWORK.registerMessage(
+				0,
+				TicTacToeOpenScreenPacket.class,
+				TicTacToeOpenScreenPacket::encode,
+				TicTacToeOpenScreenPacket::new,
+				TicTacToeOpenScreenPacket::consume
+		);
+
+		NETWORK.registerMessage(
+				1,
+				CloseScreenPacket.class,
+				CloseScreenPacket::encode,
+				CloseScreenPacket::new,
+				CloseScreenPacket::consume
+		);
+
+		NETWORK.registerMessage(
+				2,
+				TicTacToeGameStatePacket.class,
+				TicTacToeGameStatePacket::encode,
+				TicTacToeGameStatePacket::new,
+				TicTacToeGameStatePacket::consume
+		);
 	}
 
 	public static void sendMessageToPlayers(PlayerEntity thrower, ITextComponent component)
@@ -210,14 +263,19 @@ public final class FantasyTable
 
 		if(server == null) // singleplayer?
 		{
-			thrower.sendMessage(component, thrower.getUUID());
+			thrower.sendMessage(component, getPlayerUUID(thrower));
 			return;
 		}
 
 		for(PlayerEntity player : server.getPlayerList().getPlayers())
 		{
-			player.sendMessage(component, thrower.getUUID());
+			player.sendMessage(component, getPlayerUUID(thrower));
 		}
+	}
+
+	public static UUID getPlayerUUID(PlayerEntity player)
+	{
+		return player.getGameProfile().getId();
 	}
 
 	public static CustomRegistrate registrate()

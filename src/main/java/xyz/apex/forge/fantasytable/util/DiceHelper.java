@@ -138,7 +138,7 @@ public final class DiceHelper
 
 	public static int[] applySpecialDice(PlayerEntity thrower, ItemStack die, int min, int sides, int[] rolls)
 	{
-		UUID throwerID = thrower.getUUID();
+		UUID throwerID = FantasyTable.getPlayerUUID(thrower);
 
 		if(die.getItem().is(FTags.Items.DICE))
 		{
@@ -160,7 +160,7 @@ public final class DiceHelper
 
 		if(server == null) // singleplayer?
 		{
-			thrower.sendMessage(component, thrower.getUUID());
+			thrower.sendMessage(component, FantasyTable.getPlayerUUID(thrower));
 			return;
 		}
 
@@ -176,7 +176,7 @@ public final class DiceHelper
 					continue;
 			}
 
-			player.sendMessage(component, thrower.getUUID());
+			player.sendMessage(component, FantasyTable.getPlayerUUID(thrower));
 		}
 	}
 }

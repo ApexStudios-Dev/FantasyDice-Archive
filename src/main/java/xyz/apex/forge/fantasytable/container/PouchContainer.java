@@ -6,6 +6,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.item.PouchItem;
 
 import javax.annotation.Nullable;
@@ -44,7 +45,7 @@ public class PouchContainer extends Container
 	@Override
 	public boolean stillValid(PlayerEntity player)
 	{
-		return player.getUUID().equals(this.player.getUUID());
+		return FantasyTable.getPlayerUUID(player).equals(FantasyTable.getPlayerUUID(this.player));
 	}
 
 	@Override
