@@ -30,6 +30,7 @@ import xyz.apex.repack.com.tterrag.registrate.providers.ProviderType;
 import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
 import xyz.apex.repack.com.tterrag.registrate.util.entry.RegistryEntry;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem>
@@ -42,6 +43,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final ITag.INamedTag<Item> tag;
 	private final NonnullUnaryOperator<Style> nameStyle;
 	private final RollCallback rollCallback;
+	private final boolean usesFoil;
 
 	private DiceType(Builder<OWNER, DIE> builder)
 	{
@@ -50,6 +52,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		tag = builder.tag;
 		nameStyle = builder.nameStyle;
 		rollCallback = builder.rollCallback;
+		usesFoil = builder.usesFoil;
 
 		for(Int2ObjectMap.Entry<String> entry : builder.dieNames.int2ObjectEntrySet())
 		{
@@ -61,14 +64,17 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 			diceItems.put(sides, itemEntry);
 
-			owner.addDataGenerator(ProviderType.RECIPE, provider -> {
-				DataGenContext<Item, DIE> ctx = new DataGenContext<>(itemEntry, dieName, itemEntry.getId());
-				ShapedRecipeBuilder recipe = ShapedRecipeBuilder.shaped(itemEntry, 8).group("dice/" + name);
-				recipe = builder.recipeModifier.apply(sides, ctx, recipe);
+			if(builder.recipeModifier != null)
+			{
+				owner.addDataGenerator(ProviderType.RECIPE, provider -> {
+					DataGenContext<Item, DIE> ctx = new DataGenContext<>(itemEntry, dieName, itemEntry.getId());
+					ShapedRecipeBuilder recipe = ShapedRecipeBuilder.shaped(itemEntry, 8).group("dice/" + name);
+					recipe = builder.recipeModifier.apply(sides, ctx, recipe);
 
-				if(recipe != null)
-					recipe.save(provider);
-			});
+					if(recipe != null)
+						recipe.save(provider);
+				});
+			}
 		}
 
 		diceTypes.add(this);
@@ -126,6 +132,11 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return name;
 	}
 
+	public boolean usesFoil()
+	{
+		return usesFoil;
+	}
+
 	public int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int[] rolls)
 	{
 		return rollCallback.onRoll(player, hand, stack, min, rolls);
@@ -155,8 +166,9 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
 
 		private NonnullUnaryOperator<Style> nameStyle = NonnullUnaryOperator.identity();
-		private TriFunction<@NonnullType Integer, @NonnullType DataGenContext<Item, DIE>, @NonnullType ShapedRecipeBuilder, @NullableType ShapedRecipeBuilder> recipeModifier = (sides, ctx, recipe) -> recipe;
+		@Nullable private TriFunction<@NonnullType Integer, @NonnullType DataGenContext<Item, DIE>, @NonnullType ShapedRecipeBuilder, @NullableType ShapedRecipeBuilder> recipeModifier = null;
 		private RollCallback rollCallback = (player, hand, stack, min, rolls) -> rolls;
+		private boolean usesFoil = false;
 
 		private Builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
 		{
@@ -206,6 +218,12 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		public Builder<OWNER, DIE> withSimpleDie(int sides)
 		{
 			return withDie(sides).build();
+		}
+
+		public Builder<OWNER, DIE> usesFoil()
+		{
+			usesFoil = true;
+			return this;
 		}
 
 		public DiceType<OWNER, DIE> build()

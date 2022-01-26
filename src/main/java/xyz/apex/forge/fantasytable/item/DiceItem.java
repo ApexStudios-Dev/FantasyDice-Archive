@@ -67,6 +67,12 @@ public class DiceItem extends Item
 		return buildNameComponent();
 	}
 
+	@Override
+	public boolean isFoil(ItemStack stack)
+	{
+		return diceType != null && diceType.usesFoil() || super.isFoil(stack);
+	}
+
 	private IFormattableTextComponent buildNameComponent()
 	{
 		IFormattableTextComponent nameComponent = new TranslationTextComponent(getDescriptionId());
