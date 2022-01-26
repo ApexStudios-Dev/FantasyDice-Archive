@@ -23,7 +23,6 @@ import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 import xyz.apex.java.utility.function.TriFunction;
 import xyz.apex.java.utility.nullness.NonnullBiFunction;
 import xyz.apex.java.utility.nullness.NonnullType;
-import xyz.apex.java.utility.nullness.NonnullUnaryOperator;
 import xyz.apex.java.utility.nullness.NullableType;
 import xyz.apex.repack.com.tterrag.registrate.providers.DataGenContext;
 import xyz.apex.repack.com.tterrag.registrate.providers.ProviderType;
@@ -41,7 +40,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final OWNER owner;
 	private final Int2ObjectMap<ItemEntry<DIE>> diceItems = new Int2ObjectOpenHashMap<>();
 	private final ITag.INamedTag<Item> tag;
-	private final NonnullUnaryOperator<Style> nameStyle;
+	private final NonnullBiFunction<ItemStack, Style, Style> nameStyle;
 	private final RollCallback rollCallback;
 	private final boolean usesFoil;
 
@@ -92,14 +91,14 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return owner;
 	}
 
-	public Style withNameStyle(Style style)
+	public Style withNameStyle(ItemStack stack, Style style)
 	{
-		return nameStyle.apply(style);
+		return nameStyle.apply(stack, style);
 	}
 
-	public Style withRollStyle(Style style)
+	public Style withRollStyle(ItemStack stack, Style style)
 	{
-		return withNameStyle(style).withItalic(true);
+		return withNameStyle(stack, style).withItalic(true);
 	}
 
 	public ITag.INamedTag<Item> getTag()
@@ -165,7 +164,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		private final Int2ObjectMap<String> dieNames = new Int2ObjectOpenHashMap<>();
 		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
 
-		private NonnullUnaryOperator<Style> nameStyle = NonnullUnaryOperator.identity();
+		private NonnullBiFunction<ItemStack, Style, Style> nameStyle = (stack, style) -> style;
 		@Nullable private TriFunction<@NonnullType Integer, @NonnullType DataGenContext<Item, DIE>, @NonnullType ShapedRecipeBuilder, @NullableType ShapedRecipeBuilder> recipeModifier = null;
 		private RollCallback rollCallback = (player, hand, stack, min, rolls) -> rolls;
 		private boolean usesFoil = false;
@@ -180,9 +179,9 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
 		}
 
-		public Builder<OWNER, DIE> withNameStyle(NonnullUnaryOperator<Style> nameStyle)
+		public Builder<OWNER, DIE> withNameStyle(NonnullBiFunction<ItemStack, Style, Style> nameStyle)
 		{
-			this.nameStyle = this.nameStyle.andThen(nameStyle);
+			this.nameStyle = nameStyle;
 			return this;
 		}
 

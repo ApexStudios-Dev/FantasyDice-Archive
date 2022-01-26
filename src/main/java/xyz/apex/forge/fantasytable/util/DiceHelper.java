@@ -80,13 +80,13 @@ public class DiceHelper
 		IFormattableTextComponent result = new TranslationTextComponent(
 				FantasyTable.DIE_ROLL_KEY,
 				player.getDisplayName(),
-				new TranslationTextComponent(FantasyTable.DIE_ROLL_RESULT_KEY, roll, strAmount, sides).withStyle(diceType::withRollStyle)
+				new TranslationTextComponent(FantasyTable.DIE_ROLL_RESULT_KEY, roll, strAmount, sides).withStyle(style -> diceType.withRollStyle(stack, style))
 		).withStyle(style -> diceType
-				.withNameStyle(style)
+				.withNameStyle(stack, style)
 				.withHoverEvent(
 						new HoverEvent(
 								HoverEvent.Action.SHOW_TEXT,
-								new TranslationTextComponent(FantasyTable.DIE_ROLL_USING_KEY, stack.getHoverName()).withStyle(diceType::withNameStyle)
+								new TranslationTextComponent(FantasyTable.DIE_ROLL_USING_KEY, stack.getHoverName()).withStyle(hoverStyle -> diceType.withNameStyle(stack, hoverStyle))
 						)
 				)
 		);

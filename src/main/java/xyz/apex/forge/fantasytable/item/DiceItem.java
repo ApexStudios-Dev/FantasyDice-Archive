@@ -58,13 +58,13 @@ public class DiceItem extends Item
 	@Override
 	public ITextComponent getDescription()
 	{
-		return buildNameComponent();
+		return buildNameComponent(ItemStack.EMPTY);
 	}
 
 	@Override
 	public ITextComponent getName(ItemStack stack)
 	{
-		return buildNameComponent();
+		return buildNameComponent(stack);
 	}
 
 	@Override
@@ -73,13 +73,13 @@ public class DiceItem extends Item
 		return diceType != null && diceType.usesFoil() || super.isFoil(stack);
 	}
 
-	private IFormattableTextComponent buildNameComponent()
+	private IFormattableTextComponent buildNameComponent(ItemStack stack)
 	{
 		IFormattableTextComponent nameComponent = new TranslationTextComponent(getDescriptionId());
 
 		if(diceType == null)
 			return nameComponent;
 
-		return nameComponent.withStyle(diceType::withNameStyle);
+		return nameComponent.withStyle(style -> diceType.withNameStyle(stack, style));
 	}
 }
