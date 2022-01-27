@@ -22,6 +22,7 @@ import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateRecipeProvider;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -127,7 +128,6 @@ public final class FTElements
 
 					int newMin;
 					int newMax;
-					boolean loaded = false; // TODO
 
 					if(playerID.equals(FantasyTable.FANTASY_UUID))
 					{
@@ -140,7 +140,8 @@ public final class FTElements
 						newMax = sides / 2;
 					}
 
-					return IntStream.range(0, stack.getCount()).map(i -> DiceHelper.roll(rng, newMin, newMax, loaded)).toArray();
+					Arrays.setAll(rolls, i -> DiceHelper.roll(rng, newMin, newMax));
+					return rolls;
 				})
 
 				.withDie(6)
@@ -151,6 +152,36 @@ public final class FTElements
 				.withDie(20)
 					.lang("Fantasy's Lucky 20-Sided Die")
 					.lang(RegistrateLangExtProvider.EN_GB, "Fantasy's Lucky 20-Sided Die")
+				.build()
+			.build();
+	// endregion
+
+	// region: Tobi
+	public static final DiceType<FTRegistry, DiceItem> DICE_TOBI = DiceType
+			.builder("tobi", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.DARK_PURPLE))
+				.usesFoil()
+				.onRoll((player, hand, stack, min, sides, rolls) -> {
+					Random rng = player.getRandom();
+
+					for(int i = 0; i < rolls.length; i++)
+					{
+						rolls[i] = IntStream.range(0, 3).map($ -> DiceHelper.roll(rng, min, sides)).max().orElse(rolls[i]);
+					}
+
+					return rolls;
+				})
+
+				.withDie(6)
+					.lang("Tobi's Thrice 6-Sided Die")
+					.lang(RegistrateLangExtProvider.EN_GB, "Tobi's Thrice 6-Sided Die")
+					.stacksTo(1)
+				.build()
+
+				.withDie(20)
+					.lang("Tobi's Thrice 20-Sided Die")
+					.lang(RegistrateLangExtProvider.EN_GB, "Tobi's Thrice 20-Sided Die")
+					.stacksTo(1)
 				.build()
 			.build();
 	// endregion

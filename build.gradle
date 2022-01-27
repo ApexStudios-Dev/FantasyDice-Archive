@@ -48,25 +48,11 @@ minecraft {
 			}
 		}
 
-		clientApex {
-			parent runs.client
-			taskName 'Client-ApexSPG'
-			inheritArgs false
-			args '--uuid', '43fd393b-879d-45ec-b2d5-ce8c4688ab66', '--username', 'ApexSPG'
-		}
-
 		clientFantasy {
 			parent runs.client
 			taskName 'Client-FantasyGaming'
 			inheritArgs false
 			args '--uuid', '598535bd-f330-4123-b4d0-c6e618390477', '--username', 'FantasyGaming'
-		}
-
-		clientTobi {
-			parent runs.client
-			taskName 'Client-TroublesomeTobi'
-			inheritArgs false
-			args '--uuid', 'ae3f6ca6-b28c-479b-9c97-4be7df600041', '--username', 'TroublesomeTobi'
 		}
 
 		server {

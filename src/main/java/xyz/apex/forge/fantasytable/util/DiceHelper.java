@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
 
 public class DiceHelper
 {
-	public static int roll(Random rng, int min, int max, boolean loaded)
+	public static int roll(Random rng, int min, int max)
 	{
 		if(max < min)
 		{
@@ -33,8 +33,8 @@ public class DiceHelper
 		min = Math.max(min, 0);
 		max = Math.max(max, 1);
 
-		if(loaded)
-			min = Math.max(1, max / 2);
+		/*if(loaded)
+			min = Math.max(1, max / 2);*/
 
 		int roll = rng.nextInt(max) + 1;
 
@@ -58,8 +58,7 @@ public class DiceHelper
 
 		DiceItem die = (DiceItem) stack.getItem();
 		int sides = die.getSides();
-		boolean loaded = false;
-		int[] rolls = IntStream.range(0, stack.getCount()).map(i -> roll(level.random, min, sides, loaded)).toArray();
+		int[] rolls = IntStream.range(0, stack.getCount()).map(i -> roll(level.random, min, sides)).toArray();
 		rolls = die.getDiceType().onRoll(player, hand, stack, min, sides, rolls);
 		int roll = Arrays.stream(rolls).sum();
 		IFormattableTextComponent textComponent = createTextComponent(player, stack, die, roll, sides);
