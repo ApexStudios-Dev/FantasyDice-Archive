@@ -69,7 +69,10 @@ minecraft {
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-			args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'apexcore'
+			args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'apexcore', '--existing-mod', 'registrator'
+			// ForgeGradle will just force-exit the Gradle Daemon which fails our builds in case
+			// a daemon is used for any reason.
+			forceExit false
 
 			mods {
 				"${mod_id}" {
@@ -166,11 +169,11 @@ dependencies {
 	// Registrator versions must be equal to or higher than version used in ApexCore
 	if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
 		// we have access to Apex's GH Packages pull from there
-		compileOnly fg.deobf("xyz.apex.forge:apexcore-${minecraft_version}:${apexcore_version}")
-		runtimeOnly fg.deobf("xyz.apex.forge:apexcore-${minecraft_version}:${apexcore_version}")
+		compileOnly fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}")
+		runtimeOnly fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}")
 
-		compileOnly fg.deobf("xyz.apex.forge.utility:registrator-${minecraft_version}:${registrator_version}")
-		runtimeOnly fg.deobf("xyz.apex.forge.utility:registrator-${minecraft_version}:${registrator_version}")
+		compileOnly fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
+		runtimeOnly fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
 	} else {
 		// we dont have access to Apex's GH Packages, pull from CurseForge
 		// TODO: Add apexcore once they are approved on curse forge

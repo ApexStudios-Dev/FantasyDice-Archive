@@ -46,6 +46,11 @@ jobs:
       #   if: steps.cache-setup.outputs.cache-hit != 'true'
       #   run: ./gradlew hideOfficialWarningUntilChanged
 
+      # Generate Minecraft Assets & Data files
+      - run: ./gradlew Data # `Data` should match the `runData` gradle task name
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # Build package
       - run: ./gradlew build
         env:
