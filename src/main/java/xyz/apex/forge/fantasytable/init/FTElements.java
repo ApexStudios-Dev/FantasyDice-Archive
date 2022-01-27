@@ -80,6 +80,7 @@ public final class FTElements
 	public static final DiceType<FTRegistry, DiceItem> DICE_IRON = DiceType
 			.builder("iron", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GRAY))
+				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.INGOTS_IRON))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -89,6 +90,7 @@ public final class FTElements
 	public static final DiceType<FTRegistry, DiceItem> DICE_GOLD = DiceType
 			.builder("golden", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.YELLOW))
+				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.INGOTS_GOLD))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -98,6 +100,7 @@ public final class FTElements
 	public static final DiceType<FTRegistry, DiceItem> DICE_DIAMOND = DiceType
 			.builder("diamond", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.AQUA))
+				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.GEMS_DIAMOND))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -107,6 +110,7 @@ public final class FTElements
 	public static final DiceType<FTRegistry, DiceItem> DICE_EMERALD = DiceType
 			.builder("emerald", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GREEN))
+				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.GEMS_EMERALD))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
