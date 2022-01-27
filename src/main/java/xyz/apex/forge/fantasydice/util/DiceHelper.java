@@ -1,18 +1,20 @@
-package xyz.apex.forge.fantasytable.util;
+package xyz.apex.forge.fantasydice.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 
-import xyz.apex.forge.fantasytable.FantasyTable;
-import xyz.apex.forge.fantasytable.init.DiceType;
-import xyz.apex.forge.fantasytable.item.DiceItem;
+import xyz.apex.forge.fantasydice.FantasyDice;
+import xyz.apex.forge.fantasydice.init.DiceType;
+import xyz.apex.forge.fantasydice.item.DiceItem;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -77,9 +79,9 @@ public class DiceHelper
 			strAmount += count;
 
 		return new TranslationTextComponent(
-				FantasyTable.DIE_ROLL_KEY,
+				FantasyDice.DIE_ROLL_KEY,
 				player.getDisplayName(),
-				new TranslationTextComponent(FantasyTable.DIE_ROLL_RESULT_KEY, roll, strAmount, sides).withStyle(style -> diceType.withStyle(stack, style))
+				new TranslationTextComponent(FantasyDice.DIE_ROLL_RESULT_KEY, roll, strAmount, sides).withStyle(style -> diceType.withStyle(stack, style))
 		).withStyle(style -> style
 				.withHoverEvent(
 						new HoverEvent(
@@ -95,18 +97,29 @@ public class DiceHelper
 		MinecraftServer server = player.getServer();
 		UUID playerID = player.getGameProfile().getId();
 
+		player.sendMessage(component, playerID);
+
 		if(server == null)
-		{
-			player.sendMessage(component, playerID);
 			return;
-		}
+
+		DimensionType dimensionType = player.level.dimensionType();
+		ChunkPos chunkPos = new ChunkPos(player.blockPosition());
 
 		for(PlayerEntity plr : server.getPlayerList().getPlayers())
 		{
-			if(!FantasyTable.CONFIG.diceRollMessageCrossDimensions.get() && !plr.level.dimensionType().equalTo(plr.level.dimensionType()))
+			if(plr.getGameProfile().getId().equals(playerID))
 				continue;
-			if(plr.distanceTo(player) > FantasyTable.CONFIG.diceRollMessageRange.get())
-				continue;
+
+			if(dimensionType.equalTo(plr.level.dimensionType()))
+			{
+				if(chunkPos.getChessboardDistance(new ChunkPos(plr.blockPosition())) > FantasyDice.CONFIG.diceRollMessageRange.get())
+					continue;
+			}
+			else
+			{
+				if(!FantasyDice.CONFIG.diceRollMessageCrossDimensions.get())
+					continue;
+			}
 
 			plr.sendMessage(component, playerID);
 		}

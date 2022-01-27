@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasytable.item;
+package xyz.apex.forge.fantasydice.item;
 
 import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.ItemStack;

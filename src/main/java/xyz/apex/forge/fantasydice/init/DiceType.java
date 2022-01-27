@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasytable.init;
+package xyz.apex.forge.fantasydice.init;
 
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -15,7 +15,7 @@ import net.minecraft.tags.ITag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.Style;
 
-import xyz.apex.forge.fantasytable.item.DiceItem;
+import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.builder.ItemBuilder;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;

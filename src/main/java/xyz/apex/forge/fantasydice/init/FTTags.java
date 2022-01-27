@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasytable.init;
+package xyz.apex.forge.fantasydice.init;
 
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;

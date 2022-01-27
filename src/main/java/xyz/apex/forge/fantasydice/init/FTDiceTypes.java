@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasytable.init;
+package xyz.apex.forge.fantasydice.init;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.data.ShapedRecipeBuilder;
@@ -14,10 +14,10 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.Tags;
 
-import xyz.apex.forge.fantasytable.FantasyTable;
-import xyz.apex.forge.fantasytable.item.DiceItem;
-import xyz.apex.forge.fantasytable.item.DyeableDiceItem;
-import xyz.apex.forge.fantasytable.util.DiceHelper;
+import xyz.apex.forge.fantasydice.FantasyDice;
+import xyz.apex.forge.fantasydice.item.DiceItem;
+import xyz.apex.forge.fantasydice.item.DyeableDiceItem;
+import xyz.apex.forge.fantasydice.util.DiceHelper;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateRecipeProvider;
 
@@ -129,7 +129,7 @@ public final class FTDiceTypes
 					int newMin;
 					int newMax;
 
-					if(playerID.equals(FantasyTable.FANTASY_UUID))
+					if(playerID.equals(FantasyDice.FANTASY_UUID))
 					{
 						newMin = sides / 2;
 						newMax = sides;

@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasytable.item;
+package xyz.apex.forge.fantasydice.item;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,10 +9,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 
-import xyz.apex.forge.fantasytable.FantasyTable;
-import xyz.apex.forge.fantasytable.init.DiceType;
-import xyz.apex.forge.fantasytable.init.FTDiceTypes;
-import xyz.apex.forge.fantasytable.util.DiceHelper;
+import xyz.apex.forge.fantasydice.FantasyDice;
+import xyz.apex.forge.fantasydice.init.DiceType;
+import xyz.apex.forge.fantasydice.init.FTDiceTypes;
+import xyz.apex.forge.fantasydice.util.DiceHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -80,7 +80,7 @@ public class DiceItem extends Item
 	{
 		if(diceType != null)
 		{
-			tooltip.add(new TranslationTextComponent(FantasyTable.DIE_ROLL_DESC_KEY, 1, sides)
+			tooltip.add(new TranslationTextComponent(FantasyDice.DIE_ROLL_DESC_KEY, 1, sides)
 					.withStyle(style -> diceType
 							.withStyle(stack, style)
 					)
@@ -98,7 +98,7 @@ public class DiceItem extends Item
 	private IFormattableTextComponent buildApexNameComponent(ItemStack stack)
 	{
 		return new TranslationTextComponent(
-				FantasyTable.DIE_APEX_NAME,
+				FantasyDice.DIE_APEX_NAME,
 				new StringTextComponent("NULL").withStyle(style -> withStyle(stack, style).setObfuscated(true)),
 				sides
 		).withStyle(style -> withStyle(stack, style));

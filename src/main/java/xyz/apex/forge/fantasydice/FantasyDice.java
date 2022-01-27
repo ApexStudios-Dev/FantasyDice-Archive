@@ -1,18 +1,18 @@
-package xyz.apex.forge.fantasytable;
+package xyz.apex.forge.fantasydice;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
-import xyz.apex.forge.fantasytable.init.FTRegistry;
+import xyz.apex.forge.fantasydice.init.FTRegistry;
 
 import java.util.UUID;
 
-@Mod(FantasyTable.ID)
-public final class FantasyTable
+@Mod(FantasyDice.ID)
+public final class FantasyDice
 {
-	public static final String ID = "fantasytable";
+	public static final String ID = "fantasydice";
 
 	public static final Config CONFIG;
 	private static final ForgeConfigSpec CONFIG_SPEC;
@@ -32,7 +32,7 @@ public final class FantasyTable
 		CONFIG_SPEC = builder.build();
 	}
 
-	public FantasyTable()
+	public FantasyDice()
 	{
 		FTRegistry.bootstrap();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, ID + ".toml");
@@ -46,8 +46,8 @@ public final class FantasyTable
 		private Config(ForgeConfigSpec.Builder builder)
 		{
 			diceRollMessageRange = builder
-					.comment("Range from Dice Thrower Players must be within to see the Roll messages", "Note: Range is in Blocks")
-					.defineInRange("die.roll_message.range", 16, 1, Integer.MAX_VALUE);
+					.comment("Range from Dice Thrower Players must be within to see the Roll messages", "Note: Range is in Chunks using Chessboard Distancing")
+					.defineInRange("die.roll_message.range", 4, 1, Integer.MAX_VALUE);
 
 			diceRollMessageCrossDimensions = builder
 					.comment("Whether or not Dice Roll messages will be displayed to Players in different Dimensions than the Thrower", "Note: If this is True the Roll Range will be ignored in differing Dimensions")

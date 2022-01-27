@@ -1,10 +1,10 @@
-package xyz.apex.forge.fantasytable.init;
+package xyz.apex.forge.fantasydice.init;
 
 import org.apache.commons.lang3.Validate;
 
 import net.minecraftforge.fml.ModLoadingContext;
 
-import xyz.apex.forge.fantasytable.FantasyTable;
+import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.helper.RegistratorItemGroup;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
@@ -18,23 +18,23 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 
 	private FTRegistry()
 	{
-		super(FantasyTable.ID);
+		super(FantasyDice.ID);
 
 		skipErrors();
-		itemGroup(() -> RegistratorItemGroup.create(this), "Fantasy Table");
+		itemGroup(() -> RegistratorItemGroup.create(this), "Fantasy's Dice");
 
 		addDataGenerator(ProviderType.LANG, provider -> {
-			provider.add(FantasyTable.DIE_ROLL_KEY, "%s rolls %s");
-			provider.add(FantasyTable.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
-			provider.add(FantasyTable.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
-			provider.add(FantasyTable.DIE_APEX_NAME, "Apex's %s %s-Sided Die");
+			provider.add(FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
+			provider.add(FantasyDice.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
+			provider.add(FantasyDice.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
+			provider.add(FantasyDice.DIE_APEX_NAME, "Apex's %s %s-Sided Die");
 		});
 
 		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
-			provider.add(RegistrateLangExtProvider.EN_GB, FantasyTable.DIE_ROLL_KEY, "%s rolls %s");
-			provider.add(RegistrateLangExtProvider.EN_GB, FantasyTable.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
-			provider.add(RegistrateLangExtProvider.EN_GB, FantasyTable.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
-			provider.add(RegistrateLangExtProvider.EN_GB, FantasyTable.DIE_APEX_NAME, "Apex's %s %s-Sided Die");
+			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
+			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
+			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
+			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_APEX_NAME, "Apex's %s %s-Sided Die");
 		});
 	}
 
@@ -43,7 +43,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 		if(bootstrap)
 			return;
 
-		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(FantasyTable.ID));
+		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(FantasyDice.ID));
 
 		FTDiceTypes.bootstrap();
 
