@@ -6,13 +6,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.init.DiceType;
+import xyz.apex.forge.fantasytable.init.FTElements;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
 
 import javax.annotation.Nullable;
@@ -91,11 +90,22 @@ public class DiceItem extends Item
 
 	private IFormattableTextComponent buildNameComponent(ItemStack stack)
 	{
-		IFormattableTextComponent nameComponent = new TranslationTextComponent(getDescriptionId());
+		if(diceType == FTElements.DICE_APEX)
+			return buildApexNameComponent(stack);
+		return new TranslationTextComponent(getDescriptionId()).withStyle(style -> withStyle(stack, style));
+	}
 
-		if(diceType == null)
-			return nameComponent;
+	private IFormattableTextComponent buildApexNameComponent(ItemStack stack)
+	{
+		return new TranslationTextComponent(
+				FantasyTable.DIE_APEX_NAME,
+				new StringTextComponent("NULL").withStyle(style -> withStyle(stack, style).setObfuscated(true)),
+				sides
+		).withStyle(style -> withStyle(stack, style));
+	}
 
-		return nameComponent.withStyle(style -> diceType.withStyle(stack, style));
+	private Style withStyle(ItemStack stack, Style style)
+	{
+		return diceType == null ? style : diceType.withStyle(stack, style);
 	}
 }

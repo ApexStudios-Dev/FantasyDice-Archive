@@ -186,6 +186,36 @@ public final class FTElements
 			.build();
 	// endregion
 
+	// region: Apex
+	public static final DiceType<FTRegistry, DiceItem> DICE_APEX = DiceType
+			.builder("apex", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.DARK_PURPLE))
+				.usesFoil()
+				.onRoll((player, hand, stack, min, sides, rolls) -> {
+					Random rng = player.getRandom();
+
+					for(int i = 0; i < rolls.length; i++)
+					{
+						rolls[i] = rolls[i] * -1;
+					}
+
+					return rolls;
+				})
+
+				.withDie(6)
+					.lang("Apex's NULL 6-Sided Die")
+					.lang(RegistrateLangExtProvider.EN_GB, "Apex's NULL 6-Sided Die")
+					.stacksTo(1)
+				.build()
+
+				.withDie(20)
+					.lang("Apex's NULL 20-Sided Die")
+					.lang(RegistrateLangExtProvider.EN_GB, "Apex's NULL 20-Sided Die")
+					.stacksTo(1)
+				.build()
+			.build();
+	// endregion
+
 	static void bootstrap()
 	{
 	}
