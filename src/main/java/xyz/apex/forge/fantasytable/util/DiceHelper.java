@@ -101,13 +101,11 @@ public class DiceHelper
 			return;
 		}
 
-		int rollRange = 16; // TODO: Config
-
 		for(PlayerEntity plr : server.getPlayerList().getPlayers())
 		{
-			if(!plr.level.dimensionType().equalTo(plr.level.dimensionType()))
+			if(!FantasyTable.CONFIG.diceRollMessageCrossDimensions.get() && !plr.level.dimensionType().equalTo(plr.level.dimensionType()))
 				continue;
-			if(plr.distanceTo(player) > rollRange)
+			if(plr.distanceTo(player) > FantasyTable.CONFIG.diceRollMessageRange.get())
 				continue;
 
 			plr.sendMessage(component, playerID);
