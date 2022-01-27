@@ -30,7 +30,6 @@ import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
 import xyz.apex.repack.com.tterrag.registrate.util.entry.RegistryEntry;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
 public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem>
