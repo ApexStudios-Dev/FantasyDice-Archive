@@ -131,9 +131,9 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return usesFoil;
 	}
 
-	public int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int[] rolls)
+	public int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int sides, int[] rolls)
 	{
-		return rollCallback.onRoll(player, hand, stack, min, rolls);
+		return rollCallback.onRoll(player, hand, stack, min, sides, rolls);
 	}
 
 	public static <OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem> Builder<OWNER, DIE> builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
@@ -161,7 +161,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 		private NonnullBiFunction<ItemStack, Style, Style> styleModifier = (stack, style) -> style;
 		@Nullable private TriFunction<@NonnullType Integer, @NonnullType DataGenContext<Item, DIE>, @NonnullType ShapedRecipeBuilder, @NullableType ShapedRecipeBuilder> recipeModifier = null;
-		private RollCallback rollCallback = (player, hand, stack, min, rolls) -> rolls;
+		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls) -> rolls;
 		private boolean usesFoil = false;
 
 		private Builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
@@ -234,6 +234,6 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	@FunctionalInterface
 	public interface RollCallback
 	{
-		int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int[] rolls);
+		int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int sides, int[] rolls);
 	}
 }

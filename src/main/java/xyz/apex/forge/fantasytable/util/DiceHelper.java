@@ -60,7 +60,7 @@ public class DiceHelper
 		int sides = die.getSides();
 		boolean loaded = false;
 		int[] rolls = IntStream.range(0, stack.getCount()).map(i -> roll(level.random, min, sides, loaded)).toArray();
-		rolls = die.getDiceType().onRoll(player, hand, stack, min, rolls);
+		rolls = die.getDiceType().onRoll(player, hand, stack, min, sides, rolls);
 		int roll = Arrays.stream(rolls).sum();
 		IFormattableTextComponent textComponent = createTextComponent(player, stack, die, roll, sides);
 		sendMessageToPlayers(player, textComponent);
