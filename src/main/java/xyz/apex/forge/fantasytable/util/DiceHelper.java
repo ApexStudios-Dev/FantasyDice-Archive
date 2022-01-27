@@ -77,21 +77,18 @@ public class DiceHelper
 		if(count > 1)
 			strAmount += count;
 
-		IFormattableTextComponent result = new TranslationTextComponent(
+		return new TranslationTextComponent(
 				FantasyTable.DIE_ROLL_KEY,
 				player.getDisplayName(),
-				new TranslationTextComponent(FantasyTable.DIE_ROLL_RESULT_KEY, roll, strAmount, sides).withStyle(style -> diceType.withRollStyle(stack, style))
-		).withStyle(style -> diceType
-				.withNameStyle(stack, style)
+				new TranslationTextComponent(FantasyTable.DIE_ROLL_RESULT_KEY, roll, strAmount, sides).withStyle(style -> diceType.withStyle(stack, style))
+		).withStyle(style -> style
 				.withHoverEvent(
 						new HoverEvent(
 								HoverEvent.Action.SHOW_TEXT,
-								new TranslationTextComponent(FantasyTable.DIE_ROLL_USING_KEY, stack.getHoverName()).withStyle(hoverStyle -> diceType.withNameStyle(stack, hoverStyle))
+								stack.getHoverName().plainCopy().withStyle(hoverStyle -> diceType.withStyle(stack, hoverStyle))
 						)
 				)
 		);
-
-		return result;
 	}
 
 	public static void sendMessageToPlayers(PlayerEntity player, ITextComponent component)

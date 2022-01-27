@@ -26,14 +26,12 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 		addDataGenerator(ProviderType.LANG, provider -> {
 			provider.add(FantasyTable.DIE_ROLL_KEY, "%s rolls %s");
 			provider.add(FantasyTable.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
-			provider.add(FantasyTable.DIE_ROLL_USING_KEY, "Using as %s");
 			provider.add(FantasyTable.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
 		});
 
 		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyTable.DIE_ROLL_KEY, "%s rolls %s");
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyTable.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
-			provider.add(RegistrateLangExtProvider.EN_GB, FantasyTable.DIE_ROLL_USING_KEY, "Using as %s");
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyTable.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
 		});
 	}

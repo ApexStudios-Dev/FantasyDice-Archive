@@ -40,7 +40,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final OWNER owner;
 	private final Int2ObjectMap<ItemEntry<DIE>> diceItems = new Int2ObjectOpenHashMap<>();
 	private final ITag.INamedTag<Item> tag;
-	private final NonnullBiFunction<ItemStack, Style, Style> nameStyle;
+	private final NonnullBiFunction<ItemStack, Style, Style> styleModifier;
 	private final RollCallback rollCallback;
 	private final boolean usesFoil;
 
@@ -49,7 +49,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		name = Validate.notBlank(builder.name);
 		owner = builder.owner;
 		tag = builder.tag;
-		nameStyle = builder.nameStyle;
+		styleModifier = builder.styleModifier;
 		rollCallback = builder.rollCallback;
 		usesFoil = builder.usesFoil;
 
@@ -91,14 +91,9 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return owner;
 	}
 
-	public Style withNameStyle(ItemStack stack, Style style)
+	public Style withStyle(ItemStack stack, Style style)
 	{
-		return nameStyle.apply(stack, style);
-	}
-
-	public Style withRollStyle(ItemStack stack, Style style)
-	{
-		return withNameStyle(stack, style).withItalic(true);
+		return styleModifier.apply(stack, style);
 	}
 
 	public ITag.INamedTag<Item> getTag()
@@ -164,7 +159,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		private final Int2ObjectMap<String> dieNames = new Int2ObjectOpenHashMap<>();
 		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
 
-		private NonnullBiFunction<ItemStack, Style, Style> nameStyle = (stack, style) -> style;
+		private NonnullBiFunction<ItemStack, Style, Style> styleModifier = (stack, style) -> style;
 		@Nullable private TriFunction<@NonnullType Integer, @NonnullType DataGenContext<Item, DIE>, @NonnullType ShapedRecipeBuilder, @NullableType ShapedRecipeBuilder> recipeModifier = null;
 		private RollCallback rollCallback = (player, hand, stack, min, rolls) -> rolls;
 		private boolean usesFoil = false;
@@ -179,9 +174,9 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
 		}
 
-		public Builder<OWNER, DIE> withNameStyle(NonnullBiFunction<ItemStack, Style, Style> nameStyle)
+		public Builder<OWNER, DIE> withStyle(NonnullBiFunction<ItemStack, Style, Style> nameStyle)
 		{
-			this.nameStyle = nameStyle;
+			this.styleModifier = nameStyle;
 			return this;
 		}
 
@@ -202,7 +197,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			String dieName = generateDieName(sides);
 
 			String englishName = RegistrateLangProvider.toEnglishName(name);
-			String fullName = sides + " Sided " + englishName + " Die";
+			String fullName = sides + "-Sided " + englishName + " Die";
 
 			return owner
 					.item(dieName, this, properties -> diceFactory.apply(properties, sides))

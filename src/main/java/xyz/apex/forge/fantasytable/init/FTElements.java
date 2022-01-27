@@ -27,7 +27,7 @@ public final class FTElements
 	// region: Wooden
 	public static final DiceType<FTRegistry, DiceItem> DICE_WOODEN = DiceType
 			.builder("wooden", REGISTRY)
-				.withNameStyle((stack, style) -> nameStyle(stack, style, Color.fromRgb(0xFF8A5A27)))
+				.withStyle((stack, style) -> nameStyle(stack, style, Color.fromRgb(0xFF8A5A27)))
 				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, ItemTags.WOODEN_BUTTONS))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
@@ -37,7 +37,7 @@ public final class FTElements
 	// region: Stone
 	public static final DiceType<FTRegistry, DiceItem> DICE_STONE = DiceType
 			.builder("stone", REGISTRY)
-				.withNameStyle((stack, style) -> nameStyle(stack, style, TextFormatting.GRAY))
+				.withStyle((stack, style) -> nameStyle(stack, style, TextFormatting.GRAY))
 				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Blocks.STONE_BUTTON))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
@@ -47,7 +47,7 @@ public final class FTElements
 	// region: Paper
 	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
 			.builder("paper", REGISTRY, DyeableDiceItem::new)
-				.withNameStyle((stack, style) -> nameStyle(stack, style, TextFormatting.WHITE))
+				.withStyle((stack, style) -> nameStyle(stack, style, TextFormatting.WHITE))
 				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Items.PAPER))
 
 				.withDie(6)
@@ -63,7 +63,7 @@ public final class FTElements
 	// region: Bone
 	public static final DiceType<FTRegistry, DiceItem> DICE_BONE = DiceType
 			.builder("bone", REGISTRY)
-				.withNameStyle((stack, style) -> nameStyle(stack, style, TextFormatting.WHITE))
+				.withStyle((stack, style) -> nameStyle(stack, style, TextFormatting.WHITE))
 				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.BONES))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
@@ -73,7 +73,7 @@ public final class FTElements
 	// region: Iron
 	public static final DiceType<FTRegistry, DiceItem> DICE_IRON = DiceType
 			.builder("iron", REGISTRY)
-				.withNameStyle((stack, style) -> nameStyle(stack, style, TextFormatting.GRAY))
+				.withStyle((stack, style) -> nameStyle(stack, style, TextFormatting.GRAY))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -82,7 +82,7 @@ public final class FTElements
 	// region: Golden
 	public static final DiceType<FTRegistry, DiceItem> DICE_GOLD = DiceType
 			.builder("golden", REGISTRY)
-				.withNameStyle((stack, style) -> nameStyle(stack, style, TextFormatting.YELLOW))
+				.withStyle((stack, style) -> nameStyle(stack, style, TextFormatting.YELLOW))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -91,7 +91,7 @@ public final class FTElements
 	// region: Diamond
 	public static final DiceType<FTRegistry, DiceItem> DICE_DIAMOND = DiceType
 			.builder("diamond", REGISTRY)
-				.withNameStyle((stack, style) -> nameStyle(stack, style, TextFormatting.AQUA))
+				.withStyle((stack, style) -> nameStyle(stack, style, TextFormatting.AQUA))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -100,7 +100,7 @@ public final class FTElements
 	// region: Emerald
 	public static final DiceType<FTRegistry, DiceItem> DICE_EMERALD = DiceType
 			.builder("emerald", REGISTRY)
-				.withNameStyle((stack, style) -> nameStyle(stack, style, TextFormatting.GREEN))
+				.withStyle((stack, style) -> nameStyle(stack, style, TextFormatting.GREEN))
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -109,7 +109,7 @@ public final class FTElements
 	// region: Creative
 	public static final DiceType<FTRegistry, DiceItem> DICE_CREATIVE = DiceType
 			.builder("creative", REGISTRY)
-				.withNameStyle((stack, style) -> nameStyle(stack, style, TextFormatting.LIGHT_PURPLE))
+				.withStyle((stack, style) -> nameStyle(stack, style, TextFormatting.LIGHT_PURPLE))
 				.usesFoil()
 				.withSimpleDie(6)
 				.withSimpleDie(20)

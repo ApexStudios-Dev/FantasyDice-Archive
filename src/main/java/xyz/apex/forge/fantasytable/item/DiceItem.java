@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasytable.item;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,10 +11,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.init.DiceType;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Objects;
 
 public class DiceItem extends Item
@@ -73,6 +76,19 @@ public class DiceItem extends Item
 		return diceType != null && diceType.usesFoil() || super.isFoil(stack);
 	}
 
+	@Override
+	public void appendHoverText(ItemStack stack, @Nullable World level, List<ITextComponent> tooltip, ITooltipFlag flag)
+	{
+		if(diceType != null)
+		{
+			tooltip.add(new TranslationTextComponent(FantasyTable.DIE_ROLL_DESC_KEY, 1, sides)
+					.withStyle(style -> diceType
+							.withStyle(stack, style)
+					)
+			);
+		}
+	}
+
 	private IFormattableTextComponent buildNameComponent(ItemStack stack)
 	{
 		IFormattableTextComponent nameComponent = new TranslationTextComponent(getDescriptionId());
@@ -80,6 +96,6 @@ public class DiceItem extends Item
 		if(diceType == null)
 			return nameComponent;
 
-		return nameComponent.withStyle(style -> diceType.withNameStyle(stack, style));
+		return nameComponent.withStyle(style -> diceType.withStyle(stack, style));
 	}
 }
