@@ -192,13 +192,7 @@ public final class FTElements
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.DARK_PURPLE))
 				.usesFoil()
 				.onRoll((player, hand, stack, min, sides, rolls) -> {
-					Random rng = player.getRandom();
-
-					for(int i = 0; i < rolls.length; i++)
-					{
-						rolls[i] = rolls[i] * -1;
-					}
-
+					Arrays.setAll(rolls, i -> rolls[i] * -1);
 					return rolls;
 				})
 
