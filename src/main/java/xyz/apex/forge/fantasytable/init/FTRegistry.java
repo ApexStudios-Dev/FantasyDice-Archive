@@ -45,8 +45,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 
 		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(FantasyTable.ID));
 
-		FTElements.bootstrap();
-		FTItems.bootstrap();
+		FTDiceTypes.bootstrap();
 
 		FTTags.bootstrap();
 

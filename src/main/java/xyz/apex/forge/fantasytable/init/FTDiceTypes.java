@@ -27,7 +27,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
-public final class FTElements
+public final class FTDiceTypes
 {
 	private static final FTRegistry REGISTRY = FTRegistry.getRegistry();
 

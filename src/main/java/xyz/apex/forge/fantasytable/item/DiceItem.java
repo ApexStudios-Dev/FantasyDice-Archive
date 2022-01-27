@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 import xyz.apex.forge.fantasytable.FantasyTable;
 import xyz.apex.forge.fantasytable.init.DiceType;
-import xyz.apex.forge.fantasytable.init.FTElements;
+import xyz.apex.forge.fantasytable.init.FTDiceTypes;
 import xyz.apex.forge.fantasytable.util.DiceHelper;
 
 import javax.annotation.Nullable;
@@ -90,7 +90,7 @@ public class DiceItem extends Item
 
 	private IFormattableTextComponent buildNameComponent(ItemStack stack)
 	{
-		if(diceType == FTElements.DICE_APEX)
+		if(diceType == FTDiceTypes.DICE_APEX)
 			return buildApexNameComponent(stack);
 		return new TranslationTextComponent(getDescriptionId()).withStyle(style -> withStyle(stack, style));
 	}
