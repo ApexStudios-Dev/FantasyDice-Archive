@@ -1,9 +1,9 @@
 # Fantasy's Dice
-
 [![release](https://github.com/ApexModder/FantasyTable/actions/workflows/release.yml/badge.svg)](https://github.com/ApexModder/FantasyTable/actions/workflows/release.yml)
-![license](https://img.shields.io/github/license/ApexModder/FantasyTable)
-![last commit](https://img.shields.io/github/last-commit/ApexModder/FantasyTable)
-![release](https://img.shields.io/github/v/release/ApexModder/FantasyTable)
+[![license](https://img.shields.io/github/license/ApexModder/FantasyTable)](https://github.com/ApexModder/FantasyTable/blob/master/LICENSE)
+[![last commit](https://img.shields.io/github/last-commit/ApexModder/FantasyTable)](https://github.com/ApexModder/FantasyTable/)
+[![release](https://img.shields.io/github/v/release/ApexModder/FantasyTable)](https://github.com/ApexModder/FantasyTable/releases)
+[![curseforge](https://cf.way2muchnoise.eu/versions/573867.svg)](https://www.curseforge.com/minecraft/mc-mods/fantasys-dice)
 
 Mod requested by **_FantasyGaming_** which adds **_6_** & **_20 Sided Dice_** to the game of varying types.<br>
 All dice stack to max of 8.<br>
