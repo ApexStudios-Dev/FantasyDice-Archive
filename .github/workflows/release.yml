@@ -71,12 +71,11 @@ jobs:
           name: ${{ steps.tagName.outputs.tag }}
           files: ./build/libs/*.jar
 
-      # TODO: Uncomment once approved on CurseForge
       # Publish to CurseForge
-      # - run: ./gradlew curseforge
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+      - run: ./gradlew curseforge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
 
       # Kill gradlew deamon (caching requires gradle to not be running)
       - run: ./gradlew --stop

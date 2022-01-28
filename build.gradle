@@ -12,6 +12,10 @@ buildscript {
 	}
 }
 
+plugins {
+	id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
+}
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
@@ -183,9 +187,8 @@ dependencies {
 		runtimeOnly fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
 	} else {
 		// we dont have access to Apex's GH Packages, pull from CurseForge
-		// TODO: Add apexcore once they are approved on curse forge
-		// compileOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
-		// runtimeOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
+		compileOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
+		runtimeOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
 
 		compileOnly fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}")
 		runtimeOnly fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}")
@@ -214,6 +217,7 @@ def replaceProperties = [
 	mod_version: mod_version,
 	mod_base_package: mod_base_package,
 	mod_authors: mod_authors,
+	mod_curseforge_id: mod_curseforge_id,
 
 	registrator_version: registrator_version,
 	registrator_version_range: registrator_version_range,
@@ -224,7 +228,8 @@ def replaceProperties = [
 	apexcore_version_range: apexcore_version_range,
 	apexcore_cf_project: apexcore_cf_project,
 	apexcore_cf_file: apexcore_cf_file,
-	
+
+	cursegradle_version: cursegradle_version,
 	jei_version: jei_version,
 	top_version: top_version,
 	smooth_boot_version: smooth_boot_version
@@ -319,6 +324,48 @@ if(System.getenv('GITHUB_TOKEN') != null) {
 					username = System.getenv('GITHUB_ACTOR')
 					password = System.getenv('GITHUB_TOKEN')
 				}
+			}
+		}
+	}
+}
+
+if(project.hasProperty('apex_curse_gradle_token')) {
+	curseforge {
+		apiKey = project.getProperty('apex_curse_gradle_token')
+
+		project {
+			id = "${mod_curseforge_id}"
+			releaseType = 'release'
+			addGameVersion "${minecraft_version}"
+
+			mainArtifact jar
+			addArtifact deobfJar
+			addArtifact sourcesJar
+			addArtifact javadocJar
+
+			relations {
+				requiredDependency 'registrator'
+				requiredDependency 'apexcore'
+			}
+		}
+	}
+} else if(System.getenv('CURSEFORGE_TOKEN') != null) {
+	curseforge {
+		apiKey = System.getenv('CURSEFORGE_TOKEN')
+
+		project {
+			id = "${mod_curseforge_id}"
+			releaseType = 'release'
+			addGameVersion "${minecraft_version}"
+
+			mainArtifact jar
+			addArtifact deobfJar
+			addArtifact sourcesJar
+			addArtifact javadocJar
+
+			relations {
+				requiredDependency 'registrator'
+				requiredDependency 'apexcore'
 			}
 		}
 	}
