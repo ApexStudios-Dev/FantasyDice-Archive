@@ -124,4 +124,15 @@ public class DiceHelper
 			plr.sendMessage(component, playerID);
 		}
 	}
+
+	public static boolean isLuckyRoller(PlayerEntity player)
+	{
+		UUID playerId = player.getGameProfile().getId();
+
+		// should always work for FantasyGaming
+		if(playerId.equals(FantasyDice.FANTASY_UUID))
+			return true;
+
+		return FantasyDice.CONFIG.luckyRollerIDs.contains(playerId);
+	}
 }

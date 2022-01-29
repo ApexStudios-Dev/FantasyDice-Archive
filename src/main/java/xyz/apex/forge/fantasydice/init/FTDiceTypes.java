@@ -14,7 +14,6 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.Tags;
 
-import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.fantasydice.item.DyeableDiceItem;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
@@ -24,7 +23,6 @@ import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateRecipeProvider
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.UUID;
 import java.util.stream.IntStream;
 
 public final class FTDiceTypes
@@ -122,13 +120,12 @@ public final class FTDiceTypes
 			.builder("fantasy", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFFF39F9F)))
 				.onRoll((player, hand, stack, min, sides, rolls) -> {
-					UUID playerID = player.getGameProfile().getId();
 					Random rng = player.getRandom();
 
 					int newMin;
 					int newMax;
 
-					if(playerID.equals(FantasyDice.FANTASY_UUID))
+					if(DiceHelper.isLuckyRoller(player))
 					{
 						newMin = sides / 2;
 						newMax = sides;
