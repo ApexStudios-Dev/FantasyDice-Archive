@@ -196,13 +196,11 @@ public final class FTDiceTypes
 				.withDie(6)
 					.lang("Apex's NULL 6-Sided Die")
 					.lang(RegistrateLangExtProvider.EN_GB, "Apex's NULL 6-Sided Die")
-					.stacksTo(1)
 				.build()
 
 				.withDie(20)
 					.lang("Apex's NULL 20-Sided Die")
 					.lang(RegistrateLangExtProvider.EN_GB, "Apex's NULL 20-Sided Die")
-					.stacksTo(1)
 				.build()
 			.build();
 	// endregion
