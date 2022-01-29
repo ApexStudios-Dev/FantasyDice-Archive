@@ -19,7 +19,7 @@ public class RollCommand
 	public static void register(CommandDispatcher<CommandSource> dispatcher)
 	{
 		dispatcher.register(literal("roll")
-				.then(argument("max", integer(1))
+				.then(argument("max", integer(1, 999999999))
 						.executes(ctx -> {
 							ServerPlayerEntity player = ctx.getSource().getPlayerOrException();
 							int max = IntegerArgumentType.getInteger(ctx, "max");
