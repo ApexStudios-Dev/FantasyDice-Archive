@@ -1,10 +1,13 @@
 package xyz.apex.forge.fantasydice;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
+import xyz.apex.forge.apexcore.lib.util.ForgeEventBusHelper;
+import xyz.apex.forge.fantasydice.command.RollCommand;
 import xyz.apex.forge.fantasydice.init.FTRegistry;
 
 import java.util.UUID;
@@ -35,6 +38,7 @@ public final class FantasyDice
 	public FantasyDice()
 	{
 		FTRegistry.bootstrap();
+		ForgeEventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, ID + ".toml");
 	}
 
