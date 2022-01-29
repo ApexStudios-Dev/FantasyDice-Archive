@@ -121,7 +121,6 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_FANTASY = DiceType
 			.builder("fantasy", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFFF39F9F)))
-				.usesFoil()
 				.onRoll((player, hand, stack, min, sides, rolls) -> {
 					UUID playerID = player.getGameProfile().getId();
 					Random rng = player.getRandom();
@@ -160,7 +159,6 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_TOBI = DiceType
 			.builder("tobi", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.DARK_PURPLE))
-				.usesFoil()
 				.onRoll((player, hand, stack, min, sides, rolls) -> {
 					Random rng = player.getRandom();
 
@@ -190,7 +188,6 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_APEX = DiceType
 			.builder("apex", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.DARK_PURPLE))
-				.usesFoil()
 				.onRoll((player, hand, stack, min, sides, rolls) -> {
 					Arrays.setAll(rolls, i -> rolls[i] * -1);
 					return rolls;
