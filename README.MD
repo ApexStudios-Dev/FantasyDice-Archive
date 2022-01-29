@@ -18,15 +18,11 @@ All recipes use the same pattern either **_2x2_** for **_6-Sided_** or a **_Cros
 </details>
 
 ### **_Special Features_**
-- /roll command to roll in chat with a specified number similar to World of Warcraft
-  (ex: "/roll 100" will always roll out of 100, with the roll being shown in chat)
-  In addition, chat will show how many dice have been rolled 
-  (rolling 5 six-sided dice will show like this: NAME rolled ## (5d6))
-- Paper dice that can be dyed to any combination the same way leather armor can 
-- Colored chat text for each dice
-  (matches paper dice color if used)
+- `/roll` command to roll in chat with a specified number similar to _World of Warcraft_ (ex: `/roll 100` will always roll out of _100_, with the roll being shown in chat)
+- In addition, chat will show how many dice have been rolled (rolling _5 Six-Sided Dice_ will show like this: `<player> rolled <roll> (5d6)`)
+- Paper dice that can be dyed to any combination the same way leather armor can
+- Colored chat text for each dice (matches paper dice color if used)
 - Dice pouches that can also be dyed like leather armor, and have 6x3 spaces in it
-
 
 ### **_Dice Types_**
 - **_Wood_**
@@ -40,9 +36,8 @@ All recipes use the same pattern either **_2x2_** for **_6-Sided_** or a **_Cros
 
 ### **_Specialty Dice_** (_Requested by Devs_)
 - **_Fantasy's Lucky Dice_**
-  - _Lucky Rollers_ always roll _High Values_, _Unlucky Rollers_ always roll _Low Values_.
+  - _Lucky Rollers_ always roll _High Values_, _Unlucky Rollers_ always roll _Low Values_ (_Configurable_).
   - _Luck_ depends on who rolled the dice.
-  - As of right now, only **_FantasyGaming_** is a _Lucky Roller_.
 - **_Tobi's Thrice Dice_**
   - Rolls 3 times when used, result is the largest value of the three rolls.
   - Stacks to maximum of 1.
