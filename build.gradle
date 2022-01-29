@@ -1,123 +1,92 @@
 buildscript {
 	repositories {
-		maven { url = 'https://files.minecraftforge.net/maven' }
-		// maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-		jcenter()
+		maven { url = 'https://maven.minecraftforge.net' }
+		maven { url = 'https://maven.parchmentmc.org' }
+		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
 		mavenCentral()
 	}
 	dependencies {
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: fg_version, changing: true
-		// classpath "org.spongepowered:mixingradle:${mixin_version}"
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forge_gradle_version}", changing: true
+		classpath 'org.parchmentmc:librarian:1.+'
+		classpath "org.spongepowered:mixingradle:${mixin_gradle_version}"
 	}
 }
 
 plugins {
-	id 'com.github.johnrengelman.shadow' version "${jr_shadow_version}"
+	id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'maven-publish'
-// apply plugin: 'org.spongepowered.mixin'
 
-version = "${mod_version}"
-group = "${apex_package}.${mod_id}"
-archivesBaseName = "${mod_name}-${mc_version}"
+version = "${minecraft_version}-${mod_version}"
+group = "${mod_base_package}.${mod_id}"
+archivesBaseName = "${mod_id}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
-configurations {
-	shade
-}
-
 minecraft {
-	mappings channel: 'official', version: "${mc_version}"
-	// accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+	mappings channel: "${mappings_channel}", version: "${mappings_version}"
+	accessTransformer = file('src/main/resources/META-INF/accessTransformer.cfg')
 
 	runs {
 		client {
+			taskName 'Client'
 			workingDirectory project.file('run/client')
-
-			// property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
+			property 'fml.earlyprogresswindow', 'false'
 
-			// property 'mixin.env.disableRefMap', 'true'
-			// args '-mixin.config=' + mod_id + '.mixins.json'
+			if(project.hasProperty('mc_uuid') & project.hasProperty('mc_username')) {
+				args '--uuid', project.getProperty('mc_uuid'), '--username', project.getProperty('mc_username')
+			}
 
 			mods {
-				FantasyTable {
+				"${mod_id}" {
 					source sourceSets.main
 				}
 			}
 		}
 
-		clientAuthed {
-			parent runs.client
-
-			// args '-mixin.config=' + mod_id + '.mixins.json'
-
-			if(project.hasProperty('mc_uuid')) {
-				args '--uuid', project.getProperty('mc_uuid');
-			}
-
-			if(project.hasProperty('mc_username')) {
-				args '--username', project.getProperty('mc_username');
-			}
-
-			if(project.hasProperty('mc_accessToken')) {
-				args '--accessToken', project.getProperty('mc_accessToken');
-			}
-		}
-
-		clientTobi {
-			parent runs.client
-
-			// args '-mixin.config=' + mod_id + '.mixins.json'
-
-			args '--uuid', 'ae3f6ca6-b28c-479b-9c97-4be7df600041'
-			args '--username', 'TroublesomeTobi'
-		}
-
 		clientFantasy {
 			parent runs.client
-
-			// args '-mixin.config=' + mod_id + '.mixins.json'
-
-			args '--uuid', '598535bd-f330-4123-b4d0-c6e618390477'
-			args '--username', 'FantasyGaming'
+			taskName 'Client-FantasyGaming'
+			inheritArgs false
+			args '--uuid', '598535bd-f330-4123-b4d0-c6e618390477', '--username', 'FantasyGaming'
 		}
 
 		server {
+			taskName 'Server'
 			workingDirectory project.file('run/server')
-
-			// property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
-
-			// property 'mixin.env.disableRefMap', 'true'
-			// args '-mixin.config=' + mod_id + '.mixins.json'
-
+			property 'fml.earlyprogresswindow', 'false'
 			args 'nogui'
 
 			mods {
-				FantasyTable {
+				"${mod_id}" {
 					source sourceSets.main
 				}
 			}
 		}
 
 		data {
-			workingDirectory project.file('run/data')
-
-			// property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+			taskName 'Data'
+			workingDirectory project.file('run/client')
+			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
-
-			// property 'mixin.env.disableRefMap', 'true'
-			// args '-mixin.config=' + mod_id + '.mixins.json'
-
-			args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+			property 'fml.earlyprogresswindow', 'false'
+			args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'apexcore', '--existing-mod', 'registrator'
+			// ForgeGradle will just force-exit the Gradle Daemon which fails our builds in case
+			// a daemon is used for any reason.
+			forceExit false
 
 			mods {
-				FantasyTable {
+				"${mod_id}" {
 					source sourceSets.main
 				}
 			}
@@ -125,9 +94,14 @@ minecraft {
 	}
 }
 
-/*mixin {
+mixin {
 	add sourceSets.main, "${mod_id}.refmap.json"
-}*/
+	config "${mod_id}.mixins.json"
+
+	debug = true
+	debug.export = true
+	hotSwap = true
+}
 
 sourceSets.main.resources {
 	srcDir 'src/generated/resources'
@@ -137,91 +111,262 @@ repositories {
 	mavenLocal() // Local Deps
 	maven { url 'https://dvs1.progwml6.com/files/maven' } // JEI
 	maven { url 'https://maven.tterrag.com/' } // TOP
+	
+	maven { // CurseForge
+		url 'https://cursemaven.com'
+		content { includeGroup 'curse.maven' }
+	}
+
+	// GitHub Packages require read access
+	if(project.hasProperty('apex_git_package_token')) {
+		maven {
+			url = uri("https://maven.pkg.github.com/ApexModder/ApexCore")
+			credentials {
+				username = 'Apex-GitHub-PackagesToken'
+				password = project.getProperty('apex_git_package_token')
+			}
+		}
+
+		maven {
+			url = uri("https://maven.pkg.github.com/ApexModder/Registrator")
+			credentials {
+				username = 'Apex-GitHub-PackagesToken'
+				password = project.getProperty('apex_git_package_token')
+			}
+		}
+	} else if(System.getenv('GITHUB_TOKEN') != null) {
+		// github workflows have a different set of credentials
+		maven {
+			url = uri("https://maven.pkg.github.com/ApexModder/ApexCore")
+			credentials {
+				username = System.getenv('GITHUB_ACTOR')
+				password = System.getenv('GITHUB_TOKEN')
+			}
+		}
+
+		maven {
+			url = uri("https://maven.pkg.github.com/ApexModder/Registrator")
+			credentials {
+				username = System.getenv('GITHUB_ACTOR')
+				password = System.getenv('GITHUB_TOKEN')
+			}
+		}
+	}
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
 	// JEI
-	compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
-	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
+	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
 	// TOP
-	compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${mc_version_short}:${mc_version_short}-${top_version}:api")
-	runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${mc_version_short}:${mc_version_short}-${top_version}")
+	compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${top_version}:api")
+	runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${top_version}")
 
-	// Registrate
-	compileOnly fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}")
-	runtimeOnly fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}")
-	shade "com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}"
+	// CurseForge
+	// https://www.cursemaven.com/ - Examples
+	// runtimeOnly fg.deobf('curse.maven:<mod_name>-<cf_project_id>:<cf_project_file_id>')
+
+	// Mixin AP
+	annotationProcessor "org.spongepowered:mixin:${mixin_ap_version}:processor"
 
 	if(project.hasProperty('apex_local_deps') && project.getProperty('apex_local_deps')) {
-		// runtimeOnly fg.deobf("${apex_package}:devworld:${mc_version}-${devworld_version}")
-		runtimeOnly fg.deobf("${apex_package}:smoothboot:${mc_version}-${smoothboot_version}")
+		// runtimeOnly fg.deobf('xyz.apex.forge:devworld:1.16.5-2.0.0')
+		runtimeOnly fg.deobf("xyz.apex.forge:smoothboot:${minecraft_version}-${smooth_boot_version}")
+	}
+
+	// Registrator versions must be equal to or higher than version used in ApexCore
+	if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
+		// we have access to Apex's GH Packages pull from there
+		compileOnly fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}")
+		runtimeOnly fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}")
+
+		compileOnly fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
+		runtimeOnly fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
+	} else {
+		// we dont have access to Apex's GH Packages, pull from CurseForge
+		compileOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
+		runtimeOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
+
+		compileOnly fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}")
+		runtimeOnly fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}")
+	}
+}
+
+def resourceTargets = [ 'META-INF/mods.toml', 'pack.mcmeta', "${mod_id}.mixins.json".toString() ]
+def intoTargets = [ "${rootDir}/out/production/resources/", "${rootDir}/out/production/${project.name}.main/", "${rootDir}/bin/main/" ]
+def replaceProperties = [
+	minecraft_version: minecraft_version,
+	minecraft_version_range: minecraft_version_range,
+	minecraft_version_short: minecraft_version_short,
+		
+	forge_version: forge_version,
+	forge_version_range: forge_version_range,
+	forge_gradle_version: forge_gradle_version,
+
+	mixin_gradle_version: mixin_gradle_version,
+	mixin_ap_version: mixin_ap_version,
+	
+	mappings_channel: mappings_channel,
+	mappings_version: mappings_version,
+	
+	mod_id: mod_id,
+	mod_name: mod_name,
+	mod_version: mod_version,
+	mod_base_package: mod_base_package,
+	mod_authors: mod_authors,
+	mod_curseforge_id: mod_curseforge_id,
+
+	registrator_version: registrator_version,
+	registrator_version_range: registrator_version_range,
+	registrator_cf_project: registrator_cf_project,
+	registrator_cf_file: registrator_cf_file,
+
+	apexcore_version: apexcore_version,
+	apexcore_version_range: apexcore_version_range,
+	apexcore_cf_project: apexcore_cf_project,
+	apexcore_cf_file: apexcore_cf_file,
+
+	cursegradle_version: cursegradle_version,
+	jei_version: jei_version,
+	top_version: top_version,
+	smooth_boot_version: smooth_boot_version
+]
+
+processResources {
+	inputs.properties replaceProperties
+	replaceProperties.put 'project', project
+
+	filesMatching(resourceTargets) {
+		expand replaceProperties
+	}
+
+	intoTargets.each { target ->
+		if(file(target).exists()) {
+			copy{
+				from(sourceSets.main.resources) {
+					include resourceTargets
+					expand replaceProperties
+				}
+
+				into target
+			}
+		}
 	}
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = 'sources'
+	classifier 'sources'
 	from sourceSets.main.allJava
 }
 
 task deobfJar(type: Jar) {
-	classifier = 'deobf'
+	classifier 'deobf'
 	from sourceSets.main.output
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier 'javadoc'
+	from javadoc.destinationDir
+}
+
+jar {
+	from sourceSets.main.output.classesDirs
+	from sourceSets.main.output.resourcesDir
 }
 
 artifacts {
 	archives jar
 	archives sourcesJar
 	archives deobfJar
-	archives shadowJar
+	archives javadocJar
 }
 
-jar {
-	from sourceSets.main.output.classesDirs
-	from sourceSets.main.output.resourcesDir
-
+tasks.withType(Jar) {
 	manifest {
 		attributes([
 				'Specification-Title': "${mod_name}",
-				'Specification-Vendor': "${mod_author}",
-				'Specification-Version': '1',
+				'Specification-Vendor': "${mod_authors}",
+				'Specification-Version': "${mod_version}",
 				'Implementation-Title': "${mod_name}",
-				'Implementation-Version': "${mod_version}",
-				'Implementation-Vendor' : "${mod_name}",
-				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-				// 'MixinConfigs': "${mod_id}.mixins.json"
+				'Implementation-Version': "${project.version}",
+				'Implementation-Vendor' : "${mod_authors}",
+				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+				'MixinConfigs': "${mod_id}.mixins.json"
 		])
 	}
 }
 
-shadowJar {
-	configurations = [ project.configurations.shade ]
-	relocate 'com.tterrag.registrate', "${project.group}.repack.com.tterrag.registrate"
-	classifier = 'fat'
-}
-
-reobf {
-	shadowJar { }
-}
-
 jar.finalizedBy('reobfJar')
 
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			groupId = "${apex_package}"
-			artifactId = "${mod_id}"
-			version = "${mc_version}-${mod_version}"
+if(System.getenv('GITHUB_TOKEN') != null) {
+	publishing {
+		publications {
+			gpr(MavenPublication) {
+				groupId = "${mod_base_package}"
+				artifactId = "${mod_id}"
+				version = "${minecraft_version}-${mod_version}"
 
-			artifact jar
-			artifact sourcesJar
-			artifact deobfJar
-			artifact shadowJar
+				artifact jar
+				artifact sourcesJar
+				artifact deobfJar
+				artifact javadocJar
+			}
+		}
+		repositories {
+			maven {
+				name = 'GitHubPackages'
+				url = uri('https://maven.pkg.github.com/ApexModder/FantasyTable')
+
+				credentials {
+					username = System.getenv('GITHUB_ACTOR')
+					password = System.getenv('GITHUB_TOKEN')
+				}
+			}
 		}
 	}
-	repositories {
-		mavenLocal()
+}
+
+if(project.hasProperty('apex_curse_gradle_token')) {
+	curseforge {
+		apiKey = project.getProperty('apex_curse_gradle_token')
+
+		project {
+			id = "${mod_curseforge_id}"
+			releaseType = 'release'
+			addGameVersion "${minecraft_version}"
+
+			mainArtifact jar
+			addArtifact deobfJar
+			addArtifact sourcesJar
+			addArtifact javadocJar
+
+			relations {
+				requiredDependency 'registrator'
+				requiredDependency 'apexcore'
+			}
+		}
+	}
+} else if(System.getenv('CURSEFORGE_TOKEN') != null) {
+	curseforge {
+		apiKey = System.getenv('CURSEFORGE_TOKEN')
+
+		project {
+			id = "${mod_curseforge_id}"
+			releaseType = 'release'
+			addGameVersion "${minecraft_version}"
+
+			mainArtifact jar
+			addArtifact deobfJar
+			addArtifact sourcesJar
+			addArtifact javadocJar
+
+			relations {
+				requiredDependency 'registrator'
+				requiredDependency 'apexcore'
+			}
+		}
 	}
 }

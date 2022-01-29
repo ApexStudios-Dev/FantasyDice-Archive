@@ -1,7 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#forge:buttons/stone",
-    "#forge:stone_buttons"
-  ]
-}
