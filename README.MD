@@ -8,7 +8,7 @@
 Mod requested by **_FantasyGaming_** which adds **_6_** & **_20 Sided Dice_** to the game of varying types.<br>
 All dice stack to max of 8.<br>
 This mod requires [**_ApexCore_**](https://github.com/ApexModder/ApexCore) & [**_Registrator_**](https://github.com/ApexModder/Registrator/). <br>
-All recipes use the same pattern either **_2x2_** for **_6-Sided_** or **_Cross_** for **_20-Sided_**.<br>
+All recipes use the same pattern either **_2x2_** for **_6-Sided_** or a **_Cross_** for **_20-Sided_**.<br>
 
 <details>
 <summary><b>Recipes</b></summary>
@@ -17,24 +17,26 @@ All recipes use the same pattern either **_2x2_** for **_6-Sided_** or **_Cross_
 ![Recipes-20-Sided](https://i.imgur.com/EWiqU6o.gif)
 </details>
 
-### **_DiceTypes_**
-- **_Wooden_**
-  - Crafted using **_Wooden Buttons_**.
+### **_Special Features_**
+- /roll command to roll in chat with a specified number similar to World of Warcraft
+  (ex: "/roll 100" will always roll out of 100, with the roll being shown in chat)
+  In addition, chat will show how many dice have been rolled 
+  (rolling 5 six-sided dice will show like this: NAME rolled ## (5d6))
+- Paper dice that can be dyed to any combination the same way leather armor can 
+- Colored chat text for each dice
+  (matches paper dice color if used)
+- Dice pouches that can also be dyed like leather armor, and have 6x3 spaces in it
+
+
+### **_Dice Types_**
+- **_Wood_**
 - **_Stone_**
-  - Crafted using **_Stone Buttons_**.
 - **_Paper_**
-  - Crafted using **_Paper_**.
-  - Can be **_Dyed_** into any **_Color_**.
 - **_Bone_**
-  - Crafted using **_Bones_**.
 - **_Iron_**
-  - Crafted using **_Iron Ingots_**.
-- **_Golden_**
-  - Crafted using **_Gold Ingots_**.
+- **_Gold_**
 - **_Diamond_**
-  - Crafted using **_Diamonds_**.
 - **_Emerald_**
-  - Crafted using **_Emeralds_**.
 
 ### **_Specialty Dice_** (_Requested by Devs_)
 - **_Fantasy's Lucky Dice_**
