@@ -43,6 +43,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final NonnullBiFunction<ItemStack, Style, Style> styleModifier;
 	private final RollCallback rollCallback;
 	private final boolean usesFoil;
+	private final int rollAddition;
 
 	private DiceType(Builder<OWNER, DIE> builder)
 	{
@@ -52,6 +53,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		styleModifier = builder.styleModifier;
 		rollCallback = builder.rollCallback;
 		usesFoil = builder.usesFoil;
+		rollAddition = builder.rollAddition;
 
 		for(Int2ObjectMap.Entry<String> entry : builder.dieNames.int2ObjectEntrySet())
 		{
@@ -116,6 +118,11 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return diceItems.values();
 	}
 
+	public int getRollAddition()
+	{
+		return rollAddition;
+	}
+
 	public IntSet getValidSides()
 	{
 		return diceItems.keySet();
@@ -163,6 +170,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		@Nullable private TriFunction<@NonnullType Integer, @NonnullType DataGenContext<Item, DIE>, @NonnullType ShapedRecipeBuilder, @NullableType ShapedRecipeBuilder> recipeModifier = null;
 		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls) -> rolls;
 		private boolean usesFoil = false;
+		private int rollAddition = 0;
 
 		private Builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
 		{
@@ -172,6 +180,12 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 			tag = owner.itemTagModded("dice/" + name);
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
+		}
+
+		public Builder<OWNER, DIE> withRollAddition(int rollAddition)
+		{
+			this.rollAddition = rollAddition;
+			return this;
 		}
 
 		public Builder<OWNER, DIE> withStyle(NonnullBiFunction<ItemStack, Style, Style> nameStyle)

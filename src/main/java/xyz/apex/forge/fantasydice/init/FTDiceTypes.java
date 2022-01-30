@@ -34,6 +34,7 @@ public final class FTDiceTypes
 			.builder("wooden", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF8A5A27)))
 				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, ItemTags.WOODEN_BUTTONS))
+				.withRollAddition(-3)
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -44,6 +45,18 @@ public final class FTDiceTypes
 			.builder("stone", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GRAY))
 				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Blocks.STONE_BUTTON))
+				.withRollAddition(-2)
+				.withSimpleDie(6)
+				.withSimpleDie(20)
+			.build();
+	// endregion
+
+	// region: Bone
+	public static final DiceType<FTRegistry, DiceItem> DICE_BONE = DiceType
+			.builder("bone", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
+				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.BONES))
+				.withRollAddition(-1)
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -65,16 +78,6 @@ public final class FTDiceTypes
 			.build();
 	// endregion
 
-	// region: Bone
-	public static final DiceType<FTRegistry, DiceItem> DICE_BONE = DiceType
-			.builder("bone", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
-				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.BONES))
-				.withSimpleDie(6)
-				.withSimpleDie(20)
-			.build();
-	// endregion
-
 	// region: Iron
 	public static final DiceType<FTRegistry, DiceItem> DICE_IRON = DiceType
 			.builder("iron", REGISTRY)
@@ -90,6 +93,7 @@ public final class FTDiceTypes
 			.builder("golden", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.YELLOW))
 				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.INGOTS_GOLD))
+				.withRollAddition(1)
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -100,6 +104,7 @@ public final class FTDiceTypes
 			.builder("diamond", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.AQUA))
 				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.GEMS_DIAMOND))
+				.withRollAddition(2)
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();
@@ -110,6 +115,7 @@ public final class FTDiceTypes
 			.builder("emerald", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GREEN))
 				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.GEMS_EMERALD))
+				.withRollAddition(3)
 				.withSimpleDie(6)
 				.withSimpleDie(20)
 			.build();

@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -60,9 +61,14 @@ public class DiceHelper
 
 		DiceItem die = (DiceItem) stack.getItem();
 		int sides = die.getSides();
-		int[] rolls = IntStream.range(0, stack.getCount()).map(i -> roll(level.random, min, sides)).toArray();
-		rolls = die.getDiceType().onRoll(player, hand, stack, min, sides, rolls);
+		int stackCount = stack.getCount();
+		int maxPossibleRoll = sides * stackCount;
+		int[] rolls = IntStream.range(0, stackCount).map(i -> roll(level.random, min, sides)).toArray();
+		DiceType<?, ?> diceType = die.getDiceType();
+		rolls = diceType.onRoll(player, hand, stack, min, sides, rolls);
 		int roll = Arrays.stream(rolls).sum();
+		roll += diceType.getRollAddition();
+		roll = MathHelper.clamp(roll, min, maxPossibleRoll);
 		IFormattableTextComponent textComponent = createTextComponent(player, stack, die, roll, sides);
 		sendMessageToPlayers(player, textComponent);
 
