@@ -8,6 +8,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.DimensionType;
@@ -96,7 +97,7 @@ public class DiceHelper
 				.withHoverEvent(
 						new HoverEvent(
 								HoverEvent.Action.SHOW_TEXT,
-								stack.getHoverName().plainCopy().withStyle(hoverStyle -> diceType.withStyle(stack, hoverStyle))
+								stack.getHoverName().copy().withStyle(hoverStyle -> diceType.withStyle(stack, hoverStyle))
 						)
 				)
 		);
@@ -144,5 +145,19 @@ public class DiceHelper
 			return true;
 
 		return FantasyDice.CONFIG.luckyRollerIDs.contains(playerId);
+	}
+
+	public static IFormattableTextComponent makeApexComponent(Random rng, ITextComponent component)
+	{
+		IFormattableTextComponent apex = StringTextComponent.EMPTY.plainCopy();
+		String string = component.getString();
+
+		for(char c : string.toCharArray())
+		{
+			boolean obfuscate = rng.nextBoolean();
+			apex = apex.append(new StringTextComponent(String.valueOf(c)).withStyle(style -> style.setObfuscated(obfuscate)));
+		}
+
+		return apex;
 	}
 }

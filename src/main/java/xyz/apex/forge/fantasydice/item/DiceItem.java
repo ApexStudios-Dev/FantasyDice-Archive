@@ -66,7 +66,9 @@ public class DiceItem extends Item
 	@Override
 	public ITextComponent getName(ItemStack stack)
 	{
-		return buildNameComponent(stack);
+		if(!stack.hasCustomHoverName())
+			stack.setHoverName(buildNameComponent(stack));
+		return stack.getHoverName();
 	}
 
 	@Override
@@ -90,18 +92,11 @@ public class DiceItem extends Item
 
 	private IFormattableTextComponent buildNameComponent(ItemStack stack)
 	{
-		if(diceType != null && diceType.matches(FTDiceTypes.DICE_APEX))
-			return buildApexNameComponent(stack);
-		return new TranslationTextComponent(getDescriptionId()).withStyle(style -> withStyle(stack, style));
-	}
+		IFormattableTextComponent nameComponent = new TranslationTextComponent(getDescriptionId());
 
-	private IFormattableTextComponent buildApexNameComponent(ItemStack stack)
-	{
-		return new TranslationTextComponent(
-				FantasyDice.DIE_APEX_NAME,
-				new StringTextComponent("NULL").withStyle(style -> withStyle(stack, style).setObfuscated(true)),
-				sides
-		).withStyle(style -> withStyle(stack, style));
+		if(diceType != null && diceType.matches(FTDiceTypes.DICE_APEX))
+			nameComponent = DiceHelper.makeApexComponent(random, nameComponent);
+		return nameComponent.withStyle(style -> withStyle(stack, style));
 	}
 
 	private Style withStyle(ItemStack stack, Style style)

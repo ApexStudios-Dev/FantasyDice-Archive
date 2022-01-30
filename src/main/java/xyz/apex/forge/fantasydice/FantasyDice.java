@@ -29,8 +29,6 @@ public final class FantasyDice
 	public static final String DIE_ROLL_RESULT_KEY = ID + ".die.roll.result";
 	public static final String DIE_ROLL_DESC_KEY = ID + ".die.roll.desc";
 
-	public static final String DIE_APEX_NAME = ID + ".die.apex.name";
-
 	public static final UUID FANTASY_UUID = UUID.fromString("598535bd-f330-4123-b4d0-c6e618390477");
 
 	static
