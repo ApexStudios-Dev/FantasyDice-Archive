@@ -52,7 +52,7 @@ public class DiceItem extends Item
 	{
 		ItemStack stack = player.getItemInHand(hand);
 
-		if(DiceHelper.throwDice(level, player, hand, stack, 0))
+		if(DiceHelper.throwDice(level, player, hand, stack, 1))
 			return ActionResult.sidedSuccess(stack, level.isClientSide);
 		return ActionResult.pass(stack);
 	}
