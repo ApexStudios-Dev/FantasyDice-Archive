@@ -18,9 +18,9 @@ import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.fantasydice.item.DyeableDiceItem;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
+import xyz.apex.repack.com.tterrag.registrate.providers.DataGenContext;
 import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateRecipeProvider;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -33,10 +33,15 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_WOODEN = DiceType
 			.builder("wooden", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF8A5A27)))
-				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, ItemTags.WOODEN_BUTTONS))
 				.withRollAddition(-3)
-				.withSimpleDie(6)
-				.withSimpleDie(20)
+
+				.withDie(6)
+					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, ItemTags.WOODEN_BUTTONS))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> recipeTwentySided(ctx, provider, ItemTags.WOODEN_BUTTONS))
+				.build()
 			.build();
 	// endregion
 
@@ -44,10 +49,15 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_STONE = DiceType
 			.builder("stone", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GRAY))
-				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Blocks.STONE_BUTTON))
 				.withRollAddition(-2)
-				.withSimpleDie(6)
-				.withSimpleDie(20)
+
+				.withDie(6)
+					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Blocks.STONE_BUTTON))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> recipeTwentySided(ctx, provider, Blocks.STONE_BUTTON))
+				.build()
 			.build();
 	// endregion
 
@@ -55,10 +65,15 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_BONE = DiceType
 			.builder("bone", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
-				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.BONES))
 				.withRollAddition(-1)
-				.withSimpleDie(6)
-				.withSimpleDie(20)
+
+				.withDie(6)
+					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.BONES))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> recipeTwentySided(ctx, provider, Tags.Items.BONES))
+				.build()
 			.build();
 	// endregion
 
@@ -66,14 +81,15 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
 			.builder("paper", REGISTRY, DyeableDiceItem::new)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
-				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Items.PAPER))
 
 				.withDie(6)
 					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Items.PAPER))
 				.build()
 
 				.withDie(20)
 					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> recipeTwentySided(ctx, provider, Items.PAPER))
 				.build()
 			.build();
 	// endregion
@@ -82,9 +98,14 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_IRON = DiceType
 			.builder("iron", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GRAY))
-				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.INGOTS_IRON))
-				.withSimpleDie(6)
-				.withSimpleDie(20)
+
+				.withDie(6)
+					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.INGOTS_IRON))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> recipeTwentySided(ctx, provider, Tags.Items.INGOTS_IRON))
+				.build()
 			.build();
 	// endregion
 
@@ -92,10 +113,15 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_GOLD = DiceType
 			.builder("golden", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.YELLOW))
-				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.INGOTS_GOLD))
 				.withRollAddition(1)
-				.withSimpleDie(6)
-				.withSimpleDie(20)
+
+				.withDie(6)
+					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.INGOTS_GOLD))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> recipeTwentySided(ctx, provider, Tags.Items.INGOTS_GOLD))
+				.build()
 			.build();
 	// endregion
 
@@ -103,10 +129,15 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_DIAMOND = DiceType
 			.builder("diamond", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.AQUA))
-				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.GEMS_DIAMOND))
 				.withRollAddition(2)
-				.withSimpleDie(6)
-				.withSimpleDie(20)
+
+				.withDie(6)
+					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.GEMS_DIAMOND))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> recipeTwentySided(ctx, provider, Tags.Items.GEMS_DIAMOND))
+				.build()
 			.build();
 	// endregion
 
@@ -114,10 +145,15 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_EMERALD = DiceType
 			.builder("emerald", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GREEN))
-				.withRecipe((sides, ctx, recipe) -> recipes(sides, recipe, Tags.Items.GEMS_EMERALD))
 				.withRollAddition(3)
-				.withSimpleDie(6)
-				.withSimpleDie(20)
+
+				.withDie(6)
+					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.GEMS_EMERALD))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> recipeTwentySided(ctx, provider, Tags.Items.GEMS_EMERALD))
+				.build()
 			.build();
 	// endregion
 
@@ -262,60 +298,50 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Recipes
-	@Nullable
-	private static ShapedRecipeBuilder recipes(int sides, ShapedRecipeBuilder recipe, ITag.INamedTag<Item> ingredient)
+	private static <D extends DiceItem> void recipeSixSided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, ITag.INamedTag<Item> ingredient)
 	{
-		switch(sides)
-		{
-			case 6: return recipeSixSided(recipe, ingredient);
-			case 20: return recipeTwentySided(recipe, ingredient);
-			default: return null;
-		}
+		ShapedRecipeBuilder.shaped(ctx::get, 8)
+		                   .define('I', ingredient)
+		                   .pattern("II")
+		                   .pattern("II")
+		                   .group("dice/6_sided")
+		                   .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient))
+		                   .save(provider, ctx.getId());
 	}
 
-	private static ShapedRecipeBuilder recipeSixSided(ShapedRecipeBuilder recipe, ITag.INamedTag<Item> ingredient)
+	private static <D extends DiceItem> void recipeTwentySided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, ITag.INamedTag<Item> ingredient)
 	{
-		return recipe.define('I', ingredient)
-		             .pattern("II")
-		             .pattern("II")
-		             .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient));
+		ShapedRecipeBuilder.shaped(ctx::get, 8)
+		                   .define('I', ingredient)
+		                   .pattern(" I ")
+		                   .pattern("III")
+		                   .pattern(" I ")
+		                   .group("dice/20_sided")
+		                   .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient))
+		                   .save(provider, ctx.getId());
 	}
 
-	private static ShapedRecipeBuilder recipeTwentySided(ShapedRecipeBuilder recipe, ITag.INamedTag<Item> ingredient)
+	private static <D extends DiceItem> void recipeSixSided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, IItemProvider ingredient)
 	{
-		return recipe.define('I', ingredient)
-		             .pattern(" I ")
-		             .pattern("III")
-		             .pattern(" I ")
-		             .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient));
+		ShapedRecipeBuilder.shaped(ctx::get, 8)
+		                   .define('I', ingredient)
+		                   .pattern("II")
+		                   .pattern("II")
+		                   .group("dice/6_sided")
+		                   .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient))
+		                   .save(provider, ctx.getId());
 	}
 
-	@Nullable
-	private static ShapedRecipeBuilder recipes(int sides, ShapedRecipeBuilder recipe, IItemProvider ingredient)
+	private static <D extends DiceItem> void recipeTwentySided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, IItemProvider ingredient)
 	{
-		switch(sides)
-		{
-			case 6: return recipeSixSided(recipe, ingredient);
-			case 20: return recipeTwentySided(recipe, ingredient);
-			default: return null;
-		}
-	}
-
-	private static ShapedRecipeBuilder recipeSixSided(ShapedRecipeBuilder recipe, IItemProvider ingredient)
-	{
-		return recipe.define('I', ingredient)
-		             .pattern("II")
-		             .pattern("II")
-		             .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient));
-	}
-
-	private static ShapedRecipeBuilder recipeTwentySided(ShapedRecipeBuilder recipe, IItemProvider ingredient)
-	{
-		return recipe.define('I', ingredient)
-		             .pattern(" I ")
-		             .pattern("III")
-		             .pattern(" I ")
-		             .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient));
+		ShapedRecipeBuilder.shaped(ctx::get, 8)
+		                   .define('I', ingredient)
+		                   .pattern(" I ")
+		                   .pattern("III")
+		                   .pattern(" I ")
+		                   .group("dice/20_sided")
+		                   .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient))
+		                   .save(provider, ctx.getId());
 	}
 	// endregion
 }

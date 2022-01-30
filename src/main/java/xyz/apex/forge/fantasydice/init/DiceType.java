@@ -7,7 +7,6 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.ObjectCollection;
 import org.apache.commons.lang3.Validate;
 
-import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,16 +19,11 @@ import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.builder.ItemBuilder;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
-import xyz.apex.java.utility.function.TriFunction;
 import xyz.apex.java.utility.nullness.NonnullBiFunction;
-import xyz.apex.java.utility.nullness.NonnullType;
-import xyz.apex.java.utility.nullness.NullableType;
-import xyz.apex.repack.com.tterrag.registrate.providers.DataGenContext;
 import xyz.apex.repack.com.tterrag.registrate.providers.ProviderType;
 import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
 import xyz.apex.repack.com.tterrag.registrate.util.entry.RegistryEntry;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem>
@@ -64,18 +58,6 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			ItemEntry<DIE> itemEntry = ItemEntry.cast(registryEntry);
 
 			diceItems.put(sides, itemEntry);
-
-			if(builder.recipeModifier != null)
-			{
-				owner.addDataGenerator(ProviderType.RECIPE, provider -> {
-					DataGenContext<Item, DIE> ctx = new DataGenContext<>(itemEntry, dieName, itemEntry.getId());
-					ShapedRecipeBuilder recipe = ShapedRecipeBuilder.shaped(itemEntry, 8).group("dice/" + name);
-					recipe = builder.recipeModifier.apply(sides, ctx, recipe);
-
-					if(recipe != null)
-						recipe.save(provider);
-				});
-			}
 		}
 
 		diceTypes.add(this);
@@ -172,7 +154,6 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
 
 		private NonnullBiFunction<ItemStack, Style, Style> styleModifier = (stack, style) -> style;
-		@Nullable private TriFunction<@NonnullType Integer, @NonnullType DataGenContext<Item, DIE>, @NonnullType ShapedRecipeBuilder, @NullableType ShapedRecipeBuilder> recipeModifier = null;
 		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls) -> rolls;
 		private boolean usesFoil = false;
 		private int rollAddition = 0;
@@ -196,12 +177,6 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		public Builder<OWNER, DIE> withStyle(NonnullBiFunction<ItemStack, Style, Style> nameStyle)
 		{
 			this.styleModifier = nameStyle;
-			return this;
-		}
-
-		public Builder<OWNER, DIE> withRecipe(TriFunction<@NonnullType Integer, @NonnullType DataGenContext<Item, DIE>, @NonnullType ShapedRecipeBuilder, @NullableType ShapedRecipeBuilder> recipeModifier)
-		{
-			this.recipeModifier = recipeModifier;
 			return this;
 		}
 
