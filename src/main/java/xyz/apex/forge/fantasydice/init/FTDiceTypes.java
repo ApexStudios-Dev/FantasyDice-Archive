@@ -2,10 +2,12 @@ package xyz.apex.forge.fantasydice.init;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.SmithingRecipeBuilder;
 import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
@@ -157,6 +159,22 @@ public final class FTDiceTypes
 			.build();
 	// endregion
 
+	// region: Netherite
+	public static final DiceType<FTRegistry, DiceItem> DICE_NETHERITE = DiceType
+			.builder("netherite", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF5A575A)))
+				.withRollAddition(4)
+
+				.withDie(6)
+					.recipe((ctx, provider) -> smithing(ctx, provider, DICE_DIAMOND.getItem(6)))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> smithing(ctx, provider, DICE_DIAMOND.getItem(20)))
+				.build()
+			.build();
+	// endregion
+
 	// region: Fantasy
 	public static final DiceType<FTRegistry, DiceItem> DICE_FANTASY = DiceType
 			.builder("fantasy", REGISTRY)
@@ -298,6 +316,14 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Recipes
+	// TODO: This should probaly be merged into ApexCore or Registrator
+	private static <I extends Item> void smithing(DataGenContext<Item, I> ctx, RegistrateRecipeProvider provider, IItemProvider input)
+	{
+		SmithingRecipeBuilder.smithing(Ingredient.of(input), Ingredient.of(Tags.Items.INGOTS_NETHERITE), ctx.getEntry())
+		                     .unlocks("has_netherite_ingot", RegistrateRecipeProvider.hasItem(Tags.Items.INGOTS_NETHERITE))
+		                     .save(provider, ctx.getId() + "_smithing");
+	}
+
 	private static <D extends DiceItem> void recipeSixSided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, ITag.INamedTag<Item> ingredient)
 	{
 		ShapedRecipeBuilder.shaped(ctx::get, 8)
