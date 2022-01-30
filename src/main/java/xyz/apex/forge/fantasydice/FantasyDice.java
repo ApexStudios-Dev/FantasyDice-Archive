@@ -54,6 +54,17 @@ public final class FantasyDice
 	{
 		public final ForgeConfigSpec.IntValue diceRollMessageRange;
 		public final ForgeConfigSpec.BooleanValue diceRollMessageCrossDimensions;
+
+		public final ForgeConfigSpec.IntValue diceWoodenQuality;
+		public final ForgeConfigSpec.IntValue diceStoneQuality;
+		public final ForgeConfigSpec.IntValue diceBoneQuality;
+		public final ForgeConfigSpec.IntValue dicePaperQuality;
+		public final ForgeConfigSpec.IntValue diceIronQuality;
+		public final ForgeConfigSpec.IntValue diceGoldenQuality;
+		public final ForgeConfigSpec.IntValue diceDiamondQuality;
+		public final ForgeConfigSpec.IntValue diceEmeraldQuality;
+		public final ForgeConfigSpec.IntValue diceNetheriteQuality;
+
 		private final ForgeConfigSpec.ConfigValue<List<? extends String>> diceLuckyRollers;
 		public final List<UUID> luckyRollerIDs = Lists.newArrayList();
 
@@ -66,6 +77,42 @@ public final class FantasyDice
 			diceRollMessageCrossDimensions = builder
 					.comment("Whether or not Dice Roll messages will be displayed to Players in different Dimensions than the Thrower", "Note: If this is True the Roll Range will be ignored in differing Dimensions")
 					.define("die.roll_message.cross_dimension", false);
+
+			diceWoodenQuality = builder
+					.comment("Quality of 'Wooden Dice' rolls")
+					.defineInRange("die.quality.wooden", -3, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			diceStoneQuality = builder
+					.comment("Quality of 'Stone Dice' rolls")
+					.defineInRange("die.quality.stone", -2, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			diceBoneQuality = builder
+					.comment("Quality of 'Bone Dice' rolls")
+					.defineInRange("die.quality.bone", -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			dicePaperQuality = builder
+					.comment("Quality of 'Paper Dice' rolls")
+					.defineInRange("die.quality.paper", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			diceIronQuality = builder
+					.comment("Quality of 'Iron Dice' rolls")
+					.defineInRange("die.quality.iron", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			diceGoldenQuality = builder
+					.comment("Quality of 'Golden Dice' rolls")
+					.defineInRange("die.quality.golden", 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			diceDiamondQuality = builder
+					.comment("Quality of 'Diamond Dice' rolls")
+					.defineInRange("die.quality.diamond", 2, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			diceEmeraldQuality = builder
+					.comment("Quality of 'Emerald Dice' rolls")
+					.defineInRange("die.quality.emerald", 3, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			diceNetheriteQuality = builder
+					.comment("Quality of 'Netherite Dice' rolls")
+					.defineInRange("die.quality.netherite", 4, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 			diceLuckyRollers = builder
 					.comment("List of player profile UUID's that are considered Lucky Rollers for 'Fantasy's Lucky Dice'", "Example: '43fd393b-879d-45ec-b2d5-ce8c4688ab66' - Would be for 'ApexSPG' (Values must include dashes '-')", "Note: Use somewhere like 'https://mcuuid.net/' to obtain profile UUID's")

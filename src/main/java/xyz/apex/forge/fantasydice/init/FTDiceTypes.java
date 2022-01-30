@@ -16,6 +16,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.Tags;
 
+import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.fantasydice.item.DyeableDiceItem;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
@@ -35,7 +36,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_WOODEN = DiceType
 			.builder("wooden", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF8A5A27)))
-				.withRollAddition(-3)
+				.withDiceQuality(FantasyDice.CONFIG.diceWoodenQuality::get)
 
 				.withDie(6)
 					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, ItemTags.WOODEN_BUTTONS))
@@ -51,7 +52,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_STONE = DiceType
 			.builder("stone", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GRAY))
-				.withRollAddition(-2)
+				.withDiceQuality(FantasyDice.CONFIG.diceStoneQuality::get)
 
 				.withDie(6)
 					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Blocks.STONE_BUTTON))
@@ -67,7 +68,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_BONE = DiceType
 			.builder("bone", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
-				.withRollAddition(-1)
+				.withDiceQuality(FantasyDice.CONFIG.diceBoneQuality::get)
 
 				.withDie(6)
 					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.BONES))
@@ -83,6 +84,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
 			.builder("paper", REGISTRY, DyeableDiceItem::new)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
+				.withDiceQuality(FantasyDice.CONFIG.dicePaperQuality::get)
 
 				.withDie(6)
 					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
@@ -100,6 +102,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_IRON = DiceType
 			.builder("iron", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GRAY))
+				.withDiceQuality(FantasyDice.CONFIG.diceIronQuality::get)
 
 				.withDie(6)
 					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.INGOTS_IRON))
@@ -115,7 +118,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_GOLD = DiceType
 			.builder("golden", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.YELLOW))
-				.withRollAddition(1)
+				.withDiceQuality(FantasyDice.CONFIG.diceGoldenQuality::get)
 
 				.withDie(6)
 					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.INGOTS_GOLD))
@@ -131,7 +134,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_DIAMOND = DiceType
 			.builder("diamond", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.AQUA))
-				.withRollAddition(2)
+				.withDiceQuality(FantasyDice.CONFIG.diceDiamondQuality::get)
 
 				.withDie(6)
 					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.GEMS_DIAMOND))
@@ -147,7 +150,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_EMERALD = DiceType
 			.builder("emerald", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GREEN))
-				.withRollAddition(3)
+				.withDiceQuality(FantasyDice.CONFIG.diceEmeraldQuality::get)
 
 				.withDie(6)
 					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Tags.Items.GEMS_EMERALD))
@@ -163,7 +166,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_NETHERITE = DiceType
 			.builder("netherite", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF5A575A)))
-				.withRollAddition(4)
+				.withDiceQuality(FantasyDice.CONFIG.diceNetheriteQuality::get)
 
 				.withDie(6)
 					.recipe((ctx, provider) -> smithing(ctx, provider, DICE_DIAMOND.getItem(6)))

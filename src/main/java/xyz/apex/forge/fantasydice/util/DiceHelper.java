@@ -72,7 +72,7 @@ public class DiceHelper
 		DiceType<?, ?> diceType = die.getDiceType();
 		rolls = diceType.onRoll(player, hand, stack, min, sides, rolls);
 		int roll = Arrays.stream(rolls).sum();
-		roll += diceType.getRollAddition();
+		roll += diceType.getDiceQuality();
 
 		if(!diceType.matches(FTDiceTypes.DICE_APEX)) // apex goes negative, clamping will break it
 			roll = MathHelper.clamp(roll, min, maxPossibleRoll);

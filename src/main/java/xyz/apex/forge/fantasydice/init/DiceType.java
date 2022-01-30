@@ -25,6 +25,7 @@ import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
 import xyz.apex.repack.com.tterrag.registrate.util.entry.RegistryEntry;
 
 import java.util.List;
+import java.util.function.IntSupplier;
 
 public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem>
 {
@@ -35,9 +36,9 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final Int2ObjectMap<ItemEntry<DIE>> diceItems = new Int2ObjectOpenHashMap<>();
 	private final ITag.INamedTag<Item> tag;
 	private final NonnullBiFunction<ItemStack, Style, Style> styleModifier;
+	private final IntSupplier diceQuality;
 	private final RollCallback rollCallback;
 	private final boolean usesFoil;
-	private final int rollAddition;
 
 	private DiceType(Builder<OWNER, DIE> builder)
 	{
@@ -47,7 +48,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		styleModifier = builder.styleModifier;
 		rollCallback = builder.rollCallback;
 		usesFoil = builder.usesFoil;
-		rollAddition = builder.rollAddition;
+		diceQuality = builder.diceQuality;
 
 		for(Int2ObjectMap.Entry<String> entry : builder.dieNames.int2ObjectEntrySet())
 		{
@@ -105,9 +106,9 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return diceItems.values();
 	}
 
-	public int getRollAddition()
+	public int getDiceQuality()
 	{
-		return rollAddition;
+		return diceQuality.getAsInt();
 	}
 
 	public IntSet getValidSides()
@@ -153,10 +154,10 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		private final Int2ObjectMap<String> dieNames = new Int2ObjectOpenHashMap<>();
 		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
 
+		private IntSupplier diceQuality = () -> 0;
 		private NonnullBiFunction<ItemStack, Style, Style> styleModifier = (stack, style) -> style;
 		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls) -> rolls;
 		private boolean usesFoil = false;
-		private int rollAddition = 0;
 
 		private Builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
 		{
@@ -168,9 +169,9 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
 		}
 
-		public Builder<OWNER, DIE> withRollAddition(int rollAddition)
+		public Builder<OWNER, DIE> withDiceQuality(IntSupplier diceQuality)
 		{
-			this.rollAddition = rollAddition;
+			this.diceQuality = diceQuality;
 			return this;
 		}
 
