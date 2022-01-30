@@ -82,17 +82,12 @@ public class DiceHelper
 
 	private static IFormattableTextComponent createTextComponent(PlayerEntity player, ItemStack stack, DiceItem die, int roll, int sides)
 	{
-		String strAmount = "";
-		int count = stack.getCount();
 		DiceType<?, ?> diceType = die.getDiceType();
-
-		if(count > 1)
-			strAmount += count;
 
 		return new TranslationTextComponent(
 				FantasyDice.DIE_ROLL_KEY,
 				player.getDisplayName(),
-				new TranslationTextComponent(FantasyDice.DIE_ROLL_RESULT_KEY, roll, strAmount, sides).withStyle(style -> diceType.withStyle(stack, style))
+				new TranslationTextComponent(FantasyDice.DIE_ROLL_RESULT_KEY, roll, stack.getCount(), sides).withStyle(style -> diceType.withStyle(stack, style))
 		).withStyle(style -> style
 				.withHoverEvent(
 						new HoverEvent(
