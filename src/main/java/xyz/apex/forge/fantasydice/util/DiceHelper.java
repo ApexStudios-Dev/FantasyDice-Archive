@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.init.DiceType;
+import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 
 import java.util.Arrays;
@@ -68,7 +69,10 @@ public class DiceHelper
 		rolls = diceType.onRoll(player, hand, stack, min, sides, rolls);
 		int roll = Arrays.stream(rolls).sum();
 		roll += diceType.getRollAddition();
-		roll = MathHelper.clamp(roll, min, maxPossibleRoll);
+
+		if(!diceType.matches(FTDiceTypes.DICE_APEX)) // apex goes negative, clamping will break it
+			roll = MathHelper.clamp(roll, min, maxPossibleRoll);
+
 		IFormattableTextComponent textComponent = createTextComponent(player, stack, die, roll, sides);
 		sendMessageToPlayers(player, textComponent);
 

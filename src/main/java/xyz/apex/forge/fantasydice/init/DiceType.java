@@ -88,6 +88,11 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		);
 	}
 
+	public boolean matches(DiceType<?, ?> other)
+	{
+		return owner.getModId().equals(other.owner.getModId()) && name.equals(other.name);
+	}
+
 	public OWNER getOwner()
 	{
 		return owner;

@@ -90,7 +90,7 @@ public class DiceItem extends Item
 
 	private IFormattableTextComponent buildNameComponent(ItemStack stack)
 	{
-		if(diceType == FTDiceTypes.DICE_APEX)
+		if(diceType != null && diceType.matches(FTDiceTypes.DICE_APEX))
 			return buildApexNameComponent(stack);
 		return new TranslationTextComponent(getDescriptionId()).withStyle(style -> withStyle(stack, style));
 	}

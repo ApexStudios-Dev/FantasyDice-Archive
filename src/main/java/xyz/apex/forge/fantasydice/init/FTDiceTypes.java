@@ -208,6 +208,27 @@ public final class FTDiceTypes
 			.build();
 	// endregion
 
+	// region: Symacon
+	public static final DiceType<FTRegistry, DiceItem> DICE_SYMACON = DiceType
+			.builder("symacon", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFFFF681F)))
+				.onRoll((player, hand, stack, min, sides, rolls) -> {
+					boolean half = player.getRandom().nextBoolean();
+					return IntStream.of(rolls).map(i -> half ? i / 2 : i * 2).toArray();
+				})
+
+				.withDie(6)
+					.lang("Symacon's Gambling 6-Sided Die")
+					.lang(RegistrateLangExtProvider.EN_GB, "Symacon's Gambling 6-Sided Die")
+				.build()
+
+				.withDie(20)
+					.lang("Symacon's Gambling 20-Sided Die")
+					.lang(RegistrateLangExtProvider.EN_GB, "Symacon's Gambling 20-Sided Die")
+				.build()
+			.build();
+	// endregion
+
 	static void bootstrap()
 	{
 	}
