@@ -19,6 +19,7 @@ import xyz.apex.forge.fantasydice.init.DiceType;
 import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
@@ -26,6 +27,8 @@ import java.util.stream.IntStream;
 
 public class DiceHelper
 {
+	@Nullable private static IFormattableTextComponent apexNameComponent = null;
+
 	public static int roll(Random rng, int min, int max)
 	{
 		if(max < min)
@@ -144,6 +147,9 @@ public class DiceHelper
 
 	public static IFormattableTextComponent makeApexComponent(Random rng, ITextComponent component)
 	{
+		if(apexNameComponent != null)
+			return apexNameComponent;
+
 		IFormattableTextComponent apex = StringTextComponent.EMPTY.plainCopy();
 		String string = component.getString();
 
@@ -152,6 +158,9 @@ public class DiceHelper
 			boolean obfuscate = rng.nextBoolean();
 			apex = apex.append(new StringTextComponent(String.valueOf(c)).withStyle(style -> style.setObfuscated(obfuscate)));
 		}
+
+		if(FantasyDice.loadComplete && apexNameComponent == null)
+			apexNameComponent = apex;
 
 		return apex;
 	}

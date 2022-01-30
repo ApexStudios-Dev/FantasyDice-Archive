@@ -66,9 +66,10 @@ public class DiceItem extends Item
 	@Override
 	public ITextComponent getName(ItemStack stack)
 	{
-		if(!stack.hasCustomHoverName())
+		/*if(!stack.hasCustomHoverName())
 			stack.setHoverName(buildNameComponent(stack));
-		return stack.getHoverName();
+		return stack.getHoverName();*/
+		return buildNameComponent(stack);
 	}
 
 	@Override

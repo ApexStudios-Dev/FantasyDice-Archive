@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 import xyz.apex.forge.apexcore.lib.util.ForgeEventBusHelper;
 import xyz.apex.forge.apexcore.lib.util.ModEventBusHelper;
@@ -30,6 +32,7 @@ public final class FantasyDice
 	public static final String DIE_ROLL_DESC_KEY = ID + ".die.roll.desc";
 
 	public static final UUID FANTASY_UUID = UUID.fromString("598535bd-f330-4123-b4d0-c6e618390477");
+	public static boolean loadComplete = false;
 
 	static
 	{
@@ -43,6 +46,7 @@ public final class FantasyDice
 		FTRegistry.bootstrap();
 		ForgeEventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
 		ModEventBusHelper.addListener(ModConfig.ModConfigEvent.class, CONFIG::onConfigReload);
+		ModEventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, ID + ".toml");
 	}
 
