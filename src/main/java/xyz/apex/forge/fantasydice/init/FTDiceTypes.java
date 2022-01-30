@@ -163,7 +163,7 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Netherite
-	public static final DiceType<FTRegistry, DiceItem> DICE_NETHERITE = DiceType
+	/*public static final DiceType<FTRegistry, DiceItem> DICE_NETHERITE = DiceType
 			.builder("netherite", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF5A575A)))
 				.withDiceQuality(FantasyDice.CONFIG.diceNetheriteQuality::get)
@@ -175,7 +175,7 @@ public final class FTDiceTypes
 				.withDie(20)
 					.recipe((ctx, provider) -> smithing(ctx, provider, DICE_DIAMOND.getItem(20)))
 				.build()
-			.build();
+			.build();*/
 	// endregion
 
 	// region: Fantasy
