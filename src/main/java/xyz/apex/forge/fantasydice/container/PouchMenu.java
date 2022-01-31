@@ -3,17 +3,17 @@ package xyz.apex.forge.fantasydice.container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 
-import xyz.apex.forge.apexcore.lib.container.ItemInventoryContainer;
-import xyz.apex.forge.apexcore.lib.container.inventory.ItemInventory;
+import xyz.apex.forge.apexcore.lib.container.ItemInventoryMenu;
+import xyz.apex.forge.apexcore.lib.container.inventory.ItemContainer;
 import xyz.apex.forge.fantasydice.container.slot.DiceSlot;
 
 import javax.annotation.Nullable;
 
-public final class PouchMenu extends ItemInventoryContainer
+public final class PouchMenu extends ItemInventoryMenu
 {
-	public PouchMenu(@Nullable MenuType<?> menuType, int windowId, Inventory playerInventory, ItemInventory itemInventory)
+	public PouchMenu(@Nullable MenuType<?> menuType, int windowId, Inventory playerInventory, ItemContainer itemContainer)
 	{
-		super(menuType, windowId, playerInventory, itemInventory);
+		super(menuType, windowId, playerInventory, itemContainer);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public final class PouchMenu extends ItemInventoryContainer
 		{
 			for(var col = 0; col < 6; col++)
 			{
-				addSlot(new DiceSlot(itemInventory, opener, col + row * 6, 35 + col * 18, 17 + row * 18));
+				addSlot(new DiceSlot(itemContainer, opener, col + row * 6, 35 + col * 18, 17 + row * 18));
 			}
 		}
 	}

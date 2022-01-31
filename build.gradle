@@ -27,7 +27,7 @@ version = "${minecraft_version}-${mod_version}"
 group = "${mod_base_package}.${mod_id}"
 archivesBaseName = "${mod_id}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
 	mappings channel: "${mappings_channel}", version: "${mappings_version}"
@@ -312,7 +312,7 @@ if(System.getenv('GITHUB_TOKEN') != null) {
 	}
 }
 
-/*
+
 if(project.hasProperty('apex_curse_gradle_token')) {
 	curseforge {
 		apiKey = project.getProperty('apex_curse_gradle_token')
@@ -351,4 +351,4 @@ if(project.hasProperty('apex_curse_gradle_token')) {
 			}
 		}
 	}
-}*/
+}

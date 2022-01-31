@@ -21,7 +21,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 		super(FantasyDice.ID);
 
 		skipErrors();
-		itemGroup(() -> RegistratorItemGroup.create(this), "Fantasy's Dice");
+		creativeModeTab(() -> RegistratorItemGroup.create(this), "Fantasy's Dice");
 
 		addDataGenerator(ProviderType.LANG, provider -> {
 			provider.add(FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
