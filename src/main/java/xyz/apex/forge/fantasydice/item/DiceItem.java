@@ -1,13 +1,16 @@
 package xyz.apex.forge.fantasydice.item;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.*;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.init.DiceType;
@@ -17,9 +20,12 @@ import xyz.apex.forge.fantasydice.util.DiceHelper;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class DiceItem extends Item
 {
+	public static final Random RNG = new Random();
+
 	private final int sides;
 	@Nullable private DiceType<?, ?> diceType;
 
@@ -48,23 +54,23 @@ public class DiceItem extends Item
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand)
 	{
-		ItemStack stack = player.getItemInHand(hand);
+		var stack = player.getItemInHand(hand);
 
 		if(DiceHelper.throwDice(level, player, hand, stack, 1))
-			return ActionResult.sidedSuccess(stack, level.isClientSide);
-		return ActionResult.pass(stack);
+			return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+		return InteractionResultHolder.pass(stack);
 	}
 
 	@Override
-	public ITextComponent getDescription()
+	public Component getDescription()
 	{
 		return buildNameComponent(ItemStack.EMPTY);
 	}
 
 	@Override
-	public ITextComponent getName(ItemStack stack)
+	public Component getName(ItemStack stack)
 	{
 		/*if(!stack.hasCustomHoverName())
 			stack.setHoverName(buildNameComponent(stack));
@@ -79,11 +85,11 @@ public class DiceItem extends Item
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World level, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
 	{
 		if(diceType != null)
 		{
-			tooltip.add(new TranslationTextComponent(FantasyDice.DIE_ROLL_DESC_KEY, 1, sides)
+			tooltip.add(new TranslatableComponent(FantasyDice.DIE_ROLL_DESC_KEY, 1, sides)
 					.withStyle(style -> diceType
 							.withStyle(stack, style)
 					)
@@ -91,12 +97,12 @@ public class DiceItem extends Item
 		}
 	}
 
-	private IFormattableTextComponent buildNameComponent(ItemStack stack)
+	private MutableComponent buildNameComponent(ItemStack stack)
 	{
-		IFormattableTextComponent nameComponent = new TranslationTextComponent(getDescriptionId());
+		MutableComponent nameComponent = new TranslatableComponent(getDescriptionId());
 
 		if(diceType != null && diceType.matches(FTDiceTypes.DICE_APEX))
-			nameComponent = DiceHelper.makeApexComponent(random, nameComponent);
+			nameComponent = DiceHelper.makeApexComponent(RNG, nameComponent);
 		return nameComponent.withStyle(style -> withStyle(stack, style));
 	}
 

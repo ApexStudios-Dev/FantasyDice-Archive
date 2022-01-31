@@ -1,19 +1,19 @@
 package xyz.apex.forge.fantasydice.init;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.data.SmithingRecipeBuilder;
-import net.minecraft.item.IDyeableArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
+import net.minecraft.ChatFormatting;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.UpgradeRecipeBuilder;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
@@ -35,7 +35,7 @@ public final class FTDiceTypes
 	// region: Wooden
 	public static final DiceType<FTRegistry, DiceItem> DICE_WOODEN = DiceType
 			.builder("wooden", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF8A5A27)))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF8A5A27)))
 				.withDiceQuality(FantasyDice.CONFIG.diceWoodenQuality::get)
 
 				.withDie(6)
@@ -51,7 +51,7 @@ public final class FTDiceTypes
 	// region: Stone
 	public static final DiceType<FTRegistry, DiceItem> DICE_STONE = DiceType
 			.builder("stone", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GRAY))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.GRAY))
 				.withDiceQuality(FantasyDice.CONFIG.diceStoneQuality::get)
 
 				.withDie(6)
@@ -67,7 +67,7 @@ public final class FTDiceTypes
 	// region: Bone
 	public static final DiceType<FTRegistry, DiceItem> DICE_BONE = DiceType
 			.builder("bone", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.WHITE))
 				.withDiceQuality(FantasyDice.CONFIG.diceBoneQuality::get)
 
 				.withDie(6)
@@ -83,16 +83,16 @@ public final class FTDiceTypes
 	// region: Paper
 	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
 			.builder("paper", REGISTRY, DyeableDiceItem::new)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.WHITE))
 				.withDiceQuality(FantasyDice.CONFIG.dicePaperQuality::get)
 
 				.withDie(6)
-					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
 					.recipe((ctx, provider) -> recipeSixSided(ctx, provider, Items.PAPER))
 				.build()
 
 				.withDie(20)
-					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
 					.recipe((ctx, provider) -> recipeTwentySided(ctx, provider, Items.PAPER))
 				.build()
 			.build();
@@ -101,7 +101,7 @@ public final class FTDiceTypes
 	// region: Iron
 	public static final DiceType<FTRegistry, DiceItem> DICE_IRON = DiceType
 			.builder("iron", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GRAY))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.GRAY))
 				.withDiceQuality(FantasyDice.CONFIG.diceIronQuality::get)
 
 				.withDie(6)
@@ -117,7 +117,7 @@ public final class FTDiceTypes
 	// region: Golden
 	public static final DiceType<FTRegistry, DiceItem> DICE_GOLD = DiceType
 			.builder("golden", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.YELLOW))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.YELLOW))
 				.withDiceQuality(FantasyDice.CONFIG.diceGoldenQuality::get)
 
 				.withDie(6)
@@ -133,7 +133,7 @@ public final class FTDiceTypes
 	// region: Diamond
 	public static final DiceType<FTRegistry, DiceItem> DICE_DIAMOND = DiceType
 			.builder("diamond", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.AQUA))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.AQUA))
 				.withDiceQuality(FantasyDice.CONFIG.diceDiamondQuality::get)
 
 				.withDie(6)
@@ -149,7 +149,7 @@ public final class FTDiceTypes
 	// region: Emerald
 	public static final DiceType<FTRegistry, DiceItem> DICE_EMERALD = DiceType
 			.builder("emerald", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.GREEN))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.GREEN))
 				.withDiceQuality(FantasyDice.CONFIG.diceEmeraldQuality::get)
 
 				.withDie(6)
@@ -181,7 +181,7 @@ public final class FTDiceTypes
 	// region: Fantasy
 	public static final DiceType<FTRegistry, DiceItem> DICE_FANTASY = DiceType
 			.builder("fantasy", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFFF39F9F)))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFF39F9F)))
 				.onRoll((player, hand, stack, min, sides, rolls) -> {
 					Random rng = player.getRandom();
 
@@ -218,7 +218,7 @@ public final class FTDiceTypes
 	// region: Tobi
 	public static final DiceType<FTRegistry, DiceItem> DICE_TOBI = DiceType
 			.builder("tobi", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.DARK_PURPLE))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.DARK_PURPLE))
 				.onRoll((player, hand, stack, min, sides, rolls) -> {
 					Random rng = player.getRandom();
 
@@ -247,7 +247,7 @@ public final class FTDiceTypes
 	// region: Apex
 	public static final DiceType<FTRegistry, DiceItem> DICE_APEX = DiceType
 			.builder("apex", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.DARK_PURPLE))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.DARK_PURPLE))
 				.onRoll((player, hand, stack, min, sides, rolls) -> {
 					Arrays.setAll(rolls, i -> rolls[i] * -1);
 					return rolls;
@@ -268,7 +268,7 @@ public final class FTDiceTypes
 	// region: Symacon
 	public static final DiceType<FTRegistry, DiceItem> DICE_SYMACON = DiceType
 			.builder("symacon", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFFFF681F)))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFFF681F)))
 				.onRoll((player, hand, stack, min, sides, rolls) -> {
 					boolean half = player.getRandom().nextBoolean();
 					return IntStream.of(rolls).map(i -> half ? i / 2 : i * 2).toArray();
@@ -291,27 +291,27 @@ public final class FTDiceTypes
 	}
 
 	// region: Styles
-	private static Style colorOrDyed(ItemStack stack, Style style, Color color)
+	private static Style colorOrDyed(ItemStack stack, Style style, TextColor color)
 	{
-		Item item = stack.getItem();
+		var item = stack.getItem();
 
-		if(!stack.isEmpty() && item instanceof IDyeableArmorItem)
+		if(!stack.isEmpty() && item instanceof DyeableLeatherItem dyeable)
 		{
-			int dyedColor = ((IDyeableArmorItem) item).getColor(stack);
-			return style.withColor(Color.fromRgb(dyedColor));
+			var dyedColor = dyeable.getColor(stack);
+			return style.withColor(TextColor.fromRgb(dyedColor));
 		}
 
 		return style.withColor(color);
 	}
 
-	private static Style colorOrDyed(ItemStack stack, Style style, TextFormatting formatting)
+	private static Style colorOrDyed(ItemStack stack, Style style, ChatFormatting formatting)
 	{
-		Item item = stack.getItem();
+		var item = stack.getItem();
 
-		if(!stack.isEmpty() && item instanceof IDyeableArmorItem)
+		if(!stack.isEmpty() && item instanceof DyeableLeatherItem dyeable)
 		{
-			int dyedColor = ((IDyeableArmorItem) item).getColor(stack);
-			return style.withColor(Color.fromRgb(dyedColor));
+			var dyedColor = dyeable.getColor(stack);
+			return style.withColor(TextColor.fromRgb(dyedColor));
 		}
 
 		return style.withColor(formatting);
@@ -320,25 +320,25 @@ public final class FTDiceTypes
 
 	// region: Recipes
 	// TODO: This should probaly be merged into ApexCore or Registrator
-	private static <I extends Item> void smithing(DataGenContext<Item, I> ctx, RegistrateRecipeProvider provider, IItemProvider input)
+	private static <I extends Item> void smithing(DataGenContext<Item, I> ctx, RegistrateRecipeProvider provider, ItemLike input)
 	{
-		SmithingRecipeBuilder.smithing(Ingredient.of(input), Ingredient.of(Tags.Items.INGOTS_NETHERITE), ctx.getEntry())
-		                     .unlocks("has_netherite_ingot", RegistrateRecipeProvider.hasItem(Tags.Items.INGOTS_NETHERITE))
-		                     .save(provider, ctx.getId() + "_smithing");
+		UpgradeRecipeBuilder.smithing(Ingredient.of(input), Ingredient.of(Tags.Items.INGOTS_NETHERITE), ctx.getEntry())
+		                    .unlocks("has_netherite_ingot", RegistrateRecipeProvider.has(Tags.Items.INGOTS_NETHERITE))
+		                    .save(provider, ctx.getId() + "_smithing");
 	}
 
-	private static <D extends DiceItem> void recipeSixSided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, ITag.INamedTag<Item> ingredient)
+	private static <D extends DiceItem> void recipeSixSided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, Tag.Named<Item> ingredient)
 	{
 		ShapedRecipeBuilder.shaped(ctx::get, 8)
 		                   .define('I', ingredient)
 		                   .pattern("II")
 		                   .pattern("II")
 		                   .group("dice/6_sided")
-		                   .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient))
+		                   .unlockedBy("has_item", RegistrateRecipeProvider.has(ingredient))
 		                   .save(provider, ctx.getId());
 	}
 
-	private static <D extends DiceItem> void recipeTwentySided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, ITag.INamedTag<Item> ingredient)
+	private static <D extends DiceItem> void recipeTwentySided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, Tag.Named<Item> ingredient)
 	{
 		ShapedRecipeBuilder.shaped(ctx::get, 8)
 		                   .define('I', ingredient)
@@ -346,22 +346,22 @@ public final class FTDiceTypes
 		                   .pattern("III")
 		                   .pattern(" I ")
 		                   .group("dice/20_sided")
-		                   .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient))
+		                   .unlockedBy("has_item", RegistrateRecipeProvider.has(ingredient))
 		                   .save(provider, ctx.getId());
 	}
 
-	private static <D extends DiceItem> void recipeSixSided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, IItemProvider ingredient)
+	private static <D extends DiceItem> void recipeSixSided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, ItemLike ingredient)
 	{
 		ShapedRecipeBuilder.shaped(ctx::get, 8)
 		                   .define('I', ingredient)
 		                   .pattern("II")
 		                   .pattern("II")
 		                   .group("dice/6_sided")
-		                   .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient))
+		                   .unlockedBy("has_item", RegistrateRecipeProvider.has(ingredient))
 		                   .save(provider, ctx.getId());
 	}
 
-	private static <D extends DiceItem> void recipeTwentySided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, IItemProvider ingredient)
+	private static <D extends DiceItem> void recipeTwentySided(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, ItemLike ingredient)
 	{
 		ShapedRecipeBuilder.shaped(ctx::get, 8)
 		                   .define('I', ingredient)
@@ -369,7 +369,7 @@ public final class FTDiceTypes
 		                   .pattern("III")
 		                   .pattern(" I ")
 		                   .group("dice/20_sided")
-		                   .unlockedBy("has_item", RegistrateRecipeProvider.hasItem(ingredient))
+		                   .unlockedBy("has_item", RegistrateRecipeProvider.has(ingredient))
 		                   .save(provider, ctx.getId());
 	}
 	// endregion

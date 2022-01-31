@@ -1,7 +1,7 @@
 package xyz.apex.forge.fantasydice.init;
 
-import net.minecraft.item.Item;
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
 
 import xyz.apex.repack.com.tterrag.registrate.providers.ProviderType;
 
@@ -17,8 +17,8 @@ public final class FTTags
 
 	public static final class Items
 	{
-		public static final ITag.INamedTag<Item> DICE = REGISTRY.itemTagModded("dice");
-		public static final ITag.INamedTag<Item> DICE_SPECIALTY = REGISTRY.itemTagModded("dice/specialty");
+		public static final Tag.Named<Item> DICE = REGISTRY.itemTagModded("dice");
+		public static final Tag.Named<Item> DICE_SPECIALTY = REGISTRY.itemTagModded("dice/specialty");
 
 		private static void bootstrap()
 		{

@@ -1,8 +1,7 @@
 package xyz.apex.forge.fantasydice.init;
 
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.IDyeableArmorItem;
-
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraftforge.common.Tags;
 
 import xyz.apex.forge.fantasydice.item.PouchItem;
@@ -18,7 +17,7 @@ public final class FTItems
 			.item("pouch", PouchItem::new)
 				.lang("Dice Pouch")
 				.lang(RegistrateLangExtProvider.EN_GB, "Dice Pouch")
-				.color(() -> () -> (stack, tintIndex) -> tintIndex == 0 ? ((IDyeableArmorItem) stack.getItem()).getColor(stack) : 0xFFFFFFFF)
+				.color(() -> () -> (stack, tintIndex) -> tintIndex == 0 ? ((DyeableLeatherItem) stack.getItem()).getColor(stack) : 0xFFFFFFFF)
 				.recipe((ctx, provider) -> ShapedRecipeBuilder
 						.shaped(ctx::get, 1)
 						.define('S', Tags.Items.STRING)
@@ -26,8 +25,8 @@ public final class FTItems
 						.pattern(" S ")
 						.pattern("L L")
 						.pattern(" L ")
-						.unlockedBy("has_leather", RegistrateRecipeProvider.hasItem(Tags.Items.LEATHER))
-						.unlockedBy("has_string", RegistrateRecipeProvider.hasItem(Tags.Items.STRING))
+						.unlockedBy("has_leather", RegistrateRecipeProvider.has(Tags.Items.LEATHER))
+						.unlockedBy("has_string", RegistrateRecipeProvider.has(Tags.Items.STRING))
 						.save(provider, ctx.getId())
 				)
 				.model((ctx, provider) -> provider.generated(ctx, provider.modLoc("item/pouch/pouch"), provider.modLoc("item/pouch/string")))

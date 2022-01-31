@@ -7,7 +7,7 @@ buildscript {
 	}
 	dependencies {
 		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forge_gradle_version}", changing: true
-		classpath 'org.parchmentmc:librarian:1.+'
+		classpath "org.parchmentmc:librarian:${librarian_version}"
 		classpath "org.spongepowered:mixingradle:${mixin_gradle_version}"
 	}
 }
@@ -27,7 +27,7 @@ version = "${minecraft_version}-${mod_version}"
 group = "${mod_base_package}.${mod_id}"
 archivesBaseName = "${mod_id}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 minecraft {
 	mappings channel: "${mappings_channel}", version: "${mappings_version}"
@@ -110,7 +110,6 @@ sourceSets.main.resources {
 repositories {
 	mavenLocal() // Local Deps
 	maven { url 'https://dvs1.progwml6.com/files/maven' } // JEI
-	maven { url 'https://maven.tterrag.com/' } // TOP
 	
 	maven { // CurseForge
 		url 'https://cursemaven.com'
@@ -161,21 +160,12 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-	// TOP
-	compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${top_version}:api")
-	runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${top_version}")
-
 	// CurseForge
 	// https://www.cursemaven.com/ - Examples
 	// runtimeOnly fg.deobf('curse.maven:<mod_name>-<cf_project_id>:<cf_project_file_id>')
 
 	// Mixin AP
 	annotationProcessor "org.spongepowered:mixin:${mixin_ap_version}:processor"
-
-	if(project.hasProperty('apex_local_deps') && project.getProperty('apex_local_deps')) {
-		// runtimeOnly fg.deobf('xyz.apex.forge:devworld:1.16.5-2.0.0')
-		runtimeOnly fg.deobf("xyz.apex.forge:smoothboot:${minecraft_version}-${smooth_boot_version}")
-	}
 
 	// Registrator versions must be equal to or higher than version used in ApexCore
 	if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
@@ -206,6 +196,8 @@ def replaceProperties = [
 	forge_version_range: forge_version_range,
 	forge_gradle_version: forge_gradle_version,
 
+	librarian_version: librarian_version,
+
 	mixin_gradle_version: mixin_gradle_version,
 	mixin_ap_version: mixin_ap_version,
 	
@@ -230,9 +222,7 @@ def replaceProperties = [
 	apexcore_cf_file: apexcore_cf_file,
 
 	cursegradle_version: cursegradle_version,
-	jei_version: jei_version,
-	top_version: top_version,
-	smooth_boot_version: smooth_boot_version
+	jei_version: jei_version
 ]
 
 processResources {
@@ -267,11 +257,6 @@ task deobfJar(type: Jar) {
 	from sourceSets.main.output
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-	classifier 'javadoc'
-	from javadoc.destinationDir
-}
-
 jar {
 	from sourceSets.main.output.classesDirs
 	from sourceSets.main.output.resourcesDir
@@ -281,7 +266,6 @@ artifacts {
 	archives jar
 	archives sourcesJar
 	archives deobfJar
-	archives javadocJar
 }
 
 tasks.withType(Jar) {
@@ -312,7 +296,6 @@ if(System.getenv('GITHUB_TOKEN') != null) {
 				artifact jar
 				artifact sourcesJar
 				artifact deobfJar
-				artifact javadocJar
 			}
 		}
 		repositories {
@@ -341,7 +324,6 @@ if(project.hasProperty('apex_curse_gradle_token')) {
 			mainArtifact jar
 			addArtifact deobfJar
 			addArtifact sourcesJar
-			addArtifact javadocJar
 
 			relations {
 				requiredDependency 'registrator'
@@ -361,7 +343,6 @@ if(project.hasProperty('apex_curse_gradle_token')) {
 			mainArtifact jar
 			addArtifact deobfJar
 			addArtifact sourcesJar
-			addArtifact javadocJar
 
 			relations {
 				requiredDependency 'registrator'

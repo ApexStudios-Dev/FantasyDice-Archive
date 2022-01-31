@@ -7,12 +7,12 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.ObjectCollection;
 import org.apache.commons.lang3.Validate;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.Style;
+import net.minecraft.network.chat.Style;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
@@ -34,7 +34,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final String name;
 	private final OWNER owner;
 	private final Int2ObjectMap<ItemEntry<DIE>> diceItems = new Int2ObjectOpenHashMap<>();
-	private final ITag.INamedTag<Item> tag;
+	private final Tag.Named<Item> tag;
 	private final NonnullBiFunction<ItemStack, Style, Style> styleModifier;
 	private final IntSupplier diceQuality;
 	private final RollCallback rollCallback;
@@ -50,13 +50,13 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		usesFoil = builder.usesFoil;
 		diceQuality = builder.diceQuality;
 
-		for(Int2ObjectMap.Entry<String> entry : builder.dieNames.int2ObjectEntrySet())
+		for(var entry : builder.dieNames.int2ObjectEntrySet())
 		{
-			int sides = entry.getIntKey();
-			String dieName = entry.getValue();
+			var sides = entry.getIntKey();
+			var dieName = entry.getValue();
 
-			RegistryEntry<DIE> registryEntry = owner.get(dieName, Item.class);
-			ItemEntry<DIE> itemEntry = ItemEntry.cast(registryEntry);
+			var registryEntry = owner.<Item, DIE>get(dieName, Item.class);
+			var itemEntry = ItemEntry.<DIE>cast(registryEntry);
 
 			diceItems.put(sides, itemEntry);
 		}
@@ -86,7 +86,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return styleModifier.apply(stack, style);
 	}
 
-	public ITag.INamedTag<Item> getTag()
+	public Tag.Named<Item> getTag()
 	{
 		return tag;
 	}
@@ -126,7 +126,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return usesFoil;
 	}
 
-	public int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int sides, int[] rolls)
+	public int[] onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int[] rolls)
 	{
 		return rollCallback.onRoll(player, hand, stack, min, sides, rolls);
 	}
@@ -150,7 +150,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	{
 		private final String name;
 		private final OWNER owner;
-		private final ITag.INamedTag<Item> tag;
+		private final Tag.Named<Item> tag;
 		private final Int2ObjectMap<String> dieNames = new Int2ObjectOpenHashMap<>();
 		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
 
@@ -189,10 +189,10 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 		public ItemBuilder<OWNER, DIE, Builder<OWNER, DIE>> withDie(int sides)
 		{
-			String dieName = generateDieName(sides);
+			var dieName = generateDieName(sides);
 
-			String englishName = RegistrateLangProvider.toEnglishName(name);
-			String fullName = sides + "-Sided " + englishName + " Die";
+			var englishName = RegistrateLangProvider.toEnglishName(name);
+			var fullName = sides + "-Sided " + englishName + " Die";
 
 			return owner
 					.item(dieName, this, properties -> diceFactory.apply(properties, sides))
@@ -229,6 +229,6 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	@FunctionalInterface
 	public interface RollCallback
 	{
-		int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int sides, int[] rolls);
+		int[] onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int[] rolls);
 	}
 }

@@ -45,7 +45,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 
 		FTDiceTypes.bootstrap();
 		FTItems.bootstrap();
-		FTContainers.bootstrap();
+		FTMenus.bootstrap();
 		FTTags.bootstrap();
 
 		bootstrap = true;

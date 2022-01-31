@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 import xyz.apex.forge.apexcore.lib.util.ForgeEventBusHelper;
@@ -36,7 +37,7 @@ public final class FantasyDice
 
 	static
 	{
-		ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+		var builder = new ForgeConfigSpec.Builder();
 		CONFIG = new Config(builder);
 		CONFIG_SPEC = builder.build();
 	}
@@ -45,7 +46,7 @@ public final class FantasyDice
 	{
 		FTRegistry.bootstrap();
 		ForgeEventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
-		ModEventBusHelper.addListener(ModConfig.ModConfigEvent.class, CONFIG::onConfigReload);
+		ModEventBusHelper.addListener(CONFIG::onConfigReload);
 		ModEventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, ID + ".toml");
 	}
@@ -122,10 +123,8 @@ public final class FantasyDice
 		@SuppressWarnings("ResultOfMethodCallIgnored")
 		private boolean isValidUUID(Object obj)
 		{
-			if(obj instanceof String)
+			if(obj instanceof String str)
 			{
-				String str = (String) obj;
-
 				try
 				{
 					UUID.fromString(str);
@@ -140,9 +139,9 @@ public final class FantasyDice
 			return false;
 		}
 
-		private void onConfigReload(ModConfig.ModConfigEvent event)
+		private void onConfigReload(ModConfigEvent event)
 		{
-			ModConfig config = event.getConfig();
+			var config = event.getConfig();
 
 			if(config.getType() == ModConfig.Type.COMMON && config.getModId().equals(ID))
 			{

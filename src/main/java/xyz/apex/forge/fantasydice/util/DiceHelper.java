@@ -1,39 +1,31 @@
 package xyz.apex.forge.fantasydice.util;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.*;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
-import xyz.apex.forge.fantasydice.init.DiceType;
 import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.UUID;
 import java.util.stream.IntStream;
 
 public class DiceHelper
 {
-	@Nullable private static IFormattableTextComponent apexNameComponent = null;
+	@Nullable private static MutableComponent apexNameComponent = null;
 
 	public static int roll(Random rng, int min, int max)
 	{
 		if(max < min)
 		{
-			int tmp = max;
+			var tmp = max;
 			max = min;
 			min = tmp;
 		}
@@ -44,7 +36,7 @@ public class DiceHelper
 		/*if(loaded)
 			min = Math.max(1, max / 2);*/
 
-		int roll = rng.nextInt(max) + 1;
+		var roll = rng.nextInt(max) + 1;
 
 		if(roll < min)
 		{
@@ -57,40 +49,40 @@ public class DiceHelper
 		return roll;
 	}
 
-	public static boolean throwDice(World level, PlayerEntity player, Hand hand, ItemStack stack, int min)
+	public static boolean throwDice(Level level, Player player, InteractionHand hand, ItemStack stack, int min)
 	{
 		if(stack.isEmpty())
 			return false;
 		if(level.isClientSide)
 			return true;
 
-		DiceItem die = (DiceItem) stack.getItem();
-		int sides = die.getSides();
-		int stackCount = stack.getCount();
-		int maxPossibleRoll = sides * stackCount;
-		int[] rolls = IntStream.range(0, stackCount).map(i -> roll(level.random, min, sides)).toArray();
-		DiceType<?, ?> diceType = die.getDiceType();
+		var die = (DiceItem) stack.getItem();
+		var sides = die.getSides();
+		var stackCount = stack.getCount();
+		var maxPossibleRoll = sides * stackCount;
+		var rolls = IntStream.range(0, stackCount).map(i -> roll(level.random, min, sides)).toArray();
+		var diceType = die.getDiceType();
 		rolls = diceType.onRoll(player, hand, stack, min, sides, rolls);
-		int roll = Arrays.stream(rolls).sum();
+		var roll = Arrays.stream(rolls).sum();
 		roll += diceType.getDiceQuality();
 
 		if(!diceType.matches(FTDiceTypes.DICE_APEX)) // apex goes negative, clamping will break it
-			roll = MathHelper.clamp(roll, min, maxPossibleRoll);
+			roll = Mth.clamp(roll, min, maxPossibleRoll);
 
-		IFormattableTextComponent textComponent = createTextComponent(player, stack, die, roll, sides);
+		var textComponent = createTextComponent(player, stack, die, roll, sides);
 		sendMessageToPlayers(player, textComponent);
 
 		return true;
 	}
 
-	private static IFormattableTextComponent createTextComponent(PlayerEntity player, ItemStack stack, DiceItem die, int roll, int sides)
+	private static MutableComponent createTextComponent(Player player, ItemStack stack, DiceItem die, int roll, int sides)
 	{
-		DiceType<?, ?> diceType = die.getDiceType();
+		var diceType = die.getDiceType();
 
-		return new TranslationTextComponent(
+		return new TranslatableComponent(
 				FantasyDice.DIE_ROLL_KEY,
 				player.getDisplayName(),
-				new TranslationTextComponent(FantasyDice.DIE_ROLL_RESULT_KEY, roll, stack.getCount(), sides).withStyle(style -> diceType.withStyle(stack, style))
+				new TranslatableComponent(FantasyDice.DIE_ROLL_RESULT_KEY, roll, stack.getCount(), sides).withStyle(style -> diceType.withStyle(stack, style))
 		).withStyle(style -> style
 				.withHoverEvent(
 						new HoverEvent(
@@ -101,20 +93,20 @@ public class DiceHelper
 		);
 	}
 
-	public static void sendMessageToPlayers(PlayerEntity player, ITextComponent component)
+	public static void sendMessageToPlayers(Player player, Component component)
 	{
-		MinecraftServer server = player.getServer();
-		UUID playerID = player.getGameProfile().getId();
+		var server = player.getServer();
+		var playerID = player.getGameProfile().getId();
 
 		player.sendMessage(component, playerID);
 
 		if(server == null)
 			return;
 
-		DimensionType dimensionType = player.level.dimensionType();
-		ChunkPos chunkPos = new ChunkPos(player.blockPosition());
+		var dimensionType = player.level.dimensionType();
+		var chunkPos = new ChunkPos(player.blockPosition());
 
-		for(PlayerEntity plr : server.getPlayerList().getPlayers())
+		for(var plr : server.getPlayerList().getPlayers())
 		{
 			if(plr.getGameProfile().getId().equals(playerID))
 				continue;
@@ -134,9 +126,9 @@ public class DiceHelper
 		}
 	}
 
-	public static boolean isLuckyRoller(PlayerEntity player)
+	public static boolean isLuckyRoller(Player player)
 	{
-		UUID playerId = player.getGameProfile().getId();
+		var playerId = player.getGameProfile().getId();
 
 		// should always work for FantasyGaming
 		if(playerId.equals(FantasyDice.FANTASY_UUID))
@@ -145,18 +137,18 @@ public class DiceHelper
 		return FantasyDice.CONFIG.luckyRollerIDs.contains(playerId);
 	}
 
-	public static IFormattableTextComponent makeApexComponent(Random rng, ITextComponent component)
+	public static MutableComponent makeApexComponent(Random rng, Component component)
 	{
 		if(apexNameComponent != null)
 			return apexNameComponent;
 
-		IFormattableTextComponent apex = StringTextComponent.EMPTY.plainCopy();
-		String string = component.getString();
+		var apex = TextComponent.EMPTY.plainCopy();
+		var string = component.getString();
 
-		for(char c : string.toCharArray())
+		for(var c : string.toCharArray())
 		{
-			boolean obfuscate = rng.nextBoolean();
-			apex = apex.append(new StringTextComponent(String.valueOf(c)).withStyle(style -> style.setObfuscated(obfuscate)));
+			var obfuscate = rng.nextBoolean();
+			apex = apex.append(new TextComponent(String.valueOf(c)).withStyle(style -> style.setObfuscated(obfuscate)));
 		}
 
 		if(FantasyDice.loadComplete && apexNameComponent == null)
