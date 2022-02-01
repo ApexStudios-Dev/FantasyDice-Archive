@@ -1,6 +1,7 @@
 modLoader="javafml"
 loaderVersion="${forge_version_range}"
 license="GNU General Public License v3.0"
+issueTrackerURL="https://github.com/ApexModder/FantasyTable/issues"
 
 [[mods]]
 	modId="${mod_id}"
