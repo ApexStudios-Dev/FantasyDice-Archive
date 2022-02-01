@@ -20,7 +20,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 	{
 		super(FantasyDice.ID);
 
-		skipErrors();
+		//skipErrors();
 		creativeModeTab(() -> RegistratorItemGroup.create(this), "Fantasy's Dice");
 
 		addDataGenerator(ProviderType.LANG, provider -> {
@@ -45,8 +45,10 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 
 		FTDiceTypes.bootstrap();
 		FTItems.bootstrap();
+		FTBlocks.bootstrap();
 		FTMenus.bootstrap();
 		FTTags.bootstrap();
+		FTRecipes.bootstrap();
 
 		bootstrap = true;
 	}
