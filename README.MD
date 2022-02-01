@@ -9,17 +9,11 @@
 
 Mod requested by **_FantasyGaming_** which adds **_6_** & **_20 Sided Dice_** to the game of varying types.<br>
 This mod requires [**_ApexCore_**](https://github.com/ApexModder/ApexCore) & [**_Registrator_**](https://github.com/ApexModder/Registrator/). <br>
-All recipes use the same pattern either **_2x2_** for **_6-Sided_** or a **_Cross_** for **_20-Sided_**.<br>
 The prioritized version for this mod will be for 1.18.1, though 1.16.5 will still be supported but not as priority. <br>
 
 ### **_Planned Features_**
 (These are subject to change)
 - Gold and Iron coins that can be flipped to get either heads or tails
-- Netherite Dice
-- New crafting station specifically for dice (to avoid crafting conflicts that come with so many crafting recipes)
-- A way to get Special Dice, most likely from wandering traders for a steep price
-- 4-sided and 8-sided dice
-- Extra dice sets/materials
 
 ### **_Current Features_**
 - `/roll` command to roll in chat with a specified number similar to _World of Warcraft_ (ex: `/roll 100` will always roll out of _100_, with the roll being shown in chat)
@@ -27,6 +21,11 @@ The prioritized version for this mod will be for 1.18.1, though 1.16.5 will stil
 - Paper dice that can be dyed to any combination the same way leather armor can
 - Colored chat text for each dice (matches paper dice color if used)
 - Dice pouches that can also be dyed like leather armor, and have 6x3 spaces in it
+- Regular, Cosmetic, and Specialty Dice
+- A new crafting station, the Dice Station
+  (works like a stonecutter and is made with a dice pouch and a crafting table)
+- JEI Integration for recipes and the Dice Station
+
 
 ### **_Dice Types_**
 Each Dice has a Quality Value (Higher value means higher chance to get a bonus to your roll)
@@ -34,7 +33,6 @@ Each Dice has a Quality Value (Higher value means higher chance to get a bonus t
 - Wood (-2)
 - Stone (-1)
 - Bone (neutral)
-- Paper (neutral)
 - Iron (neutral)
 - Gold (+1)
 - Diamond (+2)
@@ -49,9 +47,11 @@ Each Dice has a Quality Value (Higher value means higher chance to get a bonus t
 ### **_Cosmetic Dice_**
 These dice don't have any quality values, and are purely cosmetic.
 
+- Paper Dice
 - Ender Dice
 - Frozen Dice
 - Slime Dice
+- Redstone Dice
 
 ### **_Specialty Dice_** (_Requested by Devs_)
 - **_Fantasy's Lucky Dice_**
