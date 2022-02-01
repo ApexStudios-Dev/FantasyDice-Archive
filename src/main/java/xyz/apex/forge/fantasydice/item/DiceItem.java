@@ -89,7 +89,16 @@ public class DiceItem extends Item
 	{
 		if(diceType != null)
 		{
-			tooltip.add(new TranslatableComponent(FantasyDice.DIE_ROLL_DESC_KEY, 1, sides)
+			var min = 1;
+			var max = sides;
+
+			if(diceType.matches(FTDiceTypes.DICE_APEX))
+			{
+				min = -1;
+				max *= -1;
+			}
+
+			tooltip.add(new TranslatableComponent(FantasyDice.DIE_ROLL_DESC_KEY, min, max)
 					.withStyle(style -> diceType
 							.withStyle(stack, style)
 					)
