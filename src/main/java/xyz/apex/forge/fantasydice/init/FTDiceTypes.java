@@ -36,7 +36,15 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF8A5A27)))
 				.withDiceQuality(FantasyDice.CONFIG.diceWoodenQuality::get)
 
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+				.build()
+
 				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+				.build()
+
+				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
 				.build()
 
@@ -52,7 +60,15 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.GRAY))
 				.withDiceQuality(FantasyDice.CONFIG.diceStoneQuality::get)
 
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
+				.build()
+
 				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
+				.build()
+
+				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
 				.build()
 
@@ -68,7 +84,15 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.WHITE))
 				.withDiceQuality(FantasyDice.CONFIG.diceBoneQuality::get)
 
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+				.build()
+
 				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+				.build()
+
+				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
 				.build()
 
@@ -84,7 +108,17 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.WHITE))
 				.withDiceQuality(FantasyDice.CONFIG.dicePaperQuality::get)
 
+				.withDie(4)
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
 				.withDie(6)
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
+				.withDie(8)
 					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
 				.build()
@@ -102,7 +136,15 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.GRAY))
 				.withDiceQuality(FantasyDice.CONFIG.diceIronQuality::get)
 
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+				.build()
+
 				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+				.build()
+
+				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
 				.build()
 
@@ -118,7 +160,15 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.YELLOW))
 				.withDiceQuality(FantasyDice.CONFIG.diceGoldenQuality::get)
 
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+				.build()
+
 				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+				.build()
+
+				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
 				.build()
 
@@ -134,7 +184,15 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.AQUA))
 				.withDiceQuality(FantasyDice.CONFIG.diceDiamondQuality::get)
 
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+				.build()
+
 				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+				.build()
+
+				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
 				.build()
 
@@ -150,7 +208,15 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.GREEN))
 				.withDiceQuality(FantasyDice.CONFIG.diceEmeraldQuality::get)
 
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+				.build()
+
 				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+				.build()
+
+				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
 				.build()
 
@@ -166,7 +232,17 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF423030)))
 				.withDiceQuality(FantasyDice.CONFIG.diceNetheriteQuality::get)
 
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.fireResistant()
+				.build()
+
 				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.fireResistant()
+				.build()
+
+				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
 					.fireResistant()
 				.build()
