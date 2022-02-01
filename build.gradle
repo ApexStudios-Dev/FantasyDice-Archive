@@ -52,13 +52,6 @@ minecraft {
 			}
 		}
 
-		clientFantasy {
-			parent runs.client
-			taskName 'Client-FantasyGaming'
-			inheritArgs false
-			args '--uuid', '598535bd-f330-4123-b4d0-c6e618390477', '--username', 'FantasyGaming'
-		}
-
 		server {
 			taskName 'Server'
 			workingDirectory project.file('run/server')

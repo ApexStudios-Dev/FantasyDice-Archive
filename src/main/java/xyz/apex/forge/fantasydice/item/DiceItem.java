@@ -6,7 +6,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
@@ -83,11 +86,22 @@ public class DiceItem extends Item
 	{
 		if(diceType != null)
 		{
-			tooltip.add(new TranslationTextComponent(FantasyDice.DIE_ROLL_DESC_KEY, 1, sides)
+			int min = 1;
+			int max = sides;
+
+			if(diceType.matches(FTDiceTypes.DICE_APEX))
+			{
+				min = -1;
+				max *= -1;
+			}
+
+			tooltip.add(new TranslationTextComponent(FantasyDice.DIE_ROLL_DESC_KEY, min, max)
 					.withStyle(style -> diceType
 							.withStyle(stack, style)
 					)
 			);
+
+			tooltip.add(diceType.getType().getComponent(stack, diceType));
 		}
 	}
 

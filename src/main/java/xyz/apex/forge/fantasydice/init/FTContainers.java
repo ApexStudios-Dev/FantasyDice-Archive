@@ -5,7 +5,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
 import xyz.apex.forge.apexcore.lib.container.inventory.ItemInventory;
+import xyz.apex.forge.fantasydice.client.screen.DiceStationContainerScreen;
 import xyz.apex.forge.fantasydice.client.screen.PouchContainerScreen;
+import xyz.apex.forge.fantasydice.container.DiceStationContainer;
 import xyz.apex.forge.fantasydice.container.PouchContainer;
 import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
 
@@ -18,6 +20,14 @@ public final class FTContainers
 					"pouch",
 					(containerType, i, playerInventory, packetBuffer) -> new PouchContainer(containerType, i, playerInventory, findPouch(playerInventory.player)),
 					() -> PouchContainerScreen::new
+			)
+			.register();
+
+	public static final ContainerEntry<DiceStationContainer> DICE_STATION = REGISTRY
+			.container(
+					"dice_station",
+					(containerType, i, playerInventory, packetBuffer) -> new DiceStationContainer(containerType, i, playerInventory),
+					() -> DiceStationContainerScreen::new
 			)
 			.register();
 

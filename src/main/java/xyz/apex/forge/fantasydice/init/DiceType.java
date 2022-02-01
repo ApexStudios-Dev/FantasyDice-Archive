@@ -12,8 +12,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TranslationTextComponent;
 
+import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.builder.ItemBuilder;
@@ -39,6 +42,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final IntSupplier diceQuality;
 	private final RollCallback rollCallback;
 	private final boolean usesFoil;
+	private final Type type;
 
 	private DiceType(Builder<OWNER, DIE> builder)
 	{
@@ -49,6 +53,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		rollCallback = builder.rollCallback;
 		usesFoil = builder.usesFoil;
 		diceQuality = builder.diceQuality;
+		type = builder.type;
 
 		for(Int2ObjectMap.Entry<String> entry : builder.dieNames.int2ObjectEntrySet())
 		{
@@ -101,6 +106,11 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		throw new NullPointerException("Unknown Die side count: " + sides);
 	}
 
+	public Type getType()
+	{
+		return type;
+	}
+
 	public ObjectCollection<ItemEntry<DIE>> getItems()
 	{
 		return diceItems.values();
@@ -128,7 +138,8 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 	public int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int sides, int[] rolls)
 	{
-		return rollCallback.onRoll(player, hand, stack, min, sides, rolls);
+		int diceQuality = this.diceQuality.getAsInt();
+		return rollCallback.onRoll(player, hand, stack, min, sides, rolls, diceQuality);
 	}
 
 	public static <OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem> Builder<OWNER, DIE> builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
@@ -154,9 +165,10 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		private final Int2ObjectMap<String> dieNames = new Int2ObjectOpenHashMap<>();
 		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
 
+		private Type type = Type.REGULAR;
 		private IntSupplier diceQuality = () -> 0;
 		private NonnullBiFunction<ItemStack, Style, Style> styleModifier = (stack, style) -> style;
-		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls) -> rolls;
+		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls, dieQuality) -> rolls;
 		private boolean usesFoil = false;
 
 		private Builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
@@ -167,6 +179,12 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 			tag = owner.itemTagModded("dice/" + name);
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
+		}
+
+		public Builder<OWNER, DIE> withType(Type type)
+		{
+			this.type = type;
+			return this;
 		}
 
 		public Builder<OWNER, DIE> withDiceQuality(IntSupplier diceQuality)
@@ -229,6 +247,37 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	@FunctionalInterface
 	public interface RollCallback
 	{
-		int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int sides, int[] rolls);
+		int[] onRoll(PlayerEntity player, Hand hand, ItemStack stack, int min, int sides, int[] rolls, int dieQuality);
+	}
+
+	public enum Type
+	{
+		REGULAR(FantasyDice.ID, "regular"),
+		COSMETIC(FantasyDice.ID, "cosmetic"),
+		SPECIALITY(FantasyDice.ID, "specialty");
+
+		public static final Type[] VALUES = values();
+
+		private final String translationKey;
+
+		Type(String modId, String name)
+		{
+			this(String.format("%s.die.type.%s.name", modId, name));
+		}
+
+		Type(String translationKey)
+		{
+			this.translationKey = translationKey;
+		}
+
+		public String getTranslationKey()
+		{
+			return translationKey;
+		}
+
+		public IFormattableTextComponent getComponent(ItemStack stack, DiceType<?, ?> diceType)
+		{
+			return new TranslationTextComponent(translationKey).withStyle(style -> diceType.withStyle(stack, style).withItalic(true));
+		}
 	}
 }

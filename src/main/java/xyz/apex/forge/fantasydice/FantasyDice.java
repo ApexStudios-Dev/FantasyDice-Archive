@@ -2,8 +2,11 @@ package xyz.apex.forge.fantasydice;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraftforge.common.BasicTrade;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -13,7 +16,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import xyz.apex.forge.apexcore.lib.util.ForgeEventBusHelper;
 import xyz.apex.forge.apexcore.lib.util.ModEventBusHelper;
 import xyz.apex.forge.fantasydice.command.RollCommand;
+import xyz.apex.forge.fantasydice.init.DiceType;
 import xyz.apex.forge.fantasydice.init.FTRegistry;
+import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +36,8 @@ public final class FantasyDice
 	public static final String DIE_ROLL_RESULT_KEY = ID + ".die.roll.result";
 	public static final String DIE_ROLL_DESC_KEY = ID + ".die.roll.desc";
 
+	public static final String JEI_DICE_RECIPE_TITLE_KEY = ID + ".jei.dice_recipe.name";
+
 	public static final UUID FANTASY_UUID = UUID.fromString("598535bd-f330-4123-b4d0-c6e618390477");
 	public static boolean loadComplete = false;
 
@@ -47,7 +54,24 @@ public final class FantasyDice
 		ForgeEventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
 		ModEventBusHelper.addListener(ModConfig.ModConfigEvent.class, CONFIG::onConfigReload);
 		ModEventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
+		ForgeEventBusHelper.addListener(WandererTradesEvent.class, this::onWandererTrades);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, ID + ".toml");
+	}
+
+	private void onWandererTrades(WandererTradesEvent event)
+	{
+		List<VillagerTrades.ITrade> rareTrades = event.getRareTrades();
+
+		for(DiceType<?, ?> diceType : DiceType.getDiceTypes())
+		{
+			if(diceType.getType() == DiceType.Type.SPECIALITY)
+			{
+				for(ItemEntry<?> item : diceType.getItems())
+				{
+					rareTrades.add(new BasicTrade(6, item.asItemStack(), 10, 10));
+				}
+			}
+		}
 	}
 
 	public static final class Config

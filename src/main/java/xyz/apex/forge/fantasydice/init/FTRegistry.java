@@ -10,6 +10,9 @@ import xyz.apex.forge.utility.registrator.helper.RegistratorItemGroup;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 import xyz.apex.java.utility.Lazy;
 import xyz.apex.repack.com.tterrag.registrate.providers.ProviderType;
+import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
+
+import java.util.Arrays;
 
 public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 {
@@ -27,12 +30,18 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 			provider.add(FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
 			provider.add(FantasyDice.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
 			provider.add(FantasyDice.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
+			provider.add(FantasyDice.JEI_DICE_RECIPE_TITLE_KEY, "Dice Station");
+
+			Arrays.stream(DiceType.Type.VALUES).forEach(t -> provider.add(t.getTranslationKey(), RegistrateLangProvider.toEnglishName(t.name())));
 		});
 
 		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
+			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.JEI_DICE_RECIPE_TITLE_KEY, "Dice Station");
+
+			Arrays.stream(DiceType.Type.VALUES).forEach(t -> provider.add(RegistrateLangExtProvider.EN_GB, t.getTranslationKey(), RegistrateLangProvider.toEnglishName(t.name())));
 		});
 	}
 
@@ -45,8 +54,10 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 
 		FTDiceTypes.bootstrap();
 		FTItems.bootstrap();
+		FTBlocks.bootstrap();
 		FTContainers.bootstrap();
 		FTTags.bootstrap();
+		FTRecipes.bootstrap();
 
 		bootstrap = true;
 	}

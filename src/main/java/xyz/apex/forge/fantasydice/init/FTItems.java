@@ -2,7 +2,6 @@ package xyz.apex.forge.fantasydice.init;
 
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.IDyeableArmorItem;
-
 import net.minecraftforge.common.Tags;
 
 import xyz.apex.forge.fantasydice.item.PouchItem;
