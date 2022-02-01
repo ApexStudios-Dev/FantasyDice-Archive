@@ -5,19 +5,23 @@
 [![release](https://img.shields.io/github/v/release/ApexModder/FantasyTable)](https://github.com/ApexModder/FantasyTable/releases)
 [![curseforge](https://cf.way2muchnoise.eu/versions/573867.svg)](https://www.curseforge.com/minecraft/mc-mods/fantasys-dice)
 
+![image](https://user-images.githubusercontent.com/92009173/151907592-417b46ad-7e6c-42f3-86cc-d939d9b850df.png)
+
 Mod requested by **_FantasyGaming_** which adds **_6_** & **_20 Sided Dice_** to the game of varying types.<br>
-All dice stack to max of 8.<br>
 This mod requires [**_ApexCore_**](https://github.com/ApexModder/ApexCore) & [**_Registrator_**](https://github.com/ApexModder/Registrator/). <br>
 All recipes use the same pattern either **_2x2_** for **_6-Sided_** or a **_Cross_** for **_20-Sided_**.<br>
+The prioritized version for this mod will be for 1.18.1, though 1.16.5 will still be supported but not as priority. <br>
 
-<details>
-<summary><b>Recipes</b></summary>
+### **_Planned Features_**
+(These are subject to change)
+- Gold and Iron coins that can be flipped to get either heads or tails
+- Netherite Dice
+- New crafting station specifically for dice (to avoid crafting conflicts that come with so many crafting recipes)
+- A way to get Special Dice, most likely from wandering traders for a steep price
+- 4-sided and 8-sided dice
+- Extra dice sets/materials
 
-![Recipes-6-Sided](https://i.imgur.com/et0fIEi.gif)
-![Recipes-20-Sided](https://i.imgur.com/EWiqU6o.gif)
-</details>
-
-### **_Special Features_**
+### **_Current Features_**
 - `/roll` command to roll in chat with a specified number similar to _World of Warcraft_ (ex: `/roll 100` will always roll out of _100_, with the roll being shown in chat)
 - In addition, chat will show how many dice have been rolled (rolling _5 Six-Sided Dice_ will show like this: `<player> rolled <roll> (5d6)`)
 - Paper dice that can be dyed to any combination the same way leather armor can
@@ -25,14 +29,29 @@ All recipes use the same pattern either **_2x2_** for **_6-Sided_** or a **_Cros
 - Dice pouches that can also be dyed like leather armor, and have 6x3 spaces in it
 
 ### **_Dice Types_**
-- **_Wood_**
-- **_Stone_**
-- **_Paper_**
-- **_Bone_**
-- **_Iron_**
-- **_Gold_**
-- **_Diamond_**
-- **_Emerald_**
+Each Dice has a Quality Value (Higher value means higher chance to get a bonus to your roll)
+
+- Wood (-2)
+- Stone (-1)
+- Bone (neutral)
+- Paper (neutral)
+- Iron (neutral)
+- Gold (+1)
+- Diamond (+2)
+- Emerald (+3)
+- Netherite (+4)
+
+- Cosmetic Dice
+- Specialty Dice
+
+(For those who don't like the quality value option, there is a config to change the values; simply set them to "0")
+
+### **_Cosmetic Dice_**
+These dice don't have any quality values, and are purely cosmetic.
+
+- Ender Dice
+- Frozen Dice
+- Slime Dice
 
 ### **_Specialty Dice_** (_Requested by Devs_)
 - **_Fantasy's Lucky Dice_**
@@ -43,3 +62,6 @@ All recipes use the same pattern either **_2x2_** for **_6-Sided_** or a **_Cros
   - Stacks to maximum of 1.
 - **_Apex's NULL Dice_**
   - When rolled value gets _NULLIFIED_ and ends up negative.
+- **_Symacon's Gambling Dice_**
+  - Has a 50% chance to double the user's roll or a 50% chance to half it.
+  - Rolls cap at the dice maximum and minimum.
