@@ -30,6 +30,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 			provider.add(FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
 			provider.add(FantasyDice.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
 			provider.add(FantasyDice.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
+			provider.add(FantasyDice.JEI_DICE_RECIPE_TITLE_KEY, "Dice Station");
 
 			Arrays.stream(DiceType.Type.VALUES).forEach(t -> provider.add(t.getTranslationKey(), RegistrateLangProvider.toEnglishName(t.name())));
 		});
@@ -38,6 +39,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
+			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.JEI_DICE_RECIPE_TITLE_KEY, "Dice Station");
 
 			Arrays.stream(DiceType.Type.VALUES).forEach(t -> provider.add(RegistrateLangExtProvider.EN_GB, t.getTranslationKey(), RegistrateLangProvider.toEnglishName(t.name())));
 		});
