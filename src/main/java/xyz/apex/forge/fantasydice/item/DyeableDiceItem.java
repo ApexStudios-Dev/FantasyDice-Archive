@@ -19,6 +19,6 @@ public class DyeableDiceItem extends DiceItem implements DyeableLeatherItem
 		// exactly the same as vanilla code in IDyeableArmorItem
 		// only change is to make the default color white / greyscale (16777215)
 		var displayTag = stack.getTagElement(NbtNames.DISPLAY);
-		return displayTag != null && displayTag.contains(NbtNames.COLOR, Tag.TAG_COMPOUND) ? displayTag.getInt(NbtNames.COLOR) : 16777215;
+		return displayTag != null && displayTag.contains(NbtNames.COLOR, Tag.TAG_ANY_NUMERIC) ? displayTag.getInt(NbtNames.COLOR) : 16777215;
 	}
 }

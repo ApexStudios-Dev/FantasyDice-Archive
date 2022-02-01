@@ -161,19 +161,21 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Netherite
-	/*public static final DiceType<FTRegistry, DiceItem> DICE_NETHERITE = DiceType
+	public static final DiceType<FTRegistry, DiceItem> DICE_NETHERITE = DiceType
 			.builder("netherite", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF5A575A)))
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF423030)))
 				.withDiceQuality(FantasyDice.CONFIG.diceNetheriteQuality::get)
 
 				.withDie(6)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.fireResistant()
 				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.fireResistant()
 				.build()
-			.build();*/
+			.build();
 	// endregion
 
 	// region: Fantasy
