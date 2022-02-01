@@ -81,15 +81,15 @@ public final class FantasyDice
 
 			diceWoodenQuality = builder
 					.comment("Quality of 'Wooden Dice' rolls")
-					.defineInRange("die.quality.wooden", -3, Integer.MIN_VALUE, Integer.MAX_VALUE);
+					.defineInRange("die.quality.wooden", -2, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 			diceStoneQuality = builder
 					.comment("Quality of 'Stone Dice' rolls")
-					.defineInRange("die.quality.stone", -2, Integer.MIN_VALUE, Integer.MAX_VALUE);
+					.defineInRange("die.quality.stone", -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 			diceBoneQuality = builder
 					.comment("Quality of 'Bone Dice' rolls")
-					.defineInRange("die.quality.bone", -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+					.defineInRange("die.quality.bone", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 			dicePaperQuality = builder
 					.comment("Quality of 'Paper Dice' rolls")

@@ -128,7 +128,8 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 	public int[] onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int[] rolls)
 	{
-		return rollCallback.onRoll(player, hand, stack, min, sides, rolls);
+		var dieQuality = this.diceQuality.getAsInt();
+		return rollCallback.onRoll(player, hand, stack, min, sides, rolls, dieQuality);
 	}
 
 	public static <OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem> Builder<OWNER, DIE> builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
@@ -156,7 +157,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 		private IntSupplier diceQuality = () -> 0;
 		private NonnullBiFunction<ItemStack, Style, Style> styleModifier = (stack, style) -> style;
-		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls) -> rolls;
+		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls, dieQuality) -> rolls;
 		private boolean usesFoil = false;
 
 		private Builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
@@ -229,6 +230,6 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	@FunctionalInterface
 	public interface RollCallback
 	{
-		int[] onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int[] rolls);
+		int[] onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int[] rolls, int dieQuality);
 	}
 }

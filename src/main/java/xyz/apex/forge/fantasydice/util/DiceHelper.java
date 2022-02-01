@@ -21,7 +21,7 @@ public class DiceHelper
 {
 	@Nullable private static MutableComponent apexNameComponent = null;
 
-	public static int roll(Random rng, int min, int max)
+	public static int roll(Random rng, int min, int max, int dieQuality)
 	{
 		if(max < min)
 		{
@@ -35,6 +35,27 @@ public class DiceHelper
 
 		/*if(loaded)
 			min = Math.max(1, max / 2);*/
+
+		if(dieQuality > 0)
+		{
+			var newMax = rng.nextInt(dieQuality);
+
+			if(newMax != 0)
+			{
+				max += newMax;
+				// max = Math.max(min + 1, max);
+			}
+		}
+		else if(dieQuality < 0)
+		{
+			var newMax = rng.nextInt(Math.abs(dieQuality));
+
+			if(newMax != 0)
+			{
+				max -= newMax;
+				// max = Math.max(min + 1, max);
+			}
+		}
 
 		var roll = rng.nextInt(max) + 1;
 
@@ -60,11 +81,12 @@ public class DiceHelper
 		var sides = die.getSides();
 		var stackCount = stack.getCount();
 		var maxPossibleRoll = sides * stackCount;
-		var rolls = IntStream.range(0, stackCount).map(i -> roll(level.random, min, sides)).toArray();
 		var diceType = die.getDiceType();
+		var dieQuality = diceType.getDiceQuality();
+		var rolls = IntStream.range(0, stackCount).map(i -> roll(level.random, min, sides, dieQuality)).toArray();
 		rolls = diceType.onRoll(player, hand, stack, min, sides, rolls);
 		var roll = Arrays.stream(rolls).sum();
-		roll += diceType.getDiceQuality();
+		// roll += diceType.getDiceQuality();
 
 		if(!diceType.matches(FTDiceTypes.DICE_APEX)) // apex goes negative, clamping will break it
 			roll = Mth.clamp(roll, min, maxPossibleRoll);
