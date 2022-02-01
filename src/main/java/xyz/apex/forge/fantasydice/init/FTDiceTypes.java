@@ -261,6 +261,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_ENDER = DiceType
 			.builder("ender", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF0F5959)))
+				.withType(DiceType.Type.COSMETIC)
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.ENDER_PEARL))
@@ -284,6 +285,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_FROZEN = DiceType
 			.builder("frozen", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFBADED8)))
+				.withType(DiceType.Type.COSMETIC)
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.ICE))
@@ -307,7 +309,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_SLIME = DiceType
 			.builder("slime", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF8ACC83)))
-				.withDiceQuality(FantasyDice.CONFIG.diceNetheriteQuality::get)
+				.withType(DiceType.Type.COSMETIC)
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
@@ -335,6 +337,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_REDSTONE = DiceType
 			.builder("redstone", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF931515)))
+				.withType(DiceType.Type.COSMETIC)
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
@@ -364,6 +367,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_FANTASY = DiceType
 			.builder("fantasy", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFF39F9F)))
+				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, rolls, dieQuality) -> {
 					Random rng = player.getRandom();
 
@@ -401,6 +405,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_TOBI = DiceType
 			.builder("tobi", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF5B20A2)))
+				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, rolls, dieQuality) -> {
 					Random rng = player.getRandom();
 
@@ -430,6 +435,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_APEX = DiceType
 			.builder("apex", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.DARK_PURPLE))
+				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, rolls, dieQuality) -> {
 					Arrays.setAll(rolls, i -> rolls[i] * -1);
 					return rolls;
@@ -451,6 +457,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_SYMACON = DiceType
 			.builder("symacon", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFFF681F)))
+				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, rolls, dieQuality) -> {
 					boolean half = player.getRandom().nextBoolean();
 					return IntStream.of(rolls).map(i -> half ? i / 2 : i * 2).toArray();

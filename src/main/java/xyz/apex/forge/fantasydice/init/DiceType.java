@@ -7,13 +7,16 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.ObjectCollection;
 import org.apache.commons.lang3.Validate;
 
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.builder.ItemBuilder;
@@ -39,6 +42,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final IntSupplier diceQuality;
 	private final RollCallback rollCallback;
 	private final boolean usesFoil;
+	private final Type type;
 
 	private DiceType(Builder<OWNER, DIE> builder)
 	{
@@ -49,6 +53,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		rollCallback = builder.rollCallback;
 		usesFoil = builder.usesFoil;
 		diceQuality = builder.diceQuality;
+		type = builder.type;
 
 		for(var entry : builder.dieNames.int2ObjectEntrySet())
 		{
@@ -99,6 +104,11 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			return diceItems.get(sides);
 
 		throw new NullPointerException("Unknown Die side count: " + sides);
+	}
+
+	public Type getType()
+	{
+		return type;
 	}
 
 	public ObjectCollection<ItemEntry<DIE>> getItems()
@@ -155,6 +165,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		private final Int2ObjectMap<String> dieNames = new Int2ObjectOpenHashMap<>();
 		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
 
+		private Type type = Type.REGULAR;
 		private IntSupplier diceQuality = () -> 0;
 		private NonnullBiFunction<ItemStack, Style, Style> styleModifier = (stack, style) -> style;
 		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls, dieQuality) -> rolls;
@@ -168,6 +179,12 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 			tag = owner.itemTagModded("dice/" + name);
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
+		}
+
+		public Builder<OWNER, DIE> withType(Type type)
+		{
+			this.type = type;
+			return this;
 		}
 
 		public Builder<OWNER, DIE> withDiceQuality(IntSupplier diceQuality)
@@ -231,5 +248,36 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	public interface RollCallback
 	{
 		int[] onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int[] rolls, int dieQuality);
+	}
+
+	public enum Type
+	{
+		REGULAR(FantasyDice.ID, "regular"),
+		COSMETIC(FantasyDice.ID, "cosmetic"),
+		SPECIALITY(FantasyDice.ID, "specialty");
+
+		public static final Type[] VALUES = values();
+
+		private final String translationKey;
+
+		Type(String modId, String name)
+		{
+			this("%s.die.type.%s.name".formatted(modId, name));
+		}
+
+		Type(String translationKey)
+		{
+			this.translationKey = translationKey;
+		}
+
+		public String getTranslationKey()
+		{
+			return translationKey;
+		}
+
+		public MutableComponent getComponent(ItemStack stack, DiceType<?, ?> diceType)
+		{
+			return new TranslatableComponent(translationKey).withStyle(style -> diceType.withStyle(stack, style).withItalic(true));
+		}
 	}
 }

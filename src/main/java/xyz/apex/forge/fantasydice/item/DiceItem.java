@@ -94,6 +94,8 @@ public class DiceItem extends Item
 							.withStyle(stack, style)
 					)
 			);
+
+			tooltip.add(diceType.getType().getComponent(stack, diceType));
 		}
 	}
 
