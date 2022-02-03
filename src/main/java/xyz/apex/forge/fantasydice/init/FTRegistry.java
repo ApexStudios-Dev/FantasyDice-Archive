@@ -2,11 +2,12 @@ package xyz.apex.forge.fantasydice.init;
 
 import org.apache.commons.lang3.Validate;
 
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
-import xyz.apex.forge.utility.registrator.helper.RegistratorItemGroup;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 import xyz.apex.java.utility.Lazy;
 import xyz.apex.repack.com.tterrag.registrate.providers.ProviderType;
@@ -24,7 +25,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 		super(FantasyDice.ID);
 
 		//skipErrors();
-		creativeModeTab(() -> RegistratorItemGroup.create(this), "Fantasy's Dice");
+		creativeModeTab(ItemGroup::new, "Fantasy's Dice");
 
 		addDataGenerator(ProviderType.LANG, provider -> {
 			provider.add(FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
@@ -65,5 +66,19 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 	public static FTRegistry getRegistry()
 	{
 		return registry.get();
+	}
+
+	public static final class ItemGroup extends CreativeModeTab
+	{
+		public ItemGroup()
+		{
+			super(FantasyDice.ID);
+		}
+
+		@Override
+		public ItemStack makeIcon()
+		{
+			return FTDiceTypes.DICE_GOLD.getItem(20).asItemStack();
+		}
 	}
 }
