@@ -1,11 +1,9 @@
-# Fantasy's Dice
+# ![Fantasy's Dice](./src/main/resources/banner.png)
 [![release](https://github.com/ApexModder/FantasyTable/actions/workflows/release.yml/badge.svg)](https://github.com/ApexModder/FantasyTable/actions/workflows/release.yml)
 [![license](https://img.shields.io/github/license/ApexModder/FantasyTable)](https://github.com/ApexModder/FantasyTable/blob/master/LICENSE)
 [![last commit](https://img.shields.io/github/last-commit/ApexModder/FantasyTable)](https://github.com/ApexModder/FantasyTable/)
 [![release](https://img.shields.io/github/v/release/ApexModder/FantasyTable)](https://github.com/ApexModder/FantasyTable/releases)
 [![curseforge](https://cf.way2muchnoise.eu/versions/573867.svg)](https://www.curseforge.com/minecraft/mc-mods/fantasys-dice)
-
-![image](https://user-images.githubusercontent.com/92009173/151907592-417b46ad-7e6c-42f3-86cc-d939d9b850df.png)
 
 Mod requested by **_FantasyGaming_** which adds **_6_** & **_20 Sided Dice_** to the game of varying types.<br>
 This mod requires [**_ApexCore_**](https://github.com/ApexModder/ApexCore) & [**_Registrator_**](https://github.com/ApexModder/Registrator/). <br>
@@ -22,8 +20,7 @@ The prioritized version for this mod will be for 1.18.1, though 1.16.5 will stil
 - Colored chat text for each dice (matches paper dice color if used)
 - Dice pouches that can also be dyed like leather armor, and have 6x3 spaces in it
 - Regular, Cosmetic, and Specialty Dice
-- A new crafting station, the Dice Station
-  (works like a stonecutter and is made with a dice pouch and a crafting table)
+- A new crafting station, the Dice Station (works like a stonecutter and is made with a dice pouch and a crafting table)
 - JEI Integration for recipes and the Dice Station
 
 
