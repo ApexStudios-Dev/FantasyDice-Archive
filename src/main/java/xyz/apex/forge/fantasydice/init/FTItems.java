@@ -47,6 +47,7 @@ public final class FTItems
 						.unlockedBy("has_iron_nugget", RegistrateRecipeProvider.has(Tags.Items.NUGGETS_IRON))
 						.save(provider, ctx.getId()))
 				.stacksTo(8)
+				.tag(FTTags.Items.COINS)
 			.register();
 
 	public static final ItemEntry<CoinItem> GOLDEN_COIN = REGISTRY
@@ -61,6 +62,7 @@ public final class FTItems
 						.unlockedBy("has_golden_nugget", RegistrateRecipeProvider.has(Tags.Items.NUGGETS_GOLD))
 						.save(provider, ctx.getId()))
 				.stacksTo(8)
+				.tag(FTTags.Items.COINS)
 			.register();
 
 	static void bootstrap()
