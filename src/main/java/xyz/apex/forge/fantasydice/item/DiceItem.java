@@ -54,6 +54,10 @@ public class DiceItem extends Item
 	public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
+		int cooldown = FantasyDice.CONFIG.diceCooldown.get();
+
+		if(cooldown > 0)
+			player.getCooldowns().addCooldown(this, cooldown);
 
 		if(DiceHelper.throwDice(level, player, hand, stack, 1))
 			return ActionResult.sidedSuccess(stack, level.isClientSide);
