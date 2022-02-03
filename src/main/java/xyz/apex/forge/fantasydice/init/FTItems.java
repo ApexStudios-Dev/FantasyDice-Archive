@@ -1,9 +1,11 @@
 package xyz.apex.forge.fantasydice.init;
 
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraftforge.common.Tags;
 
+import xyz.apex.forge.fantasydice.item.CoinItem;
 import xyz.apex.forge.fantasydice.item.PouchItem;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
@@ -31,6 +33,34 @@ public final class FTItems
 				)
 				.model((ctx, provider) -> provider.generated(ctx, provider.modLoc("item/pouch/pouch"), provider.modLoc("item/pouch/string")))
 				.stacksTo(1)
+			.register();
+
+	public static final ItemEntry<CoinItem> IRON_COIN = REGISTRY
+			.item("iron_coin", CoinItem::new)
+				.lang("Iron Coin")
+				.lang(RegistrateLangExtProvider.EN_GB, "Iron Coin")
+				.recipe((ctx, provider) -> ShapelessRecipeBuilder
+						.shapeless(ctx::get, 1)
+						.requires(Tags.Items.NUGGETS_IRON)
+						.requires(Tags.Items.NUGGETS_IRON)
+						.group("coin")
+						.unlockedBy("has_iron_nugget", RegistrateRecipeProvider.has(Tags.Items.NUGGETS_IRON))
+						.save(provider, ctx.getId()))
+				.stacksTo(8)
+			.register();
+
+	public static final ItemEntry<CoinItem> GOLDEN_COIN = REGISTRY
+			.item("golden_coin", CoinItem::new)
+				.lang("Golden Coin")
+				.lang(RegistrateLangExtProvider.EN_GB, "Golden Coin")
+				.recipe((ctx, provider) -> ShapelessRecipeBuilder
+						.shapeless(ctx::get, 1)
+						.requires(Tags.Items.NUGGETS_GOLD)
+						.requires(Tags.Items.NUGGETS_GOLD)
+						.group("coin")
+						.unlockedBy("has_golden_nugget", RegistrateRecipeProvider.has(Tags.Items.NUGGETS_GOLD))
+						.save(provider, ctx.getId()))
+				.stacksTo(8)
 			.register();
 
 	static void bootstrap()

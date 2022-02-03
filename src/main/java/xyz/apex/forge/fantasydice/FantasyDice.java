@@ -36,6 +36,9 @@ public final class FantasyDice
 	public static final String DIE_ROLL_RESULT_KEY = ID + ".die.roll.result";
 	public static final String DIE_ROLL_DESC_KEY = ID + ".die.roll.desc";
 
+	public static final String COIN_FLIP = ID + ".coin.flip";
+	public static final String COIN_DESC = ID + "coin.desc";
+
 	public static final String JEI_DICE_RECIPE_TITLE_KEY = ID + ".jei.dice_recipe.name";
 
 	public static final UUID FANTASY_UUID = UUID.fromString("598535bd-f330-4123-b4d0-c6e618390477");
