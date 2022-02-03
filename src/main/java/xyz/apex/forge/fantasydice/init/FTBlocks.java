@@ -42,7 +42,7 @@ public final class FTBlocks
 							provider.modLoc("block/dice_table_side")
 					).texture("particle", provider.modLoc("block/dice_table_front"));
 
-					provider.simpleBlock(ctx.getEntry(), model);
+					provider.horizontalBlock(ctx.getEntry(), model);
 				})
 
 				.simpleItem()
