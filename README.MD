@@ -5,6 +5,10 @@
 [![release](https://img.shields.io/github/v/release/ApexModder/FantasyTable)](https://github.com/ApexModder/FantasyTable/releases)
 [![curseforge](https://cf.way2muchnoise.eu/versions/573867.svg)](https://www.curseforge.com/minecraft/mc-mods/fantasys-dice)
 
+[<img src="https://i.imgur.com/qUJzbM4.png" width=33%></img>](http://discord.apexmods.xyz/)
+
+---
+
 Mod requested by **_FantasyGaming_** which adds **_6_** & **_20 Sided Dice_** to the game of varying types.<br>
 This mod requires [**_ApexCore_**](https://github.com/ApexModder/ApexCore) & [**_Registrator_**](https://github.com/ApexModder/Registrator/). <br>
 The prioritized version for this mod will be for 1.18.1, though 1.16.5 will still be supported but not as priority. <br>
