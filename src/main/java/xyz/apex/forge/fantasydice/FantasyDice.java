@@ -142,7 +142,7 @@ public final class FantasyDice
 
 			diceCooldown = builder
 					.comment("Cool down in which Dice can be used", "Note: Cool down is in ticks, 20 == 1 second, 0 == No Cool down")
-					.defineInRange("die.cooldown", 20, 0, Integer.MAX_VALUE);
+					.defineInRange("die.cooldown", 20, -1, Integer.MAX_VALUE);
 
 			diceLuckyRollers = builder
 					.comment("List of player profile UUID's that are considered Lucky Rollers for 'Fantasy's Lucky Dice'", "Example: '43fd393b-879d-45ec-b2d5-ce8c4688ab66' - Would be for 'ApexSPG' (Values must include dashes '-')", "Note: Use somewhere like 'https://mcuuid.net/' to obtain profile UUID's")
