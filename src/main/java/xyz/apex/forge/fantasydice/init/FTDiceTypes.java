@@ -103,34 +103,6 @@ public final class FTDiceTypes
 			.build();
 	// endregion
 
-	// region: Paper
-	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
-			.builder("paper", REGISTRY, DyeableDiceItem::new)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.WHITE))
-				.withDiceQuality(FantasyDice.CONFIG.dicePaperQuality::get)
-
-				.withDie(4)
-					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
-				.build()
-
-				.withDie(6)
-					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
-				.build()
-
-				.withDie(8)
-					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
-				.build()
-
-				.withDie(20)
-					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
-				.build()
-			.build();
-	// endregion
-
 	// region: Iron
 	public static final DiceType<FTRegistry, DiceItem> DICE_IRON = DiceType
 			.builder("iron", REGISTRY)
@@ -437,6 +409,34 @@ public final class FTDiceTypes
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
 					.fireResistant()
+				.build()
+			.build();
+	// endregion
+
+	// region: Paper
+	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
+			.builder("paper", REGISTRY, DyeableDiceItem::new)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.WHITE))
+				.withType(DiceType.Type.COSMETIC)
+
+				.withDie(4)
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
+				.withDie(6)
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
+				.withDie(8)
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
+				.withDie(20)
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
 				.build()
 			.build();
 	// endregion
