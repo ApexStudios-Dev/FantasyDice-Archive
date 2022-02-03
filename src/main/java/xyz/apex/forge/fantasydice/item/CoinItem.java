@@ -80,12 +80,12 @@ public class CoinItem extends Item
 		return new TranslatableComponent(
 				FantasyDice.COIN_FLIP,
 				player.getDisplayName(),
-				new TextComponent(String.valueOf(heads)).withStyle(style -> style.withItalic(true)),
-				new TextComponent(String.valueOf(tails)).withStyle(style -> style.withItalic(true))
+				heads,
+				tails
 		).withStyle(style -> style
 				.withHoverEvent(new HoverEvent(
-						HoverEvent.Action.SHOW_ITEM,
-						new HoverEvent.ItemStackInfo(stack)
+						HoverEvent.Action.SHOW_TEXT,
+						stack.getHoverName()
 				))
 		);
 	}
