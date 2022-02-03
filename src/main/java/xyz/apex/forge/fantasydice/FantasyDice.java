@@ -82,7 +82,6 @@ public final class FantasyDice
 		public final ForgeConfigSpec.IntValue diceWoodenQuality;
 		public final ForgeConfigSpec.IntValue diceStoneQuality;
 		public final ForgeConfigSpec.IntValue diceBoneQuality;
-		public final ForgeConfigSpec.IntValue dicePaperQuality;
 		public final ForgeConfigSpec.IntValue diceIronQuality;
 		public final ForgeConfigSpec.IntValue diceGoldenQuality;
 		public final ForgeConfigSpec.IntValue diceDiamondQuality;
@@ -113,10 +112,6 @@ public final class FantasyDice
 			diceBoneQuality = builder
 					.comment("Quality of 'Bone Dice' rolls")
 					.defineInRange("die.quality.bone", -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
-
-			dicePaperQuality = builder
-					.comment("Quality of 'Paper Dice' rolls")
-					.defineInRange("die.quality.paper", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 			diceIronQuality = builder
 					.comment("Quality of 'Iron Dice' rolls")

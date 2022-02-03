@@ -103,34 +103,6 @@ public final class FTDiceTypes
 			.build();
 	// endregion
 
-	// region: Paper
-	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
-			.builder("paper", REGISTRY, DyeableDiceItem::new)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
-				.withDiceQuality(FantasyDice.CONFIG.dicePaperQuality::get)
-
-				.withDie(4)
-					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
-				.build()
-
-				.withDie(6)
-					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
-				.build()
-
-				.withDie(8)
-					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
-				.build()
-
-				.withDie(20)
-					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
-				.build()
-			.build();
-	// endregion
-
 	// region: Iron
 	public static final DiceType<FTRegistry, DiceItem> DICE_IRON = DiceType
 			.builder("iron", REGISTRY)
@@ -357,6 +329,34 @@ public final class FTDiceTypes
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
 					.fireResistant()
+				.build()
+			.build();
+	// endregion
+
+	// region: Paper
+	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
+			.builder("paper", REGISTRY, DyeableDiceItem::new)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextFormatting.WHITE))
+				.withType(DiceType.Type.COSMETIC)
+
+				.withDie(4)
+					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
+				.withDie(6)
+					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
+				.withDie(8)
+					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
+				.withDie(20)
+					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
 				.build()
 			.build();
 	// endregion
