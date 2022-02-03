@@ -30,7 +30,7 @@ public final class FTDiceTypes
 {
 	private static final FTRegistry REGISTRY = FTRegistry.getRegistry();
 
-	// region: Normal
+	// region: Regular
 	// region: Wooden
 	public static final DiceType<FTRegistry, DiceItem> DICE_WOODEN = DiceType
 			.builder("wooden", REGISTRY)
@@ -471,6 +471,34 @@ public final class FTDiceTypes
 				.withDie(20)
 					.lang("Symacon's Gambling 20-Sided Die")
 					.lang(RegistrateLangExtProvider.EN_GB, "Symacon's Gambling 20-Sided Die")
+				.build()
+			.build();
+	// endregion
+
+	// region: Chocolate
+	public static final DiceType<FTRegistry, DiceItem> DICE_CHOCOLATE = DiceType
+			.builder("chocolate", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF673B27)))
+				.withType(DiceType.Type.COSMETIC)
+
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+					.fireResistant()
+				.build()
+
+				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+					.fireResistant()
+				.build()
+
+				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+					.fireResistant()
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+					.fireResistant()
 				.build()
 			.build();
 	// endregion
