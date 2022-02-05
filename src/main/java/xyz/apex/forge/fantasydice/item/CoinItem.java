@@ -12,7 +12,10 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
+import xyz.apex.forge.fantasydice.init.FTDiceTypes;
+import xyz.apex.forge.fantasydice.init.FTItems;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
+import xyz.apex.java.utility.nullness.NonnullUnaryOperator;
 
 import java.util.List;
 
@@ -35,7 +38,7 @@ public class CoinItem extends Item
 		if(cooldown > 0)
 			player.getCooldowns().addCooldown(this, cooldown);
 
-		if(flip(level, player, hand, stack))
+		if(flip(level, player, hand, stack, style -> withStyle(stack, style)))
 			return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
 		return InteractionResultHolder.pass(stack);
 	}
@@ -43,10 +46,36 @@ public class CoinItem extends Item
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslatableComponent(FantasyDice.COIN_DESC));
+		tooltip.add(new TranslatableComponent(FantasyDice.COIN_DESC).withStyle(style -> withStyle(stack, style)));
 	}
 
-	public static boolean flip(Level level, Player player, InteractionHand hand, ItemStack stack)
+	@Override
+	public Component getDescription()
+	{
+		return buildNameComponent(ItemStack.EMPTY);
+	}
+
+	@Override
+	public Component getName(ItemStack stack)
+	{
+		return buildNameComponent(stack);
+	}
+
+	private MutableComponent buildNameComponent(ItemStack stack)
+	{
+		return new TranslatableComponent(getDescriptionId()).withStyle(style -> withStyle(stack, style));
+	}
+
+	private Style withStyle(ItemStack stack, Style style)
+	{
+		if(FTItems.IRON_COIN.is(this))
+			return FTDiceTypes.DICE_IRON.withStyle(stack, style);
+		if(FTItems.GOLDEN_COIN.is(this))
+			return FTDiceTypes.DICE_GOLD.withStyle(stack, style);
+		return style;
+	}
+
+	public static boolean flip(Level level, Player player, InteractionHand hand, ItemStack stack, NonnullUnaryOperator<Style> withStyle)
 	{
 		if(stack.isEmpty())
 			return false;
@@ -69,24 +98,30 @@ public class CoinItem extends Item
 				throw new RuntimeException("Invalid coin flip state");
 		}
 
-		var message = buildFlipMessage(player, stack, heads, tails);
+		var message = buildFlipMessage(player, stack, heads, tails, withStyle);
 		DiceHelper.sendMessageToPlayers(player, message);
 		return true;
 	}
 
-	public static MutableComponent buildFlipMessage(Player player, ItemStack stack, int heads, int tails)
+	public static MutableComponent buildFlipMessage(Player player, ItemStack stack, int heads, int tails, NonnullUnaryOperator<Style> withStyle)
 	{
-		// <player> flipped <N_heads> Heads & <N_tails> Tails
-		return new TranslatableComponent(
-				FantasyDice.COIN_FLIP,
-				player.getDisplayName(),
-				heads,
-				tails
-		).withStyle(style -> style
-				.withHoverEvent(new HoverEvent(
-						HoverEvent.Action.SHOW_TEXT,
-						stack.getHoverName()
-				))
+		// prefix: <player> flipped
+		// suffix: <N_heads> Heads & <N_tails> Tails
+		// full: <player> flipped <N_heads> Heads & <N_tails> Tails
+		MutableComponent prefix = new TranslatableComponent(
+				FantasyDice.COIN_FLIP_PREFIX,
+				player.getDisplayName()
 		);
+
+		MutableComponent suffix = new TranslatableComponent(FantasyDice.COIN_FLIP_SUFFIX, heads, tails)
+				.withStyle(style -> withStyle
+						.apply(style)
+						.withHoverEvent(new HoverEvent(
+								HoverEvent.Action.SHOW_TEXT,
+								stack.getHoverName()
+						))
+				);
+
+		return prefix.append(" ").append(suffix);
 	}
 }
