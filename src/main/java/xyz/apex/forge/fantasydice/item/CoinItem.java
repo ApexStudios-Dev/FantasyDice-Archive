@@ -6,10 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 
@@ -107,18 +104,23 @@ public class CoinItem extends Item
 
 	public static IFormattableTextComponent buildFlipMessage(PlayerEntity player, ItemStack stack, int heads, int tails, NonnullUnaryOperator<Style> withStyle)
 	{
-		// <player> flipped <N_heads> Heads & <N_tails> Tails
-		return new TranslationTextComponent(
-				FantasyDice.COIN_FLIP,
-				player.getDisplayName(),
-				heads,
-				tails
-		).withStyle(style -> withStyle
-				.apply(style)
-				.withHoverEvent(new HoverEvent(
-						HoverEvent.Action.SHOW_TEXT,
-						stack.getHoverName()
-				))
+		// prefix: <player> flipped
+		// suffix: <N_heads> Heads & <N_tails> Tails
+		// full: <player> flipped <N_heads> Heads & <N_tails> Tails
+		IFormattableTextComponent prefix = new TranslationTextComponent(
+				FantasyDice.COIN_FLIP_PREFIX,
+				player.getDisplayName()
 		);
+
+		IFormattableTextComponent suffix = new TranslationTextComponent(FantasyDice.COIN_FLIP_SUFFIX, heads, tails)
+				.withStyle(style -> withStyle
+						.apply(style)
+						.withHoverEvent(new HoverEvent(
+								HoverEvent.Action.SHOW_TEXT,
+								stack.getHoverName()
+						))
+				);
+
+		return prefix.append(" ").append(suffix);
 	}
 }
