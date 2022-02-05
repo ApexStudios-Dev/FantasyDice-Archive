@@ -34,7 +34,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 			provider.add(FantasyDice.JEI_DICE_RECIPE_TITLE_KEY, "Dice Station");
 
 			provider.add(FantasyDice.COIN_FLIP, "%s flipped %s Heads and %s Tails");
-			provider.add(FantasyDice.COIN_DESC, "Flip it and see if you will get Heads or Tails");
+			provider.add(FantasyDice.COIN_DESC, "Flip to get Heads of Tails");
 
 			Arrays.stream(DiceType.Type.VALUES).forEach(t -> provider.add(t.getTranslationKey(), RegistrateLangProvider.toEnglishName(t.name())));
 		});
@@ -46,7 +46,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.JEI_DICE_RECIPE_TITLE_KEY, "Dice Station");
 
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.COIN_FLIP, "%s flipped %s Heads and %s Tails");
-			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.COIN_DESC, "Flip it and see if you will get Heads or Tails");
+			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.COIN_DESC, "Flip to get Heads of Tails");
 
 			Arrays.stream(DiceType.Type.VALUES).forEach(t -> provider.add(RegistrateLangExtProvider.EN_GB, t.getTranslationKey(), RegistrateLangProvider.toEnglishName(t.name())));
 		});
