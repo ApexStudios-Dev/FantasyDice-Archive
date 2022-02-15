@@ -91,13 +91,13 @@ public class DiceHelper
 		if(!diceType.matches(FTDiceTypes.DICE_APEX)) // apex goes negative, clamping will break it
 			roll = Mth.clamp(roll, min, maxPossibleRoll);
 
-		var textComponent = createTextComponent(player, stack, die, roll, sides);
+		var textComponent = createTextComponent(player, stack, die, roll, sides, rolls);
 		sendMessageToPlayers(player, textComponent);
 
 		return true;
 	}
 
-	private static MutableComponent createTextComponent(Player player, ItemStack stack, DiceItem die, int roll, int sides)
+	private static MutableComponent createTextComponent(Player player, ItemStack stack, DiceItem die, int roll, int sides, int[] rolls)
 	{
 		var diceType = die.getDiceType();
 
@@ -109,7 +109,9 @@ public class DiceHelper
 				.withHoverEvent(
 						new HoverEvent(
 								HoverEvent.Action.SHOW_TEXT,
-								stack.getHoverName().copy().withStyle(hoverStyle -> diceType.withStyle(stack, hoverStyle))
+								stack.getHoverName().copy()
+								     .append(new TextComponent("\n" + Arrays.toString(rolls)).withStyle(s->s.withItalic(true)))
+								     .withStyle(hoverStyle -> diceType.withStyle(stack, hoverStyle))
 						)
 				)
 		);

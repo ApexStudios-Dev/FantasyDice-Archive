@@ -92,24 +92,7 @@ public class DiceItem extends Item
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
 	{
 		if(diceType != null)
-		{
-			var min = 1;
-			var max = sides;
-
-			if(diceType.matches(FTDiceTypes.DICE_APEX))
-			{
-				min = -1;
-				max *= -1;
-			}
-
-			tooltip.add(new TranslatableComponent(FantasyDice.DIE_ROLL_DESC_KEY, min, max)
-					.withStyle(style -> diceType
-							.withStyle(stack, style)
-					)
-			);
-
 			tooltip.add(diceType.getType().getComponent(stack, diceType));
-		}
 	}
 
 	private MutableComponent buildNameComponent(ItemStack stack)

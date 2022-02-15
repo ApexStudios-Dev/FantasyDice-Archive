@@ -277,7 +277,14 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 		public MutableComponent getComponent(ItemStack stack, DiceType<?, ?> diceType)
 		{
-			return new TranslatableComponent(translationKey).withStyle(style -> diceType.withStyle(stack, style).withItalic(true));
+			var diceQuality = diceType.getDiceQuality();
+
+			return new TranslatableComponent(translationKey)
+					.append(diceQuality > 0 ? " (+" + diceQuality + ")" : " (" + diceQuality + ")")
+					.withStyle(style -> diceType
+							.withStyle(stack, style)
+							.withItalic(true))
+					;
 		}
 	}
 }
