@@ -30,7 +30,6 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 		addDataGenerator(ProviderType.LANG, provider -> {
 			provider.add(FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
 			provider.add(FantasyDice.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
-			provider.add(FantasyDice.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
 			provider.add(FantasyDice.JEI_DICE_RECIPE_TITLE_KEY, "Dice Station");
 
 			provider.add(FantasyDice.COIN_FLIP_PREFIX, "%s flipped");
@@ -43,7 +42,6 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
-			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.DIE_ROLL_DESC_KEY, "Rolls a random number between %s & %s");
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.JEI_DICE_RECIPE_TITLE_KEY, "Dice Station");
 
 			provider.add(RegistrateLangExtProvider.EN_GB, FantasyDice.COIN_FLIP_PREFIX, "%s flipped");

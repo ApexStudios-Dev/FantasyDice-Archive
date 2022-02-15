@@ -277,7 +277,13 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 		public IFormattableTextComponent getComponent(ItemStack stack, DiceType<?, ?> diceType)
 		{
-			return new TranslationTextComponent(translationKey).withStyle(style -> diceType.withStyle(stack, style).withItalic(true));
+			int diceQuality = diceType.getDiceQuality();
+			return new TranslationTextComponent(translationKey)
+					.append(diceQuality > 0 ? " (+" + diceQuality + ")" : " (" + diceQuality + ")")
+					.withStyle(style -> diceType
+							.withStyle(stack, style)
+							.withItalic(true)
+					);
 		}
 	}
 }

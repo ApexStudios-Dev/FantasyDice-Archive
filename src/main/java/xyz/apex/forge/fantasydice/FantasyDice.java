@@ -34,7 +34,6 @@ public final class FantasyDice
 
 	public static final String DIE_ROLL_KEY = ID + ".die.roll";
 	public static final String DIE_ROLL_RESULT_KEY = ID + ".die.roll.result";
-	public static final String DIE_ROLL_DESC_KEY = ID + ".die.roll.desc";
 
 	public static final String COIN_FLIP_PREFIX = ID + ".coin.flip.prefix";
 	public static final String COIN_FLIP_SUFFIX = ID + ".coin.flip.suffix";

@@ -89,24 +89,7 @@ public class DiceItem extends Item
 	public void appendHoverText(ItemStack stack, @Nullable World level, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if(diceType != null)
-		{
-			int min = 1;
-			int max = sides;
-
-			if(diceType.matches(FTDiceTypes.DICE_APEX))
-			{
-				min = -1;
-				max *= -1;
-			}
-
-			tooltip.add(new TranslationTextComponent(FantasyDice.DIE_ROLL_DESC_KEY, min, max)
-					.withStyle(style -> diceType
-							.withStyle(stack, style)
-					)
-			);
-
 			tooltip.add(diceType.getType().getComponent(stack, diceType));
-		}
 	}
 
 	private IFormattableTextComponent buildNameComponent(ItemStack stack)
