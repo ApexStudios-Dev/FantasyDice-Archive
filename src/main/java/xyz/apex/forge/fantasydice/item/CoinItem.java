@@ -88,7 +88,7 @@ public class CoinItem extends Item
 
 		for(var i = 0; i < stack.getCount(); i++)
 		{
-			var roll = DiceHelper.roll(rng, 1, 2, 0);
+			var roll = DiceHelper.roll(rng, 1, 2, 0, false);
 
 			if(roll == HEADS)
 				heads++;

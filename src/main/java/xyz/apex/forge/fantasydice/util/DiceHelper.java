@@ -21,7 +21,7 @@ public class DiceHelper
 {
 	@Nullable private static MutableComponent apexNameComponent = null;
 
-	public static int roll(Random rng, int min, int max, int dieQuality)
+	public static int roll(Random rng, int min, int max, int dieQuality, boolean isApex)
 	{
 		if(max < min)
 		{
@@ -30,8 +30,8 @@ public class DiceHelper
 			min = tmp;
 		}
 
-		min = Math.max(min, 0);
-		max = Math.max(max, 1);
+		var maxOriginal = max;
+		var minOriginal = min;
 
 		/*if(loaded)
 			min = Math.max(1, max / 2);*/
@@ -41,21 +41,20 @@ public class DiceHelper
 			var newMax = rng.nextInt(dieQuality);
 
 			if(newMax != 0)
-			{
 				max += newMax;
-				// max = Math.max(min + 1, max);
-			}
 		}
 		else if(dieQuality < 0)
 		{
 			var newMax = rng.nextInt(Math.abs(dieQuality));
 
 			if(newMax != 0)
-			{
 				max -= newMax;
-				// max = Math.max(min + 1, max);
-			}
 		}
+
+		if(!isApex)
+			min = Math.max(min, minOriginal);
+
+		max = Math.min(max, maxOriginal);
 
 		var roll = rng.nextInt(max) + 1;
 
@@ -83,12 +82,13 @@ public class DiceHelper
 		var maxPossibleRoll = sides * stackCount;
 		var diceType = die.getDiceType();
 		var dieQuality = diceType.getDiceQuality();
-		var rolls = IntStream.range(0, stackCount).map(i -> roll(level.random, min, sides, dieQuality)).toArray();
+		var isApex = diceType.matches(FTDiceTypes.DICE_APEX);
+		var rolls = IntStream.range(0, stackCount).map(i -> roll(level.random, min, sides, dieQuality, isApex)).toArray();
 		rolls = diceType.onRoll(player, hand, stack, min, sides, rolls);
 		var roll = Arrays.stream(rolls).sum();
 		// roll += diceType.getDiceQuality();
 
-		if(!diceType.matches(FTDiceTypes.DICE_APEX)) // apex goes negative, clamping will break it
+		if(!isApex) // apex goes negative, clamping will break it
 			roll = Mth.clamp(roll, min, maxPossibleRoll);
 
 		var textComponent = createTextComponent(player, stack, die, roll, sides, rolls);
