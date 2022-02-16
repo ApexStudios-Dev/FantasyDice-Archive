@@ -385,7 +385,7 @@ public final class FTDiceTypes
 						newMax = sides / 2;
 					}
 
-					Arrays.setAll(rolls, i -> DiceHelper.roll(rng, newMin, newMax, dieQuality));
+					Arrays.setAll(rolls, i -> DiceHelper.roll(rng, newMin, newMax, dieQuality, false));
 					return rolls;
 				})
 
@@ -411,7 +411,7 @@ public final class FTDiceTypes
 
 					for(int i = 0; i < rolls.length; i++)
 					{
-						rolls[i] = IntStream.range(0, 3).map($ -> DiceHelper.roll(rng, min, sides, dieQuality)).max().orElse(rolls[i]);
+						rolls[i] = IntStream.range(0, 3).map($ -> DiceHelper.roll(rng, min, sides, dieQuality, false)).max().orElse(rolls[i]);
 					}
 
 					return rolls;

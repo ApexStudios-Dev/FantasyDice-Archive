@@ -6,7 +6,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 
@@ -87,7 +90,7 @@ public class CoinItem extends Item
 
 		for(int i = 0; i < stack.getCount(); i++)
 		{
-			int roll = DiceHelper.roll(level.random, 1, 2, 0);
+			int roll = DiceHelper.roll(level.random, 1, 2, 0, false);
 
 			if(roll == HEADS)
 				heads++;

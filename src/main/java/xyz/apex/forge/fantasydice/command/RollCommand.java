@@ -23,7 +23,7 @@ public class RollCommand
 						.executes(ctx -> {
 							ServerPlayerEntity player = ctx.getSource().getPlayerOrException();
 							int max = IntegerArgumentType.getInteger(ctx, "max");
-							int roll = DiceHelper.roll(player.getRandom(), 1, max, 0);
+							int roll = DiceHelper.roll(player.getRandom(), 1, max, 0, false);
 
 							DiceHelper.sendMessageToPlayers(
 									player,
