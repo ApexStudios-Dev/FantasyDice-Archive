@@ -1,5 +1,7 @@
 package xyz.apex.forge.fantasydice.init;
 
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.IDyeableArmorItem;
@@ -9,7 +11,6 @@ import xyz.apex.forge.fantasydice.item.CoinItem;
 import xyz.apex.forge.fantasydice.item.PouchItem;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
-import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateRecipeProvider;
 
 public final class FTItems
 {

@@ -156,9 +156,9 @@ public final class DiceStationContainer extends BaseContainer
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player)
+	public boolean isPlayerValid(PlayerEntity player)
 	{
-		return super.stillValid(player) && stillValid(access, player, FTBlocks.DICE_STATION.asBlock());
+		return super.isPlayerValid(player) && stillValid(access, player, FTBlocks.DICE_STATION.asBlock());
 	}
 
 	@Override

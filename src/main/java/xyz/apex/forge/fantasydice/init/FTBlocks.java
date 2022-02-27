@@ -1,5 +1,7 @@
 package xyz.apex.forge.fantasydice.init;
 
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -9,7 +11,6 @@ import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import xyz.apex.forge.fantasydice.block.DiceStationBlock;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
-import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateRecipeProvider;
 
 public final class FTBlocks
 {

@@ -1,10 +1,10 @@
 package xyz.apex.forge.fantasydice.init;
 
+import com.tterrag.registrate.providers.ProviderType;
+
 import net.minecraft.data.TagsProvider;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
-
-import xyz.apex.repack.com.tterrag.registrate.providers.ProviderType;
 
 @SuppressWarnings("unchecked")
 public final class FTTags

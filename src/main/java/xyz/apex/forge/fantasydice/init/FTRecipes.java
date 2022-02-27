@@ -1,12 +1,13 @@
 package xyz.apex.forge.fantasydice.init;
 
+import com.tterrag.registrate.util.DataIngredient;
+
 import net.minecraft.data.SingleItemRecipeBuilder;
+import net.minecraft.util.IItemProvider;
 
 import xyz.apex.forge.apexcore.lib.item.crafting.SingleItemRecipe;
 import xyz.apex.forge.fantasydice.item.crafting.DiceStationRecipe;
 import xyz.apex.forge.utility.registrator.entry.RecipeSerializerEntry;
-import xyz.apex.forge.utility.registrator.entry.similar.ItemLike;
-import xyz.apex.repack.com.tterrag.registrate.util.DataIngredient;
 
 public final class FTRecipes
 {
@@ -18,7 +19,7 @@ public final class FTRecipes
 	{
 	}
 
-	public static SingleItemRecipeBuilder diceStation(DataIngredient ingredient, ItemLike result, int count)
+	public static SingleItemRecipeBuilder diceStation(DataIngredient ingredient, IItemProvider result, int count)
 	{
 		return new SingleItemRecipeBuilder(DICE_STATION_RECIPE.asRecipeSerializer(), ingredient, result, count);
 	}
