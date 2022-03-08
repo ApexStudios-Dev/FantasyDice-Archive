@@ -35,7 +35,6 @@ public final class FTContainers
 	{
 	}
 
-	// TODO: Move to ApexCore and make more generic (for any ItemInventory not just DicePouch)
 	private static ItemInventory findPouch(PlayerEntity player)
 	{
 		for(Hand hand : Hand.values())
