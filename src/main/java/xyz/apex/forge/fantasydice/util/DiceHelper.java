@@ -81,6 +81,26 @@ public class DiceHelper
 		return roll;
 	}
 
+	/*private static boolean throw10SidedDice(World level, PlayerEntity player, Hand hand, ItemStack stack, DiceItem die)
+	{
+		int singleRoll = rollDice(level, player, hand, stack, 1);
+
+
+		return true;
+
+//		// single
+//		int roll1 = rollDice(level, player, hand, stack, 1);
+//		IFormattableTextComponent roll1Component = createTextComponent(player, stack, die, roll1, 10, new int[] { roll1 });
+//		sendMessageToPlayers(player, roll1Component);
+//
+//		// 10
+//		int roll10 = rollDice(level, player, hand, stack, 1) * 10;
+//		IFormattableTextComponent roll10Component = createTextComponent(player, stack, die, roll10, 10, new int[] { roll10 });
+//		sendMessageToPlayers(player, roll10Component);
+//
+//		return true;
+	}*/
+
 	public static boolean throwDice(World level, PlayerEntity player, Hand hand, ItemStack stack, int min)
 	{
 		if(stack.isEmpty())
@@ -90,13 +110,16 @@ public class DiceHelper
 
 		DiceItem die = (DiceItem) stack.getItem();
 		int sides = die.getSides();
+
+		/*if(sides == 10)
+			return throw10SidedDice(level, player, hand, stack, die);*/
+
 		int stackCount = stack.getCount();
 		int maxPossibleRoll = sides * stackCount;
 		DiceType<?, ?> diceType = die.getDiceType();
-		int diceQuality = diceType.getDiceQuality();
 		boolean isApex = diceType.matches(FTDiceTypes.DICE_APEX);
-		int[] rolls = IntStream.range(0, stackCount).map(i -> roll(level.random, min, sides, diceQuality, isApex)).toArray();
-		rolls = diceType.onRoll(player, hand, stack, min, sides, rolls);
+
+		int[] rolls = IntStream.range(0, stackCount).map(i -> rollDice(level, player, hand, stack, min)).toArray();
 		int roll = Arrays.stream(rolls).sum();
 
 		if(!isApex) // apex goes negative, clamping will break it
@@ -108,9 +131,29 @@ public class DiceHelper
 		return true;
 	}
 
-	private static IFormattableTextComponent createTextComponent(PlayerEntity player, ItemStack stack, DiceItem die, int roll, int sides, int[] rolls)
+	private static int rollDice(World level, PlayerEntity player, Hand hand, ItemStack stack, int min)
+	{
+		DiceItem die = (DiceItem) stack.getItem();
+		int sides = die.getSides();
+		DiceType<?, ?> diceType = die.getDiceType();
+		int diceQuality = diceType.getDiceQuality();
+		boolean isApex = diceType.matches(FTDiceTypes.DICE_APEX);
+		int roll = roll(level.random, min, sides, diceQuality, isApex);
+		roll = diceType.onRoll(player, hand, stack, min, sides, roll);
+
+		if(!isApex) // apex goes negative, clamping will break it
+			roll = MathHelper.clamp(roll, min, sides);
+
+		return roll;
+	}
+
+	private static IFormattableTextComponent createTextComponent(PlayerEntity player, ItemStack stack, DiceItem die, int roll, int sides, @Nullable int[] rolls)
 	{
 		DiceType<?, ?> diceType = die.getDiceType();
+		ITextComponent[] rollsComponent = new ITextComponent[] { StringTextComponent.EMPTY };
+
+		if(rolls != null && rolls.length > 1)
+			rollsComponent[0] = new StringTextComponent("\n" + Arrays.toString(rolls)).withStyle(s -> s.withItalic(true));
 
 		return new TranslationTextComponent(
 				FantasyDice.DIE_ROLL_KEY,
@@ -121,7 +164,7 @@ public class DiceHelper
 						new HoverEvent(
 								HoverEvent.Action.SHOW_TEXT,
 								stack.getHoverName().copy()
-								     .append(new StringTextComponent("\n" + Arrays.toString(rolls)).withStyle(s->s.withItalic(true)))
+								     .append(rollsComponent[0])
 								     .withStyle(hoverStyle -> diceType.withStyle(stack, hoverStyle))
 						)
 				)
