@@ -177,7 +177,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			this.owner = owner;
 			this.diceFactory = diceFactory;
 
-			tag = owner.itemTagModded("dice/" + name);
+			tag = owner.moddedItemTag("dice/" + name);
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
 		}
 
