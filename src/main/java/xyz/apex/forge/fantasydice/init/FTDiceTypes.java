@@ -49,9 +49,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
@@ -77,9 +81,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
@@ -105,9 +113,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
@@ -133,9 +145,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
@@ -161,9 +177,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
@@ -189,9 +209,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
@@ -217,9 +241,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
@@ -248,10 +276,15 @@ public final class FTDiceTypes
 					.fireResistant()
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
 					.fireResistant()
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.fireResistant()
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
@@ -280,9 +313,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.ENDER_PEARL))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.ENDER_PEARL))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.ENDER_PEARL))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.ENDER_PEARL))
@@ -308,9 +345,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.ICE))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.ICE))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.ICE))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.ICE))
@@ -336,9 +377,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
@@ -364,9 +409,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
@@ -395,10 +444,15 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
 
 				.withDie(20)
 					.color(() -> () -> (stack, tintIndex) -> ((IDyeableArmorItem) stack.getItem()).getColor(stack))
