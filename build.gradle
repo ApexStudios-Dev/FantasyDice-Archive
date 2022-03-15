@@ -173,6 +173,7 @@ processResources {
 task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier 'sources'
 	from sourceSets.main.allJava
+	from sourceSets.main.resources
 }
 
 task deobfJar(type: Jar) {
