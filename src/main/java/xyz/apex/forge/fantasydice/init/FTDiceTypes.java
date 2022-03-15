@@ -569,7 +569,7 @@ public final class FTDiceTypes
 	public static final DiceType<FTRegistry, DiceItem> DICE_CHOCOLATE = DiceType
 			.builder("chocolate", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, Color.fromRgb(0xFF673B27)))
-				.withType(DiceType.Type.COSMETIC)
+				.withType(DiceType.Type.SPECIALITY)
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
@@ -583,9 +583,13 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
 				.build()
 
-				/*.withDie(10)
+				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
-				.build()*/
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
