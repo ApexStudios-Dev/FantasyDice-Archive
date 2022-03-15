@@ -1,5 +1,7 @@
 package xyz.apex.forge.fantasydice.init;
 
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.RegistrateLangProvider;
 import org.apache.commons.lang3.Validate;
 
 import net.minecraft.world.item.CreativeModeTab;
@@ -10,8 +12,6 @@ import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 import xyz.apex.java.utility.Lazy;
-import xyz.apex.repack.com.tterrag.registrate.providers.ProviderType;
-import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
 
 import java.util.Arrays;
 

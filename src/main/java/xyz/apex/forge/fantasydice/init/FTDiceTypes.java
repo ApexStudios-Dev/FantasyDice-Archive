@@ -1,5 +1,9 @@
 package xyz.apex.forge.fantasydice.init;
 
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import com.tterrag.registrate.util.DataIngredient;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -18,9 +22,6 @@ import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.fantasydice.item.DyeableDiceItem;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
-import xyz.apex.repack.com.tterrag.registrate.providers.DataGenContext;
-import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import xyz.apex.repack.com.tterrag.registrate.util.DataIngredient;
 
 import java.util.Arrays;
 import java.util.Random;

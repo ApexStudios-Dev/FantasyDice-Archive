@@ -13,8 +13,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
-import xyz.apex.forge.apexcore.lib.util.ForgeEventBusHelper;
-import xyz.apex.forge.apexcore.lib.util.ModEventBusHelper;
+import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasydice.command.RollCommand;
 import xyz.apex.forge.fantasydice.init.DiceType;
 import xyz.apex.forge.fantasydice.init.FTRegistry;
@@ -54,10 +53,10 @@ public final class FantasyDice
 	public FantasyDice()
 	{
 		FTRegistry.bootstrap();
-		ForgeEventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
-		ModEventBusHelper.addListener(CONFIG::onConfigReload);
-		ModEventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
-		ForgeEventBusHelper.addListener(WandererTradesEvent.class, this::onWandererTrades);
+		EventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
+		EventBusHelper.addListener(CONFIG::onConfigReload);
+		EventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
+		EventBusHelper.addListener(WandererTradesEvent.class, this::onWandererTrades);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, ID + ".toml");
 	}
 

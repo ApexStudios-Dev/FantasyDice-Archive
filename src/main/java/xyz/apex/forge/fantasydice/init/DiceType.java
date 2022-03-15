@@ -1,6 +1,8 @@
 package xyz.apex.forge.fantasydice.init;
 
 import com.google.common.collect.Lists;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.RegistrateLangProvider;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -21,11 +23,9 @@ import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.builder.ItemBuilder;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
+import xyz.apex.forge.utility.registrator.entry.RegistryEntry;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 import xyz.apex.java.utility.nullness.NonnullBiFunction;
-import xyz.apex.repack.com.tterrag.registrate.providers.ProviderType;
-import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
-import xyz.apex.repack.com.tterrag.registrate.util.entry.RegistryEntry;
 
 import java.util.List;
 import java.util.function.IntSupplier;
