@@ -12,10 +12,6 @@ buildscript {
 	}
 }
 
-plugins {
-	id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
-}
-
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
@@ -31,7 +27,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
 	mappings channel: "${mappings_channel}", version: "${mappings_version}"
-	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+	accessTransformer = file('accesstransformer.cfg')
 
 	runs {
 		client {
@@ -40,15 +36,20 @@ minecraft {
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-
-			if(project.hasProperty('mc_uuid') & project.hasProperty('mc_username')) {
-				args '--uuid', project.getProperty('mc_uuid'), '--username', project.getProperty('mc_username')
-			}
+			property 'forge.enabledGameTestNamespaces', mod_id
 
 			mods {
 				"${mod_id}" {
 					source sourceSets.main
 				}
+			}
+		}
+
+		if(project.hasProperty('mc_uuid') & project.hasProperty('mc_username')) {
+			clientAuthed {
+				parent runs.client
+				taskName 'Client-Authed'
+				args '--uuid', project.getProperty('mc_uuid'), '--username', project.getProperty('mc_username')
 			}
 		}
 
@@ -58,7 +59,25 @@ minecraft {
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
+			property 'forge.enabledGameTestNamespaces', mod_id
 			args 'nogui'
+
+			mods {
+				"${mod_id}" {
+					source sourceSets.main
+				}
+			}
+		}
+
+		gameTestServer {
+			taskName 'GameTestServer'
+			workingDirectory rootProject.file('run/server')
+			// property 'forge.logging.markers', 'REGISTRIES'
+			// property 'forge.logging.console.level', 'debug'
+			property 'fml.earlyprogresswindow', 'false'
+			property 'forge.enabledGameTestNamespaces', mod_id
+			args 'nogui'
+			singleInstance true
 
 			mods {
 				"${mod_id}" {
@@ -91,9 +110,9 @@ mixin {
 	add sourceSets.main, "${mod_id}.refmap.json"
 	config "${mod_id}.mixins.json"
 
-	debug = true
+	/*debug = true
 	debug.export = true
-	hotSwap = true
+	hotSwap = true*/
 }
 
 sourceSets.main.resources {
@@ -101,127 +120,38 @@ sourceSets.main.resources {
 }
 
 repositories {
-	mavenLocal() // Local Deps
-	maven { url 'https://dvs1.progwml6.com/files/maven' } // JEI
-	
-	maven { // CurseForge
-		url 'https://cursemaven.com'
-		content { includeGroup 'curse.maven' }
-	}
-
-	// GitHub Packages require read access
-	if(project.hasProperty('apex_git_package_token')) {
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/ApexCore")
-			credentials {
-				username = 'Apex-GitHub-PackagesToken'
-				password = project.getProperty('apex_git_package_token')
-			}
-		}
-
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/Registrator")
-			credentials {
-				username = 'Apex-GitHub-PackagesToken'
-				password = project.getProperty('apex_git_package_token')
-			}
-		}
-	} else if(System.getenv('GITHUB_TOKEN') != null) {
-		// github workflows have a different set of credentials
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/ApexCore")
-			credentials {
-				username = System.getenv('GITHUB_ACTOR')
-				password = System.getenv('GITHUB_TOKEN')
-			}
-		}
-
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/Registrator")
-			credentials {
-				username = System.getenv('GITHUB_ACTOR')
-				password = System.getenv('GITHUB_TOKEN')
-			}
-		}
-	}
+	mavenCentral()
+	maven { url 'https://dvs1.progwml6.com/files/maven' }
+	maven { url 'https://maven.tterrag.com/' }
+	maven { url 'https://apexmodder.jfrog.io/artifactory/mods-maven/' }
 }
 
 dependencies {
 	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+	annotationProcessor "org.spongepowered:mixin:${mixin_ap_version}:processor"
 
-	// JEI
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-	// CurseForge
-	// https://www.cursemaven.com/ - Examples
-	// runtimeOnly fg.deobf('curse.maven:<mod_name>-<cf_project_id>:<cf_project_file_id>')
+	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version_short}-${registrate_version}:sources")
+	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version_short}-${registrate_version}")
+	shade fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version_short}-${registrate_version}")
 
-	// Mixin AP
-	annotationProcessor "org.spongepowered:mixin:${mixin_ap_version}:processor"
+	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}:deobf"
+	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}:sources"
+	shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
 
-	// Registrator versions must be equal to or higher than version used in ApexCore
-	if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
-		// we have access to Apex's GH Packages pull from there
-		compileOnly fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}")
-		runtimeOnly fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}")
-
-		compileOnly fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
-		runtimeOnly fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
-	} else {
-		// we dont have access to Apex's GH Packages, pull from CurseForge
-		compileOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
-		runtimeOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
-
-		compileOnly fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}")
-		runtimeOnly fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}")
-	}
+	runtimeOnly fg.deobf("xyz.apex.forge.utility:${devworld_mod_id}:${minecraft_version}-${devworld_version}:deobf")
+	runtimeOnly fg.deobf("xyz.apex.forge.utility:${smoothboot_mod_id}:${minecraft_version}-${smoothboot_version}:deobf")
+	implementation fg.deobf("xyz.apex.forge.utility:${registrator_mod_id}:${minecraft_version}-${registrator_version}:deobf")
+	implementation fg.deobf("xyz.apex.forge:${apexcore_mod_id}:${minecraft_version}-${apexcore_version}:deobf")
 }
 
-def resourceTargets = [ 'META-INF/mods.toml', 'pack.mcmeta', "${mod_id}.mixins.json".toString() ]
-def intoTargets = [ "${rootDir}/out/production/resources/", "${rootDir}/out/production/${project.name}.main/", "${rootDir}/bin/main/" ]
-def replaceProperties = [
-	minecraft_version: minecraft_version,
-	minecraft_version_range: minecraft_version_range,
-	minecraft_version_short: minecraft_version_short,
-		
-	forge_version: forge_version,
-	forge_version_range: forge_version_range,
-	forge_gradle_version: forge_gradle_version,
-
-	librarian_version: librarian_version,
-
-	mixin_gradle_version: mixin_gradle_version,
-	mixin_ap_version: mixin_ap_version,
-	
-	mappings_channel: mappings_channel,
-	mappings_version: mappings_version,
-	
-	mod_id: mod_id,
-	mod_name: mod_name,
-	mod_version: mod_version,
-	mod_base_package: mod_base_package,
-	mod_authors: mod_authors,
-	mod_curseforge_id: mod_curseforge_id,
-
-	registrator_version: registrator_version,
-	registrator_version_range: registrator_version_range,
-	registrator_cf_project: registrator_cf_project,
-	registrator_cf_file: registrator_cf_file,
-
-	apexcore_version: apexcore_version,
-	apexcore_version_range: apexcore_version_range,
-	apexcore_cf_project: apexcore_cf_project,
-	apexcore_cf_file: apexcore_cf_file,
-
-	cursegradle_version: cursegradle_version,
-	jei_version: jei_version
-]
+def resourceTargets = [ 'META-INF/mods.toml', '**/*.mcmeta' ]
+def intoTargets = [ "${projectDir}/out/production/resources/", "${projectDir}/out/production/${project.name}.main/", "${projectDir}/bin/main/" ]
+def replaceProperties = project.properties
 
 processResources {
-	inputs.properties replaceProperties
-	replaceProperties.put 'project', project
-
 	filesMatching(resourceTargets) {
 		expand replaceProperties
 	}
@@ -251,17 +181,39 @@ task deobfJar(type: Jar) {
 }
 
 jar {
+	classifier 'slim'
+
 	from sourceSets.main.output.classesDirs
 	from sourceSets.main.output.resourcesDir
+}
+
+shadowJar {
+	classifier ''
+	configurations = [ project.configurations.shade ]
+	relocate "${registrate_package}", "xyz.apex.repack.${registrate_package}"
+
+	// we only want to remap class refrences imports etc
+	// and not shade in these into the mod jar
+	// registrator already comes with these pre shaded
+	// and we dependend on registrator
+	dependencies {
+		exclude dependency("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
+		exclude dependency("xyz.apex.java.utility:javautilities:${javautilities_version}")
+	}
 }
 
 artifacts {
 	archives jar
 	archives sourcesJar
 	archives deobfJar
+	archives shadowJar
 }
 
 tasks.withType(Jar) {
+	from(file('accesstransformer.cfg')) {
+		into '/META-INF'
+	}
+
 	manifest {
 		attributes([
 				'Specification-Title': "${mod_name}",
@@ -276,12 +228,16 @@ tasks.withType(Jar) {
 	}
 }
 
+reobf {
+	shadowJar { }
+}
+
 jar.finalizedBy('reobfJar')
 
-if(System.getenv('GITHUB_TOKEN') != null) {
+if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
 	publishing {
 		publications {
-			gpr(MavenPublication) {
+			mavenJava(MavenPublication) {
 				groupId = "${mod_base_package}"
 				artifactId = "${mod_id}"
 				version = "${minecraft_version}-${mod_version}"
@@ -289,58 +245,18 @@ if(System.getenv('GITHUB_TOKEN') != null) {
 				artifact jar
 				artifact sourcesJar
 				artifact deobfJar
+				artifact shadowJar
 			}
 		}
 		repositories {
 			maven {
-				name = 'GitHubPackages'
-				url = uri('https://maven.pkg.github.com/ApexModder/FantasyTable')
+				name 'ApexMods-Maven'
+				url 'https://apexmodder.jfrog.io/artifactory/mods-maven/'
 
 				credentials {
-					username = System.getenv('GITHUB_ACTOR')
-					password = System.getenv('GITHUB_TOKEN')
+					username System.getenv('APEX_MODS_MAVEN_USERNAME')
+					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
 				}
-			}
-		}
-	}
-}
-
-
-if(project.hasProperty('apex_curse_gradle_token')) {
-	curseforge {
-		apiKey = project.getProperty('apex_curse_gradle_token')
-
-		project {
-			id = "${mod_curseforge_id}"
-			releaseType = 'release'
-			addGameVersion "${minecraft_version}"
-
-			mainArtifact jar
-			addArtifact deobfJar
-			addArtifact sourcesJar
-
-			relations {
-				requiredDependency 'registrator'
-				requiredDependency 'apexcore'
-			}
-		}
-	}
-} else if(System.getenv('CURSEFORGE_TOKEN') != null) {
-	curseforge {
-		apiKey = System.getenv('CURSEFORGE_TOKEN')
-
-		project {
-			id = "${mod_curseforge_id}"
-			releaseType = 'release'
-			addGameVersion "${minecraft_version}"
-
-			mainArtifact jar
-			addArtifact deobfJar
-			addArtifact sourcesJar
-
-			relations {
-				requiredDependency 'registrator'
-				requiredDependency 'apexcore'
 			}
 		}
 	}
