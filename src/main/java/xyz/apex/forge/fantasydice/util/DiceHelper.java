@@ -78,15 +78,14 @@ public class DiceHelper
 
 		var die = (DiceItem) stack.getItem();
 		var sides = die.getSides();
+
 		var stackCount = stack.getCount();
 		var maxPossibleRoll = sides * stackCount;
 		var diceType = die.getDiceType();
-		var dieQuality = diceType.getDiceQuality();
 		var isApex = diceType.matches(FTDiceTypes.DICE_APEX);
-		var rolls = IntStream.range(0, stackCount).map(i -> roll(level.random, min, sides, dieQuality, isApex)).toArray();
-		rolls = diceType.onRoll(player, hand, stack, min, sides, rolls);
+
+		var rolls = IntStream.range(0, stackCount).map(i -> rollDice(level, player, hand, stack, min)).toArray();
 		var roll = Arrays.stream(rolls).sum();
-		// roll += diceType.getDiceQuality();
 
 		if(!isApex) // apex goes negative, clamping will break it
 			roll = Mth.clamp(roll, min, maxPossibleRoll);
@@ -97,9 +96,29 @@ public class DiceHelper
 		return true;
 	}
 
-	private static MutableComponent createTextComponent(Player player, ItemStack stack, DiceItem die, int roll, int sides, int[] rolls)
+	private static int rollDice(Level level, Player player, InteractionHand hand, ItemStack stack, int min)
+	{
+		var die = (DiceItem) stack.getItem();
+		var sides = die.getSides();
+		var diceType = die.getDiceType();
+		var diceQuality = diceType.getDiceQuality();
+		var isApex = diceType.matches(FTDiceTypes.DICE_APEX);
+		var roll = roll(level.random, min, sides, diceQuality, isApex);
+		roll = diceType.onRoll(player, hand, stack, min, sides, roll);
+
+		if(!isApex) // apex goes negative, clamping will break it
+			roll = Mth.clamp(roll, min, sides);
+
+		return roll;
+	}
+
+	private static MutableComponent createTextComponent(Player player, ItemStack stack, DiceItem die, int roll, int sides, @Nullable int[] rolls)
 	{
 		var diceType = die.getDiceType();
+		var rollsComponent = new Component[] { TextComponent.EMPTY };
+
+		if(rolls != null && rolls.length > 1)
+			rollsComponent[0] = new TextComponent("\n" + Arrays.toString(rolls)).withStyle(s -> s.withItalic(true));
 
 		return new TranslatableComponent(
 				FantasyDice.DIE_ROLL_KEY,
@@ -110,7 +129,7 @@ public class DiceHelper
 						new HoverEvent(
 								HoverEvent.Action.SHOW_TEXT,
 								stack.getHoverName().copy()
-								     .append(new TextComponent("\n" + Arrays.toString(rolls)).withStyle(s->s.withItalic(true)))
+								     .append(rollsComponent[0])
 								     .withStyle(hoverStyle -> diceType.withStyle(stack, hoverStyle))
 						)
 				)

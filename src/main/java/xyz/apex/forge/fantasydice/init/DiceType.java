@@ -136,10 +136,10 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return usesFoil;
 	}
 
-	public int[] onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int[] rolls)
+	public int onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int roll)
 	{
 		var dieQuality = this.diceQuality.getAsInt();
-		return rollCallback.onRoll(player, hand, stack, min, sides, rolls, dieQuality);
+		return rollCallback.onRoll(player, hand, stack, min, sides, roll, dieQuality);
 	}
 
 	public static <OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem> Builder<OWNER, DIE> builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
@@ -247,7 +247,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	@FunctionalInterface
 	public interface RollCallback
 	{
-		int[] onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int[] rolls, int dieQuality);
+		int onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int roll, int dieQuality);
 	}
 
 	public enum Type

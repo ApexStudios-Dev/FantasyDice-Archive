@@ -23,7 +23,6 @@ import xyz.apex.forge.fantasydice.item.DyeableDiceItem;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -47,6 +46,14 @@ public final class FTDiceTypes
 				.build()
 
 				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+				.build()
+
+				.withDie(12)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
 				.build()
 
@@ -74,6 +81,14 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
 				.build()
 
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
+				.build()
+
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.COBBLESTONE))
 				.build()
@@ -95,6 +110,14 @@ public final class FTDiceTypes
 				.build()
 
 				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+				.build()
+
+				.withDie(12)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
 				.build()
 
@@ -122,6 +145,14 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
 				.build()
 
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+				.build()
+
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
 				.build()
@@ -143,6 +174,14 @@ public final class FTDiceTypes
 				.build()
 
 				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+				.build()
+
+				.withDie(12)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
 				.build()
 
@@ -170,6 +209,14 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
 				.build()
 
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+				.build()
+
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
 				.build()
@@ -191,6 +238,14 @@ public final class FTDiceTypes
 				.build()
 
 				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+				.build()
+
+				.withDie(12)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
 				.build()
 
@@ -221,6 +276,16 @@ public final class FTDiceTypes
 					.fireResistant()
 				.build()
 
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.fireResistant()
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.fireResistant()
+				.build()
+
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
 					.fireResistant()
@@ -243,6 +308,14 @@ public final class FTDiceTypes
 				.build()
 
 				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COPPER_INGOT))
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COPPER_INGOT))
+				.build()
+
+				.withDie(12)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COPPER_INGOT))
 				.build()
 
@@ -272,6 +345,14 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.ENDER_PEARL))
 				.build()
 
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.ENDER_PEARL))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.ENDER_PEARL))
+				.build()
+
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.ENDER_PEARL))
 				.build()
@@ -296,6 +377,14 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.ICE))
 				.build()
 
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.ICE))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.ICE))
+				.build()
+
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Blocks.ICE))
 				.build()
@@ -310,22 +399,26 @@ public final class FTDiceTypes
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
-					.fireResistant()
 				.build()
 
 				.withDie(6)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
-					.fireResistant()
 				.build()
 
 				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
-					.fireResistant()
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
 				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
-					.fireResistant()
 				.build()
 			.build();
 	// endregion
@@ -338,22 +431,26 @@ public final class FTDiceTypes
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
-					.fireResistant()
 				.build()
 
 				.withDie(6)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
-					.fireResistant()
 				.build()
 
 				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
-					.fireResistant()
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
 				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
-					.fireResistant()
 				.build()
 			.build();
 	// endregion
@@ -366,50 +463,26 @@ public final class FTDiceTypes
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-					.fireResistant()
 				.build()
 
 				.withDie(6)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-					.fireResistant()
 				.build()
 
 				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-					.fireResistant()
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
 				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-					.fireResistant()
-				.build()
-			.build();
-	// endregion
-
-	// region: Chocolate
-	public static final DiceType<FTRegistry, DiceItem> DICE_CHOCOLATE = DiceType
-			.builder("chocolate", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF673B27)))
-				.withType(DiceType.Type.COSMETIC)
-
-				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
-					.fireResistant()
-				.build()
-
-				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
-					.fireResistant()
-				.build()
-
-				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
-					.fireResistant()
-				.build()
-
-				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
-					.fireResistant()
 				.build()
 			.build();
 	// endregion
@@ -435,6 +508,16 @@ public final class FTDiceTypes
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
 				.build()
 
+				.withDie(10)
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
+				.withDie(12)
+					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+
 				.withDie(20)
 					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
@@ -449,7 +532,7 @@ public final class FTDiceTypes
 			.builder("fantasy", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFF39F9F)))
 				.withType(DiceType.Type.SPECIALITY)
-				.onRoll((player, hand, stack, min, sides, rolls, dieQuality) -> {
+				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> {
 					Random rng = player.getRandom();
 
 					int newMin;
@@ -466,8 +549,7 @@ public final class FTDiceTypes
 						newMax = sides / 2;
 					}
 
-					Arrays.setAll(rolls, i -> DiceHelper.roll(rng, newMin, newMax, dieQuality, false));
-					return rolls;
+					return DiceHelper.roll(rng, newMin, newMax, dieQuality, false);
 				})
 
 				.withDie(6)
@@ -487,15 +569,9 @@ public final class FTDiceTypes
 			.builder("tobi", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF5B20A2)))
 				.withType(DiceType.Type.SPECIALITY)
-				.onRoll((player, hand, stack, min, sides, rolls, dieQuality) -> {
+				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> {
 					Random rng = player.getRandom();
-
-					for(int i = 0; i < rolls.length; i++)
-					{
-						rolls[i] = IntStream.range(0, 3).map($ -> DiceHelper.roll(rng, min, sides, dieQuality, false)).max().orElse(rolls[i]);
-					}
-
-					return rolls;
+					return IntStream.range(0, 3).map($ -> DiceHelper.roll(rng, min, sides, dieQuality, false)).max().orElse(roll);
 				})
 
 				.withDie(6)
@@ -517,10 +593,7 @@ public final class FTDiceTypes
 			.builder("apex", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.DARK_PURPLE))
 				.withType(DiceType.Type.SPECIALITY)
-				.onRoll((player, hand, stack, min, sides, rolls, dieQuality) -> {
-					Arrays.setAll(rolls, i -> rolls[i] * -1);
-					return rolls;
-				})
+				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> roll * -1)
 
 				.withDie(6)
 					.lang("Apex's NULL 6-Sided Die")
@@ -539,9 +612,9 @@ public final class FTDiceTypes
 			.builder("symacon", REGISTRY)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFFF681F)))
 				.withType(DiceType.Type.SPECIALITY)
-				.onRoll((player, hand, stack, min, sides, rolls, dieQuality) -> {
+				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> {
 					boolean half = player.getRandom().nextBoolean();
-					return IntStream.of(rolls).map(i -> half ? i / 2 : i * 2).toArray();
+					return half ? roll / 2 : roll * 2;
 				})
 
 				.withDie(6)
@@ -552,6 +625,38 @@ public final class FTDiceTypes
 				.withDie(20)
 					.lang("Symacon's Gambling 20-Sided Die")
 					.lang(RegistrateLangExtProvider.EN_GB, "Symacon's Gambling 20-Sided Die")
+				.build()
+			.build();
+	// endregion
+
+	// region: Chocolate
+	public static final DiceType<FTRegistry, DiceItem> DICE_CHOCOLATE = DiceType
+			.builder("chocolate", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF673B27)))
+				.withType(DiceType.Type.SPECIALITY)
+
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+				.build()
+
+				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+				.build()
+
+				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COCOA_BEANS))
 				.build()
 			.build();
 	// endregion
