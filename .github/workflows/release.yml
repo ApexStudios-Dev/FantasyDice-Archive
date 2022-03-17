@@ -86,6 +86,10 @@ jobs:
       # Build package
       - run: ./gradlew build
 
+      - uses: actions/upload-artifact@v3
+        - name: build-artifacts
+        - path: ./build/libs
+
       # Publish to GitHub Packages
 #      - run: ./gradlew publish
 #        env:
