@@ -87,29 +87,29 @@ jobs:
       - run: ./gradlew build
 
       # Publish to GitHub Packages
-      - run: ./gradlew publish
-        env:
-          APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
-          APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
+#      - run: ./gradlew publish
+#        env:
+#          APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
+#          APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
 
       # Use 'Publish Minecraft Mods' action to publish to various mod hosting sources
-      - uses: Kir-Antipov/mc-publish@v2.1
-        with:
-          modrinth-id: hPeyEJEZ
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-
-          curseforge-id: 573867
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-
-          name: FantasyDice-1.16.5-${{ steps.vers.outputs.num }}
-          version: ${{ steps.vers.outputs.num }}
-          version-type: release
-          loaders: forge
-          game-versions: 1.16.5
-          java: 8
-          files: ''
-          files-primary: build/libs/!(*-@(deobf|slim|sources)).jar
-          files-secondary: build/libs/*-@(deobf|slim|sources).jar
+#      - uses: Kir-Antipov/mc-publish@v2.1
+#        with:
+#          modrinth-id: hPeyEJEZ
+#          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+#
+#          curseforge-id: 573867
+#          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+#
+#          name: FantasyDice-1.16.5-${{ steps.vers.outputs.num }}
+#          version: ${{ steps.vers.outputs.num }}
+#          version-type: release
+#          loaders: forge
+#          game-versions: 1.16.5
+#          java: 8
+#          files: ''
+#          files-primary: build/libs/!(*-@(deobf|slim|sources)).jar
+#          files-secondary: build/libs/*-@(deobf|slim|sources).jar
 
       # Kill gradlew deamon (caching requires gradle to not be running)
       - run: ./gradlew --stop
