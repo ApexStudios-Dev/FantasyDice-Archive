@@ -12,7 +12,7 @@ import org.apache.commons.lang3.Validate;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -37,7 +37,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final String name;
 	private final OWNER owner;
 	private final Int2ObjectMap<ItemEntry<DIE>> diceItems = new Int2ObjectOpenHashMap<>();
-	private final Tag.Named<Item> tag;
+	private final TagKey<Item> tag;
 	private final NonnullBiFunction<ItemStack, Style, Style> styleModifier;
 	private final IntSupplier diceQuality;
 	private final RollCallback rollCallback;
@@ -91,7 +91,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return styleModifier.apply(stack, style);
 	}
 
-	public Tag.Named<Item> getTag()
+	public TagKey<Item> getTag()
 	{
 		return tag;
 	}
@@ -161,7 +161,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	{
 		private final String name;
 		private final OWNER owner;
-		private final Tag.Named<Item> tag;
+		private final TagKey<Item> tag;
 		private final Int2ObjectMap<String> dieNames = new Int2ObjectOpenHashMap<>();
 		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
 

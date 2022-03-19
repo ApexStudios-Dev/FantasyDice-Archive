@@ -8,7 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -695,7 +695,7 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Recipes
-	private static <D extends DiceItem> void diceRecipe(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, Tag.Named<Item> ingredient)
+	private static <D extends DiceItem> void diceRecipe(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, TagKey<Item> ingredient)
 	{
 		FTRecipes.diceStation(DataIngredient.tag(ingredient), ctx::get, 1)
 				.unlockedBy("has_item", RegistrateRecipeProvider.has(ingredient))

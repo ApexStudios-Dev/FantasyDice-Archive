@@ -154,7 +154,7 @@ public class DiceHelper
 			if(plr.getGameProfile().getId().equals(playerID))
 				continue;
 
-			if(dimensionType.equalTo(plr.level.dimensionType()))
+			if(dimensionType == plr.level.dimensionType())
 			{
 				if(chunkPos.getChessboardDistance(new ChunkPos(plr.blockPosition())) > FantasyDice.CONFIG.diceRollMessageRange.get())
 					continue;

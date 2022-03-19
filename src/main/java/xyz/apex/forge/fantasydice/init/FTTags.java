@@ -2,7 +2,7 @@ package xyz.apex.forge.fantasydice.init;
 
 import com.tterrag.registrate.providers.ProviderType;
 
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 @SuppressWarnings("unchecked")
@@ -17,10 +17,10 @@ public final class FTTags
 
 	public static final class Items
 	{
-		public static final Tag.Named<Item> DICE = REGISTRY.itemTagModded("dice");
-		public static final Tag.Named<Item> DICE_SPECIALTY = REGISTRY.itemTagModded("dice/specialty");
+		public static final TagKey<Item> DICE = REGISTRY.itemTagModded("dice");
+		public static final TagKey<Item> DICE_SPECIALTY = REGISTRY.itemTagModded("dice/specialty");
 
-		public static final Tag.Named<Item> COINS = REGISTRY.itemTagModded("coins");
+		public static final TagKey<Item> COINS = REGISTRY.itemTagModded("coins");
 
 		private static void bootstrap()
 		{
