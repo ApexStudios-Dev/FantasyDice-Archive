@@ -152,9 +152,10 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version_short}-${registrate_version}:sources")
-	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version_short}-${registrate_version}")
-	shade fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version_short}-${registrate_version}")
+	compileOnly fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}:sources")
+	compileOnly fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
+	runtimeOnly fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
+	shade fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
 
 	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}:deobf"
 	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}:sources"
