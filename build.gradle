@@ -219,7 +219,7 @@ shadowJar {
 	// registrator already comes with these pre shaded
 	// and we dependend on registrator
 	dependencies {
-		exclude dependency(fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version_short}-${registrate_version}"))
+		exclude dependency(fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"))
 		exclude dependency("xyz.apex.java.utility:javautilities:${javautilities_version}")
 	}
 }
