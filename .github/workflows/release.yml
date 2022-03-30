@@ -15,6 +15,7 @@ jobs:
     steps:
       # Checkout repository & Setup JDK
       - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow
       - uses: actions/setup-java@v2
         with:
           distribution: adopt
