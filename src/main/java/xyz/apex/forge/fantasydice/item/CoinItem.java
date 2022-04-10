@@ -46,7 +46,7 @@ public class CoinItem extends Item
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslatableComponent(FantasyDice.COIN_DESC).withStyle(style -> withStyle(stack, style)));
+		tooltip.add(new TranslatableComponent(FantasyDice.COIN_DESC).withStyle(style -> withStyle(stack, style).withItalic(true)));
 	}
 
 	@Override
