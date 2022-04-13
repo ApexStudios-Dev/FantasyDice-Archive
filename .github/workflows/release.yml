@@ -105,7 +105,7 @@ jobs:
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
           color: '#E27E8B'
           file: ./CHANGELOG.md
-          message: "**Fantasy's Dice** has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.18.1_**!"
+          message: "<@&963675324166602822> has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.18.1_**!"
 
       - name: Stop Gradle Deamons
         run: ./gradlew --stop
