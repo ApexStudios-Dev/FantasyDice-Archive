@@ -24,7 +24,6 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 	{
 		super(FantasyDice.ID);
 
-		skipErrors();
 		itemGroup(ModItemGroup::new, "Fantasy's Dice");
 
 		addDataGenerator(ProviderType.LANG, provider -> {
