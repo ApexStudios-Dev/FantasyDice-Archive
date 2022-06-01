@@ -1,8 +1,8 @@
 buildscript {
 	repositories {
-		maven { url = 'https://maven.minecraftforge.net' }
-		maven { url = 'https://maven.parchmentmc.org' }
-		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+		maven { url 'https://maven.minecraftforge.net' }
+		maven { url 'https://maven.parchmentmc.org' }
+		maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
 		mavenCentral()
 	}
 	dependencies {
@@ -115,6 +115,14 @@ repositories {
 	maven { url 'https://dvs1.progwml6.com/files/maven' }
 	maven { url 'https://maven.tterrag.com/' }
 	maven { url 'https://maven.apexmods.xyz/' }
+
+	maven {
+		url 'https://cursemaven.com'
+
+		content {
+			includeGroup "curse.maven"
+		}
+	}
 }
 
 dependencies {
@@ -165,16 +173,15 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 task deobfJar(type: Jar) {
 	classifier 'deobf'
-	from sourceSets.main.output
 	exclude '**/*bbmodel'
+	from sourceSets.main.output
 }
 
 jar {
 	classifier 'slim'
-
+	exclude '**/*bbmodel'
 	from sourceSets.main.output.classesDirs
 	from sourceSets.main.output.resourcesDir
-	exclude '**/*bbmodel'
 }
 
 shadowJar {
@@ -201,24 +208,38 @@ artifacts {
 }
 
 if(System.getenv('GENERATE_CHANGELOG') != null) {
-    def previousGitTag = { ->
-        def code = new ByteArrayOutputStream()
+	def previousGitTag
+	def prefix = 'v'
+	def suffix = ''
 
-        exec {
-            commandLine 'git', 'describe', '--tags', '--match', 'v*', '--exclude', "v${mod_version}"
-            standardOutput code
-        }
+	if(mod_release_type == 'prerelease') {
+		prefix = 'pv'
+	} else if(mod_release_type == 'alpha' || mod_release_type == 'beta') {
+		suffix = "${mod_release_type}".toUpperCase()
+	}
 
-        return code.toString().trim().split('-')[0]
-    }
+	def currentGitTag = "${prefix}${mod_version}${suffix}"
 
-    task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+	try {
+		def code = new ByteArrayOutputStream()
+
+		exec {
+			commandLine 'git', 'describe', '--abbrev=0', '--tags', '--exclude', currentGitTag
+			standardOutput code
+		}
+
+		previousGitTag = code.toString().trim()
+	} catch(e) {
+		previousGitTag = ''
+	}
+
+	task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
         file = file("CHANGELOG.md")
         fromRepo = file('.')
         fromRef = "${previousGitTag}"
         toRef = "v${mod_version}"
         templateContent = file('.github/changelog.mustache').text
-		        .replace('{mod_version}', "${mod_version}")
+		        .replace('{current_tag}', "${currentGitTag}")
 		        .replace('{mod_git_url}', "${mod_git_url}")
 		        .replace('{last_tag}', "${previousGitTag}")
     }
