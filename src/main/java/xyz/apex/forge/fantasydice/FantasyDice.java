@@ -17,7 +17,6 @@ import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasydice.command.RollCommand;
 import xyz.apex.forge.fantasydice.init.DiceType;
 import xyz.apex.forge.fantasydice.init.FTRegistry;
-import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +53,7 @@ public final class FantasyDice
 	{
 		FTRegistry.bootstrap();
 		EventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
-		EventBusHelper.addListener(CONFIG::onConfigReload);
+		EventBusHelper.addListener(ModConfigEvent.class, CONFIG::onConfigReload);
 		EventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
 		EventBusHelper.addListener(WandererTradesEvent.class, this::onWandererTrades);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, ID + ".toml");
@@ -68,7 +67,7 @@ public final class FantasyDice
 		{
 			if(diceType.getType() == DiceType.Type.SPECIALITY)
 			{
-				for(ItemEntry<?> item : diceType.getItems())
+				for(var item : diceType.getItems())
 				{
 					rareTrades.add(new BasicItemListing(6, item.asItemStack(), 10, 10));
 				}
@@ -108,15 +107,15 @@ public final class FantasyDice
 
 			diceWoodenQuality = builder
 					.comment("Quality of 'Wooden Dice' rolls")
-					.defineInRange("die.quality.wooden", -2, Integer.MIN_VALUE, Integer.MAX_VALUE);
+					.defineInRange("die.quality.wooden", -3, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 			diceStoneQuality = builder
 					.comment("Quality of 'Stone Dice' rolls")
-					.defineInRange("die.quality.stone", -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+					.defineInRange("die.quality.stone", -2, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 			diceBoneQuality = builder
 					.comment("Quality of 'Bone Dice' rolls")
-					.defineInRange("die.quality.bone", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+					.defineInRange("die.quality.bone", -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 			diceIronQuality = builder
 					.comment("Quality of 'Iron Dice' rolls")

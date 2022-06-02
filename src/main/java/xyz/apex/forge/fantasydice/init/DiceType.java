@@ -3,6 +3,7 @@ package xyz.apex.forge.fantasydice.init;
 import com.google.common.collect.Lists;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -23,7 +24,6 @@ import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.builder.ItemBuilder;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
-import xyz.apex.forge.utility.registrator.entry.RegistryEntry;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 import xyz.apex.java.utility.nullness.NonnullBiFunction;
 
@@ -60,8 +60,8 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			var sides = entry.getIntKey();
 			var dieName = entry.getValue();
 
-			var registryEntry = owner.<Item, DIE>get(dieName, Item.class);
-			var itemEntry = ItemEntry.<DIE>cast(registryEntry);
+			RegistryEntry<DIE> registryEntry = owner.get(dieName, Item.class);
+			var itemEntry = ItemEntry.cast(registryEntry);
 
 			diceItems.put(sides, itemEntry);
 		}
@@ -138,8 +138,8 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 	public int onRoll(Player player, InteractionHand hand, ItemStack stack, int min, int sides, int roll)
 	{
-		var dieQuality = this.diceQuality.getAsInt();
-		return rollCallback.onRoll(player, hand, stack, min, sides, roll, dieQuality);
+		var diceQuality = this.diceQuality.getAsInt();
+		return rollCallback.onRoll(player, hand, stack, min, sides, roll, diceQuality);
 	}
 
 	public static <OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem> Builder<OWNER, DIE> builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
@@ -177,7 +177,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			this.owner = owner;
 			this.diceFactory = diceFactory;
 
-			tag = owner.itemTagModded("dice/" + name);
+			tag = owner.moddedItemTag("dice/" + name);
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
 		}
 
@@ -262,7 +262,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 		Type(String modId, String name)
 		{
-			this("%s.die.type.%s.name".formatted(modId, name));
+			this(String.format("%s.die.type.%s.name", modId, name));
 		}
 
 		Type(String translationKey)
@@ -278,13 +278,12 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		public MutableComponent getComponent(ItemStack stack, DiceType<?, ?> diceType)
 		{
 			var diceQuality = diceType.getDiceQuality();
-
 			return new TranslatableComponent(translationKey)
 					.append(diceQuality > 0 ? " (+" + diceQuality + ")" : " (" + diceQuality + ")")
 					.withStyle(style -> diceType
 							.withStyle(stack, style)
-							.withItalic(true))
-					;
+							.withItalic(true)
+					);
 		}
 	}
 }

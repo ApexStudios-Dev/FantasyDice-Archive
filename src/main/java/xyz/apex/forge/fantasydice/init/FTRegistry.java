@@ -24,8 +24,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 	{
 		super(FantasyDice.ID);
 
-		//skipErrors();
-		creativeModeTab(ItemGroup::new, "Fantasy's Dice");
+		creativeModeTab(ModItemGroup::new, "Fantasy's Dice");
 
 		addDataGenerator(ProviderType.LANG, provider -> {
 			provider.add(FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
@@ -62,7 +61,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 		FTDiceTypes.bootstrap();
 		FTItems.bootstrap();
 		FTBlocks.bootstrap();
-		FTMenus.bootstrap();
+		FTContainers.bootstrap();
 		FTTags.bootstrap();
 		FTRecipes.bootstrap();
 
@@ -74,9 +73,9 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 		return registry.get();
 	}
 
-	public static final class ItemGroup extends CreativeModeTab
+	public static final class ModItemGroup extends CreativeModeTab
 	{
-		public ItemGroup()
+		public ModItemGroup()
 		{
 			super(FantasyDice.ID);
 		}

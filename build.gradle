@@ -1,8 +1,8 @@
 buildscript {
 	repositories {
-		maven { url = 'https://maven.minecraftforge.net' }
-		maven { url = 'https://maven.parchmentmc.org' }
-		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+		maven { url 'https://maven.minecraftforge.net' }
+		maven { url 'https://maven.parchmentmc.org' }
+		maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
 		mavenCentral()
 	}
 	dependencies {
@@ -33,10 +33,10 @@ archivesBaseName = "${mod_id}"
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 configurations {
-	shade
-
 	library
 	implementation.extendsFrom library
+
+	shade
 }
 
 minecraft {
@@ -46,7 +46,7 @@ minecraft {
 	runs {
 		client {
 			taskName 'Client'
-			workingDirectory project.file('run/client')
+			workingDirectory file('run/client')
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
@@ -69,7 +69,7 @@ minecraft {
 
 		server {
 			taskName 'Server'
-			workingDirectory project.file('run/server')
+			workingDirectory file('run/server')
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
@@ -102,11 +102,11 @@ minecraft {
 
 		data {
 			taskName 'Data'
-			workingDirectory project.file('run/client')
+			workingDirectory file('run/client')
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-			args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'apexcore', '--existing-mod', 'registrator'
+			args '--mod', mod_id, '--client', '--server', '--validate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', registrator_mod_id, '--existing-mod', apexcore_mod_id
 			// ForgeGradle will just force-exit the Gradle Daemon which fails our builds in case
 			// a daemon is used for any reason.
 			forceExit false
@@ -126,13 +126,11 @@ minecraft.runs.all {
 	}
 }
 
-mixin {
-	add sourceSets.main, "${mod_id}.refmap.json"
-	config "${mod_id}.mixins.json"
-
-	/*debug = true
-	debug.export = true
-	hotSwap = true*/
+if(file("./src/main/resources/${mod_id}.mixins.json").exists()) {
+	mixin {
+		add sourceSets.main, "${mod_id}.refmap.json"
+		config "${mod_id}.mixins.json"
+	}
 }
 
 sourceSets.main.resources {
@@ -141,9 +139,18 @@ sourceSets.main.resources {
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 	maven { url 'https://dvs1.progwml6.com/files/maven' }
 	maven { url 'https://maven.tterrag.com/' }
 	maven { url 'https://maven.apexmods.xyz/' }
+
+	maven {
+		url 'https://cursemaven.com'
+
+		content {
+			includeGroup "curse.maven"
+		}
+	}
 }
 
 dependencies {
@@ -153,13 +160,10 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-	compileOnly fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}:sources")
-	compileOnly fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
-	runtimeOnly fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
-	shade fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
+	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
+	shade "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
 
-	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}:deobf"
-	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}:sources"
+	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}"
 	shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
 	library "xyz.apex.java.utility:javautilities:${javautilities_version}"
 
@@ -198,12 +202,13 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 task deobfJar(type: Jar) {
 	classifier 'deobf'
+	exclude '**/*bbmodel'
 	from sourceSets.main.output
 }
 
 jar {
 	classifier 'slim'
-
+	exclude '**/*bbmodel'
 	from sourceSets.main.output.classesDirs
 	from sourceSets.main.output.resourcesDir
 }
@@ -212,13 +217,14 @@ shadowJar {
 	classifier ''
 	configurations = [ project.configurations.shade ]
 	relocate "${registrate_package}", "xyz.apex.repack.${registrate_package}"
+	exclude '**/*bbmodel'
 
 	// we only want to remap class refrences imports etc
 	// and not shade in these into the mod jar
 	// registrator already comes with these pre shaded
 	// and we dependend on registrator
 	dependencies {
-		exclude dependency(fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"))
+		exclude dependency("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
 		exclude dependency("xyz.apex.java.utility:javautilities:${javautilities_version}")
 	}
 }
@@ -231,27 +237,41 @@ artifacts {
 }
 
 if(System.getenv('GENERATE_CHANGELOG') != null) {
-    def previousGitTag = { ->
-        def code = new ByteArrayOutputStream()
+	def previousGitTag
+	def prefix = 'v'
+	def suffix = ''
 
-        exec {
-            commandLine 'git', 'describe', '--tags', '--match', 'v*', '--exclude', "v${mod_version}"
-            standardOutput code
-        }
+	if(mod_release_type == 'prerelease') {
+		prefix = 'pv'
+	} else if(mod_release_type == 'alpha' || mod_release_type == 'beta') {
+		suffix = "${mod_release_type}".toUpperCase()
+	}
 
-        return code.toString().trim().split('-')[0]
-    }
+	def currentGitTag = "${prefix}${mod_version}${suffix}"
 
-    task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-        file = file("CHANGELOG.md")
-        fromRepo = file('.')
-        fromRef = "${previousGitTag}"
-        toRef = "v${mod_version}"
-        templateContent = file('.github/changelog.mustache').text
-		        .replace('{mod_version}', "${mod_version}")
-		        .replace('{mod_git_url}', "${mod_git_url}")
-		        .replace('{last_tag}', "${previousGitTag}")
-    }
+	try {
+		def code = new ByteArrayOutputStream()
+
+		exec {
+			commandLine 'git', 'describe', '--abbrev=0', '--tags', '--exclude', currentGitTag
+			standardOutput code
+		}
+
+		previousGitTag = code.toString().trim()
+	} catch(e) {
+		previousGitTag = ''
+	}
+
+	task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+		file = file("CHANGELOG.md")
+		fromRepo = file('.')
+		fromRef = "${previousGitTag}"
+		toRef = "v${mod_version}"
+		templateContent = file('.github/changelog.mustache').text
+		                                                    .replace('{current_tag}', "${currentGitTag}")
+		                                                    .replace('{mod_git_url}', "${mod_git_url}")
+		                                                    .replace('{last_tag}', "${previousGitTag}")
+	}
 }
 
 tasks.withType(Jar) {
@@ -314,6 +334,23 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
 				}
 			}
+		}
+	}
+} else {
+	publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				groupId = "${mod_base_package}"
+				artifactId = "${mod_id}"
+				version = "${minecraft_version}-${mod_version}"
+				artifact jar
+				artifact sourcesJar
+				artifact deobfJar
+				artifact shadowJar
+			}
+		}
+		repositories {
+			mavenLocal()
 		}
 	}
 }

@@ -1,7 +1,5 @@
 package xyz.apex.forge.fantasydice.item;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.network.chat.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -17,6 +15,7 @@ import xyz.apex.forge.fantasydice.init.FTItems;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
 import xyz.apex.java.utility.nullness.NonnullUnaryOperator;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class CoinItem extends Item
@@ -82,13 +81,12 @@ public class CoinItem extends Item
 		if(level.isClientSide)
 			return true;
 
-		var rng = level.random;
 		var heads = 0;
 		var tails = 0;
 
 		for(var i = 0; i < stack.getCount(); i++)
 		{
-			var roll = DiceHelper.roll(rng, 1, 2, 0, false);
+			var roll = DiceHelper.roll(level.random, 1, 2, 0, false);
 
 			if(roll == HEADS)
 				heads++;
@@ -108,12 +106,12 @@ public class CoinItem extends Item
 		// prefix: <player> flipped
 		// suffix: <N_heads> Heads & <N_tails> Tails
 		// full: <player> flipped <N_heads> Heads & <N_tails> Tails
-		MutableComponent prefix = new TranslatableComponent(
+		var prefix = new TranslatableComponent(
 				FantasyDice.COIN_FLIP_PREFIX,
 				player.getDisplayName()
 		);
 
-		MutableComponent suffix = new TranslatableComponent(FantasyDice.COIN_FLIP_SUFFIX, heads, tails)
+		var suffix = new TranslatableComponent(FantasyDice.COIN_FLIP_SUFFIX, heads, tails)
 				.withStyle(style -> withStyle
 						.apply(style)
 						.withHoverEvent(new HoverEvent(

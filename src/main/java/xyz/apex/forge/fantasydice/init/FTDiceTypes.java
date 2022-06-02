@@ -23,7 +23,6 @@ import xyz.apex.forge.fantasydice.item.DyeableDiceItem;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 
-import java.util.Random;
 import java.util.stream.IntStream;
 
 public final class FTDiceTypes
@@ -455,38 +454,6 @@ public final class FTDiceTypes
 			.build();
 	// endregion
 
-	// region: Amethyst
-	public static final DiceType<FTRegistry, DiceItem> DICE_AMETHYST = DiceType
-			.builder("amethyst", REGISTRY)
-				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFC991EB)))
-				.withType(DiceType.Type.COSMETIC)
-
-				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-				.build()
-
-				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-				.build()
-
-				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-				.build()
-
-				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-				.build()
-
-				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-				.build()
-
-				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
-				.build()
-			.build();
-	// endregion
-
 	// region: Paper
 	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
 			.builder("paper", REGISTRY, DyeableDiceItem::new)
@@ -524,6 +491,38 @@ public final class FTDiceTypes
 				.build()
 			.build();
 	// endregion
+
+	// region: Amethyst
+	public static final DiceType<FTRegistry, DiceItem> DICE_AMETHYST = DiceType
+			.builder("amethyst", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFC991EB)))
+				.withType(DiceType.Type.COSMETIC)
+
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+			.build();
+	// endregion
 	// endregion
 
 	// region: Speciality
@@ -533,7 +532,7 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFF39F9F)))
 				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> {
-					Random rng = player.getRandom();
+					var rng = player.getRandom();
 
 					int newMin;
 					int newMax;
@@ -570,7 +569,7 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF5B20A2)))
 				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> {
-					Random rng = player.getRandom();
+					var rng = player.getRandom();
 					return IntStream.range(0, 3).map($ -> DiceHelper.roll(rng, min, sides, dieQuality, false)).max().orElse(roll);
 				})
 
@@ -613,7 +612,7 @@ public final class FTDiceTypes
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFFF681F)))
 				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> {
-					boolean half = player.getRandom().nextBoolean();
+					var half = player.getRandom().nextBoolean();
 					return half ? roll / 2 : roll * 2;
 				})
 
@@ -671,9 +670,9 @@ public final class FTDiceTypes
 	{
 		var item = stack.getItem();
 
-		if(!stack.isEmpty() && item instanceof DyeableLeatherItem dyeable)
+		if(!stack.isEmpty() && item instanceof DyeableLeatherItem dyedItem)
 		{
-			var dyedColor = dyeable.getColor(stack);
+			var dyedColor = dyedItem.getColor(stack);
 			return style.withColor(TextColor.fromRgb(dyedColor));
 		}
 
@@ -684,9 +683,9 @@ public final class FTDiceTypes
 	{
 		var item = stack.getItem();
 
-		if(!stack.isEmpty() && item instanceof DyeableLeatherItem dyeable)
+		if(!stack.isEmpty() && item instanceof DyeableLeatherItem dyedItem)
 		{
-			var dyedColor = dyeable.getColor(stack);
+			var dyedColor = dyedItem.getColor(stack);
 			return style.withColor(TextColor.fromRgb(dyedColor));
 		}
 
@@ -698,8 +697,8 @@ public final class FTDiceTypes
 	private static <D extends DiceItem> void diceRecipe(DataGenContext<Item, D> ctx, RegistrateRecipeProvider provider, TagKey<Item> ingredient)
 	{
 		FTRecipes.diceStation(DataIngredient.tag(ingredient), ctx::get, 1)
-				.unlockedBy("has_item", RegistrateRecipeProvider.has(ingredient))
-				 .group("dice/%d_sided".formatted(ctx.getEntry().getSides()))
+		         .unlockedBy("has_item", RegistrateRecipeProvider.has(ingredient))
+				 // .group(String.format("dice/%d_sided", ctx.getEntry().getSides()))
 		         .save(provider, ctx.getId());
 	}
 
@@ -707,7 +706,7 @@ public final class FTDiceTypes
 	{
 		FTRecipes.diceStation(DataIngredient.items(ingredient.asItem()), ctx::get, 1)
 		         .unlockedBy("has_item", RegistrateRecipeProvider.has(ingredient))
-		         .group("dice/%d_sided".formatted(ctx.getEntry().getSides()))
+		         // .group(String.format("dice/%d_sided", ctx.getEntry().getSides()))
 		         .save(provider, ctx.getId());
 	}
 	// endregion

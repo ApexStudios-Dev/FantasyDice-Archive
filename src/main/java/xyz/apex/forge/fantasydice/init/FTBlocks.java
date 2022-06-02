@@ -6,6 +6,7 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
 
 import xyz.apex.forge.fantasydice.block.DiceStationBlock;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
@@ -33,7 +34,7 @@ public final class FTBlocks
 							.save(provider, ctx.getId())
 				)
 				.blockState((ctx, provider) -> {
-					var model = provider.models().cube(
+					BlockModelBuilder model = provider.models().cube(
 							ctx.getName(),
 							provider.mcLoc("block/oak_planks"),
 							provider.modLoc("block/dice_table_top"),
