@@ -291,6 +291,38 @@ public final class FTDiceTypes
 				.build()
 			.build();
 	// endregion
+
+	// region: Copper
+	public static final DiceType<FTRegistry, DiceItem> DICE_COPPER = DiceType
+			.builder("copper", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFD4784D)))
+				.withDiceQuality(FantasyDice.CONFIG.diceCopperQuality::get)
+
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COPPER_INGOT))
+				.build()
+
+				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COPPER_INGOT))
+				.build()
+
+				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COPPER_INGOT))
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COPPER_INGOT))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COPPER_INGOT))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.COPPER_INGOT))
+				.build()
+			.build();
+	// endregion
 	// endregion
 
 	// region: Cosmetic
@@ -456,6 +488,38 @@ public final class FTDiceTypes
 				.withDie(20)
 					.color(() -> () -> (stack, tintIndex) -> ((DyeableLeatherItem) stack.getItem()).getColor(stack))
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.PAPER))
+				.build()
+			.build();
+	// endregion
+
+	// region: Amethyst
+	public static final DiceType<FTRegistry, DiceItem> DICE_AMETHYST = DiceType
+			.builder("amethyst", REGISTRY)
+				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFC991EB)))
+				.withType(DiceType.Type.COSMETIC)
+
+				.withDie(4)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(6)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(8)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(10)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(12)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
+				.build()
+
+				.withDie(20)
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Items.AMETHYST_SHARD))
 				.build()
 			.build();
 	// endregion

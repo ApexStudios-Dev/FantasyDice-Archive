@@ -88,6 +88,7 @@ public final class FantasyDice
 		public final ForgeConfigSpec.IntValue diceDiamondQuality;
 		public final ForgeConfigSpec.IntValue diceEmeraldQuality;
 		public final ForgeConfigSpec.IntValue diceNetheriteQuality;
+		public final ForgeConfigSpec.IntValue diceCopperQuality;
 
 		public final ForgeConfigSpec.IntValue diceCooldown;
 
@@ -135,6 +136,10 @@ public final class FantasyDice
 			diceNetheriteQuality = builder
 					.comment("Quality of 'Netherite Dice' rolls")
 					.defineInRange("die.quality.netherite", 4, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			diceCopperQuality = builder
+					.comment("Quality of 'Copper Dice' rolls")
+					.defineInRange("die.quality.copper", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 			diceCooldown = builder
 					.comment("Cool down in which Dice can be used", "Note: Cool down is in ticks, 20 == 1 second, 0 == No Cool down")
