@@ -33,6 +33,9 @@ archivesBaseName = "${mod_id}"
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 configurations {
+	library
+	implementation.extendsFrom library
+
 	shade
 }
 
@@ -98,6 +101,12 @@ minecraft {
 	}
 }
 
+minecraft.runs.all {
+	lazyToken('minecraft_classpath') {
+		configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
+	}
+}
+
 if(file("./src/main/resources/${mod_id}.mixins.json").exists()) {
 	mixin {
 		add sourceSets.main, "${mod_id}.refmap.json"
@@ -137,6 +146,7 @@ dependencies {
 
 	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}"
 	shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
+	library "xyz.apex.java.utility:javautilities:${javautilities_version}"
 
 	implementation fg.deobf("xyz.apex.forge.utility:${registrator_mod_id}:${minecraft_version}-${registrator_version}:deobf")
 	implementation fg.deobf("xyz.apex.forge:${apexcore_mod_id}:${minecraft_version}-${apexcore_version}:deobf")
