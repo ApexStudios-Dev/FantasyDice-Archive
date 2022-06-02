@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class DiceItem extends Item
 {
-	public static final Random RNG = new Random();
+	private static final Random RNG = new Random();
 
 	private final int sides;
 	@Nullable private DiceType<?, ?> diceType;
@@ -95,7 +95,7 @@ public class DiceItem extends Item
 			tooltip.add(diceType.getType().getComponent(stack, diceType));
 	}
 
-	private MutableComponent buildNameComponent(ItemStack stack)
+	private Component buildNameComponent(ItemStack stack)
 	{
 		MutableComponent nameComponent = new TranslatableComponent(getDescriptionId());
 

@@ -5,7 +5,6 @@ import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 
-@SuppressWarnings("unchecked")
 public final class FTTags
 {
 	private static final FTRegistry REGISTRY = FTRegistry.getRegistry();
@@ -17,10 +16,10 @@ public final class FTTags
 
 	public static final class Items
 	{
-		public static final Tag.Named<Item> DICE = REGISTRY.itemTagModded("dice");
-		public static final Tag.Named<Item> DICE_SPECIALTY = REGISTRY.itemTagModded("dice/specialty");
+		public static final Tag.Named<Item> DICE = REGISTRY.moddedItemTag("dice");
+		public static final Tag.Named<Item> DICE_SPECIALTY = REGISTRY.moddedItemTag("dice/specialty");
 
-		public static final Tag.Named<Item> COINS = REGISTRY.itemTagModded("coins");
+		public static final Tag.Named<Item> COINS = REGISTRY.moddedItemTag("coins");
 
 		private static void bootstrap()
 		{

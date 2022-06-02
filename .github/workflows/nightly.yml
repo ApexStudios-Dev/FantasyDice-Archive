@@ -1,9 +1,10 @@
-name: release
+name: nightly
 
 on:
+  workflow_dispatch:
   push:
-    tags:
-      - v*
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   publish:
@@ -18,16 +19,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Unshallow Repository
-        run: git fetch --prune --unshallow
-
-      - name: Read Properties
-        uses: christian-draeger/read-properties@1.0.1
-        id: mod_version
-        with:
-          path: ./gradle.properties
-          property: mod_version
 
       - name: Setup Java
         uses: actions/setup-java@v2
@@ -60,12 +51,6 @@ jobs:
       - name: Generate Mod Data & Asset Files
         run: ./gradlew data
 
-      - name: Generate Changelog File
-        run: ./gradlew gitChangelogTask
-        env:
-          GENERATE_CHANGELOG: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build Mod JARs
         run: ./gradlew build
 
@@ -74,37 +59,6 @@ jobs:
         with:
           name: Mod-Jars
           path: ./build/libs
-
-      - name: Upload Changelog to GitHub Actions
-        uses: actions/upload-artifact@v3
-        with:
-          name: Changelog
-          path: ./CHANGELOG.md
-
-      - name: Publish Mod to Maven
-        run: ./gradlew publish
-        env:
-          APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
-          APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
-
-      - name: Publish Mod to CurseForge
-        run: ./gradlew curseforge
-        env:
-          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-
-      - name: Publish Mod to Modrinth
-        run: ./gradlew modrinth
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-
-      - name: Send Version Release Announcement Messages
-        uses: appleboy/discord-action@0.0.3
-        with:
-          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
-          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-          color: '#E27E8B'
-          file: ./CHANGELOG.md
-          message: "Fantasy's Dice has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.18.1_**!"
 
       - name: Stop Gradle Deamons
         run: ./gradlew --stop

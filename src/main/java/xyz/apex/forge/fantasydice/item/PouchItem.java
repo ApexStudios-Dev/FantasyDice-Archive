@@ -5,12 +5,12 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 
-import xyz.apex.forge.apexcore.lib.container.inventory.ItemContainer;
+import xyz.apex.forge.apexcore.lib.container.inventory.ItemInventory;
 import xyz.apex.forge.apexcore.lib.item.InventoryItem;
-import xyz.apex.forge.fantasydice.container.PouchMenu;
-import xyz.apex.forge.fantasydice.init.FTMenus;
+import xyz.apex.forge.fantasydice.container.PouchContainer;
+import xyz.apex.forge.fantasydice.init.FTContainers;
 
-public class PouchItem extends InventoryItem<PouchMenu> implements DyeableLeatherItem
+public class PouchItem extends InventoryItem<PouchContainer> implements DyeableLeatherItem
 {
 	public PouchItem(Properties properties)
 	{
@@ -18,20 +18,20 @@ public class PouchItem extends InventoryItem<PouchMenu> implements DyeableLeathe
 	}
 
 	@Override
-	protected MenuType<PouchMenu> getMenuType()
+	protected MenuType<PouchContainer> getContainerType()
 	{
-		return FTMenus.POUCH.asMenuType();
+		return FTContainers.POUCH.asMenuType();
 	}
 
 	@Override
-	protected ItemContainer createMenu(ItemStack stack)
+	protected ItemInventory createInventory(ItemStack stack)
 	{
-		return new ItemContainer(stack, 18);
+		return new ItemInventory(stack, 18);
 	}
 
 	@Override
-	protected PouchMenu createMenu(MenuType<PouchMenu> menuType, int i, Inventory playerInventory, ItemContainer itemContainer)
+	protected PouchContainer createContainer(MenuType<PouchContainer> containerType, int i, Inventory playerInventory, ItemInventory itemInventory)
 	{
-		return FTMenus.POUCH.create(i, playerInventory);
+		return FTContainers.POUCH.create(i, playerInventory);
 	}
 }

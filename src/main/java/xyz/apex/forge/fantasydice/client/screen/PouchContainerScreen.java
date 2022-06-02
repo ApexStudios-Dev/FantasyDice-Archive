@@ -6,14 +6,14 @@ import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.apexcore.lib.client.screen.ItemInventoryContainerScreen;
 import xyz.apex.forge.fantasydice.FantasyDice;
-import xyz.apex.forge.fantasydice.container.PouchMenu;
+import xyz.apex.forge.fantasydice.container.PouchContainer;
 
-public final class PouchMenuScreen extends ItemInventoryContainerScreen<PouchMenu>
+public final class PouchContainerScreen extends ItemInventoryContainerScreen<PouchContainer>
 {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(FantasyDice.ID, "textures/gui/container/pouch.png");
 
-	public PouchMenuScreen(PouchMenu menu, Inventory playerInventory, Component title)
+	public PouchContainerScreen(PouchContainer container, Inventory playerInventory, Component title)
 	{
-		super(menu, playerInventory, title, TEXTURE);
+		super(container, playerInventory, title, TEXTURE);
 	}
 }

@@ -5,7 +5,6 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
@@ -17,14 +16,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeManager;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.init.FTBlocks;
 import xyz.apex.forge.fantasydice.init.FTRecipes;
 import xyz.apex.forge.fantasydice.item.crafting.DiceStationRecipe;
-
-import java.util.List;
 
 @JeiPlugin
 public class JeiIntegration implements IModPlugin
@@ -40,7 +36,7 @@ public class JeiIntegration implements IModPlugin
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration)
 	{
-		IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
+		var guiHelper = registration.getJeiHelpers().getGuiHelper();
 		diceStationRecipeCategory = new DiceStationRecipeCategory(guiHelper);
 		registration.addRecipeCategories(diceStationRecipeCategory);
 	}
@@ -48,8 +44,8 @@ public class JeiIntegration implements IModPlugin
 	@Override
 	public void registerRecipes(IRecipeRegistration registration)
 	{
-		RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
-		List<DiceStationRecipe> diceStationRecipes = recipeManager.getAllRecipesFor(FTRecipes.DICE_STATION_RECIPE.asRecipeType());
+		var recipeManager = Minecraft.getInstance().level.getRecipeManager();
+		var diceStationRecipes = recipeManager.getAllRecipesFor(FTRecipes.DICE_STATION_RECIPE.asRecipeType());
 		registration.addRecipes(diceStationRecipes, FTRecipes.DICE_STATION_RECIPE.getId());
 	}
 
@@ -67,7 +63,7 @@ public class JeiIntegration implements IModPlugin
 		private DiceStationRecipeCategory(IGuiHelper guiHelper)
 		{
 			background = guiHelper.createDrawable(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 0, 220, 82, 34);
-			icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, FTBlocks.DICE_STATION.asItemStack());
+			icon = guiHelper.createDrawableIngredient(FTBlocks.DICE_STATION.asItemStack());
 		}
 
 		@Override
@@ -110,7 +106,7 @@ public class JeiIntegration implements IModPlugin
 		@Override
 		public void setRecipe(IRecipeLayout recipeLayout, DiceStationRecipe recipe, IIngredients ingredients)
 		{
-			IGuiItemStackGroup group = recipeLayout.getItemStacks();
+			var group = recipeLayout.getItemStacks();
 			group.init(0, true, 0, 8);
 			group.init(1, false, 60, 8);
 			group.set(ingredients);

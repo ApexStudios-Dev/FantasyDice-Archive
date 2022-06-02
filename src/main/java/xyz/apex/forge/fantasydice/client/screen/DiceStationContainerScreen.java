@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -13,9 +12,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
-import xyz.apex.forge.fantasydice.container.DiceStationMenu;
+import xyz.apex.forge.fantasydice.container.DiceStationContainer;
 
-public final class DiceStationMenuScreen extends AbstractContainerScreen<DiceStationMenu>
+public class DiceStationContainerScreen extends AbstractContainerScreen<DiceStationContainer>
 {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(FantasyDice.ID, "textures/gui/container/dice_station.png");
 
@@ -24,11 +23,11 @@ public final class DiceStationMenuScreen extends AbstractContainerScreen<DiceSta
 	private int startIndex = 0;
 	private boolean displayRecipes = false;
 
-	public DiceStationMenuScreen(DiceStationMenu menu, Inventory playerInventory, Component title)
+	public DiceStationContainerScreen(DiceStationContainer container, Inventory playerInventory, Component title)
 	{
-		super(menu, playerInventory, title);
+		super(container, playerInventory, title);
 
-		menu.registerUpdateListener(this::containerChanged);
+		container.registerUpdateListener(this::containerChanged);
 		--titleLabelY;
 	}
 
@@ -72,7 +71,6 @@ public final class DiceStationMenuScreen extends AbstractContainerScreen<DiceSta
 	protected void renderBg(PoseStack pose, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, TEXTURE);
 		var i = leftPos;
 		var j = topPos;

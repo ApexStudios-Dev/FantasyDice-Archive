@@ -69,6 +69,26 @@ public class DiceHelper
 		return roll;
 	}
 
+	/*private static boolean throw10SidedDice(World level, PlayerEntity player, Hand hand, ItemStack stack, DiceItem die)
+	{
+		var singleRoll = rollDice(level, player, hand, stack, 1);
+
+
+		return true;
+
+//		// single
+//		var roll1 = rollDice(level, player, hand, stack, 1);
+//		var roll1Component = createTextComponent(player, stack, die, roll1, 10, new int[] { roll1 });
+//		sendMessageToPlayers(player, roll1Component);
+//
+//		// 10
+//		var roll10 = rollDice(level, player, hand, stack, 1) * 10;
+//		var roll10Component = createTextComponent(player, stack, die, roll10, 10, new int[] { roll10 });
+//		sendMessageToPlayers(player, roll10Component);
+//
+//		return true;
+	}*/
+
 	public static boolean throwDice(Level level, Player player, InteractionHand hand, ItemStack stack, int min)
 	{
 		if(stack.isEmpty())
@@ -78,6 +98,9 @@ public class DiceHelper
 
 		var die = (DiceItem) stack.getItem();
 		var sides = die.getSides();
+
+		/*if(sides == 10)
+			return throw10SidedDice(level, player, hand, stack, die);*/
 
 		var stackCount = stack.getCount();
 		var maxPossibleRoll = sides * stackCount;
