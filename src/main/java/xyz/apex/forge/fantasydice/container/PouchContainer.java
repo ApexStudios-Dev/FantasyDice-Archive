@@ -9,11 +9,11 @@ import xyz.apex.forge.fantasydice.container.slot.DiceSlot;
 
 import javax.annotation.Nullable;
 
-public final class PouchMenu extends ItemInventoryContainer
+public final class PouchContainer extends ItemInventoryContainer
 {
-	public PouchMenu(@Nullable MenuType<?> menuType, int windowId, Inventory playerInventory, ItemInventory itemInventory)
+	public PouchContainer(@Nullable MenuType<?> containerType, int windowId, Inventory playerInventory, ItemInventory itemInventory)
 	{
-		super(menuType, windowId, playerInventory, itemInventory);
+		super(containerType, windowId, playerInventory, itemInventory);
 	}
 
 	@Override

@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class DiceItem extends Item
 {
-	public static final Random RNG = new Random();
+	private static final Random RNG = new Random();
 
 	private final int sides;
 	@Nullable private DiceType<?, ?> diceType;
@@ -57,6 +57,10 @@ public class DiceItem extends Item
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand)
 	{
 		var stack = player.getItemInHand(hand);
+		var cooldown = FantasyDice.CONFIG.diceCooldown.get();
+
+		if(cooldown > 0)
+			player.getCooldowns().addCooldown(this, cooldown);
 
 		if(DiceHelper.throwDice(level, player, hand, stack, 1))
 			return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
@@ -88,16 +92,10 @@ public class DiceItem extends Item
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
 	{
 		if(diceType != null)
-		{
-			tooltip.add(new TranslatableComponent(FantasyDice.DIE_ROLL_DESC_KEY, 1, sides)
-					.withStyle(style -> diceType
-							.withStyle(stack, style)
-					)
-			);
-		}
+			tooltip.add(diceType.getType().getComponent(stack, diceType));
 	}
 
-	private MutableComponent buildNameComponent(ItemStack stack)
+	private Component buildNameComponent(ItemStack stack)
 	{
 		MutableComponent nameComponent = new TranslatableComponent(getDescriptionId());
 

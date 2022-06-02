@@ -2,8 +2,10 @@ package xyz.apex.forge.fantasydice;
 
 import com.google.common.collect.Lists;
 
+import net.minecraftforge.common.BasicTrade;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -11,9 +13,9 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
-import xyz.apex.forge.apexcore.lib.util.ForgeEventBusHelper;
-import xyz.apex.forge.apexcore.lib.util.ModEventBusHelper;
+import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasydice.command.RollCommand;
+import xyz.apex.forge.fantasydice.init.DiceType;
 import xyz.apex.forge.fantasydice.init.FTRegistry;
 
 import java.util.Collections;
@@ -30,7 +32,12 @@ public final class FantasyDice
 
 	public static final String DIE_ROLL_KEY = ID + ".die.roll";
 	public static final String DIE_ROLL_RESULT_KEY = ID + ".die.roll.result";
-	public static final String DIE_ROLL_DESC_KEY = ID + ".die.roll.desc";
+
+	public static final String COIN_FLIP_PREFIX = ID + ".coin.flip.prefix";
+	public static final String COIN_FLIP_SUFFIX = ID + ".coin.flip.suffix";
+	public static final String COIN_DESC = ID + "coin.desc";
+
+	public static final String JEI_DICE_RECIPE_TITLE_KEY = ID + ".jei.dice_recipe.name";
 
 	public static final UUID FANTASY_UUID = UUID.fromString("598535bd-f330-4123-b4d0-c6e618390477");
 	public static boolean loadComplete = false;
@@ -45,10 +52,27 @@ public final class FantasyDice
 	public FantasyDice()
 	{
 		FTRegistry.bootstrap();
-		ForgeEventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
-		ModEventBusHelper.addListener(CONFIG::onConfigReload);
-		ModEventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
+		EventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
+		EventBusHelper.addListener(ModConfigEvent.class, CONFIG::onConfigReload);
+		EventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
+		EventBusHelper.addListener(WandererTradesEvent.class, this::onWandererTrades);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, ID + ".toml");
+	}
+
+	private void onWandererTrades(WandererTradesEvent event)
+	{
+		var rareTrades = event.getRareTrades();
+
+		for(var diceType : DiceType.getDiceTypes())
+		{
+			if(diceType.getType() == DiceType.Type.SPECIALITY)
+			{
+				for(var item : diceType.getItems())
+				{
+					rareTrades.add(new BasicTrade(6, item.asItemStack(), 10, 10));
+				}
+			}
+		}
 	}
 
 	public static final class Config
@@ -59,12 +83,13 @@ public final class FantasyDice
 		public final ForgeConfigSpec.IntValue diceWoodenQuality;
 		public final ForgeConfigSpec.IntValue diceStoneQuality;
 		public final ForgeConfigSpec.IntValue diceBoneQuality;
-		public final ForgeConfigSpec.IntValue dicePaperQuality;
 		public final ForgeConfigSpec.IntValue diceIronQuality;
 		public final ForgeConfigSpec.IntValue diceGoldenQuality;
 		public final ForgeConfigSpec.IntValue diceDiamondQuality;
 		public final ForgeConfigSpec.IntValue diceEmeraldQuality;
 		public final ForgeConfigSpec.IntValue diceNetheriteQuality;
+
+		public final ForgeConfigSpec.IntValue diceCooldown;
 
 		private final ForgeConfigSpec.ConfigValue<List<? extends String>> diceLuckyRollers;
 		public final List<UUID> luckyRollerIDs = Lists.newArrayList();
@@ -91,10 +116,6 @@ public final class FantasyDice
 					.comment("Quality of 'Bone Dice' rolls")
 					.defineInRange("die.quality.bone", -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-			dicePaperQuality = builder
-					.comment("Quality of 'Paper Dice' rolls")
-					.defineInRange("die.quality.paper", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-
 			diceIronQuality = builder
 					.comment("Quality of 'Iron Dice' rolls")
 					.defineInRange("die.quality.iron", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -114,6 +135,10 @@ public final class FantasyDice
 			diceNetheriteQuality = builder
 					.comment("Quality of 'Netherite Dice' rolls")
 					.defineInRange("die.quality.netherite", 4, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+			diceCooldown = builder
+					.comment("Cool down in which Dice can be used", "Note: Cool down is in ticks, 20 == 1 second, 0 == No Cool down")
+					.defineInRange("die.cooldown", 20, -1, Integer.MAX_VALUE);
 
 			diceLuckyRollers = builder
 					.comment("List of player profile UUID's that are considered Lucky Rollers for 'Fantasy's Lucky Dice'", "Example: '43fd393b-879d-45ec-b2d5-ce8c4688ab66' - Would be for 'ApexSPG' (Values must include dashes '-')", "Note: Use somewhere like 'https://mcuuid.net/' to obtain profile UUID's")

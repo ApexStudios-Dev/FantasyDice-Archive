@@ -22,7 +22,7 @@ public class RollCommand
 						.executes(ctx -> {
 							var player = ctx.getSource().getPlayerOrException();
 							var max = IntegerArgumentType.getInteger(ctx, "max");
-							var roll = DiceHelper.roll(player.getRandom(), 1, max);
+							var roll = DiceHelper.roll(player.getRandom(), 1, max, 0, false);
 
 							DiceHelper.sendMessageToPlayers(
 									player,
