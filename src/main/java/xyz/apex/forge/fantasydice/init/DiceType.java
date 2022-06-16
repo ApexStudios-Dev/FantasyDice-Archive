@@ -19,7 +19,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import xyz.apex.forge.fantasydice.FantasyDice;
+import xyz.apex.forge.commonality.init.ItemTags;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.builder.ItemBuilder;
@@ -177,7 +178,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			this.owner = owner;
 			this.diceFactory = diceFactory;
 
-			tag = owner.moddedItemTag("dice/" + name);
+			tag = ItemTags.tag(owner.getModId(), "dice/" + name);
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
 		}
 
@@ -252,9 +253,9 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 	public enum Type
 	{
-		REGULAR(FantasyDice.ID, "regular"),
-		COSMETIC(FantasyDice.ID, "cosmetic"),
-		SPECIALITY(FantasyDice.ID, "specialty");
+		REGULAR(Mods.FANTASY_DICE, "regular"),
+		COSMETIC(Mods.FANTASY_DICE, "cosmetic"),
+		SPECIALITY(Mods.FANTASY_DICE, "specialty");
 
 		public static final Type[] VALUES = values();
 

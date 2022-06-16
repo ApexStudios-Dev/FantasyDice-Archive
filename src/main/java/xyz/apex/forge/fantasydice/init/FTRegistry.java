@@ -8,6 +8,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
@@ -22,7 +23,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 
 	private FTRegistry()
 	{
-		super(FantasyDice.ID);
+		super(Mods.FANTASY_DICE);
 
 		creativeModeTab(ModItemGroup::new, "Fantasy's Dice");
 
@@ -56,7 +57,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 		if(bootstrap)
 			return;
 
-		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(FantasyDice.ID));
+		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(Mods.FANTASY_DICE));
 
 		FTDiceTypes.bootstrap();
 		FTItems.bootstrap();
@@ -77,7 +78,7 @@ public final class FTRegistry extends AbstractRegistrator<FTRegistry>
 	{
 		public ModItemGroup()
 		{
-			super(FantasyDice.ID);
+			super(Mods.FANTASY_DICE);
 		}
 
 		@Override

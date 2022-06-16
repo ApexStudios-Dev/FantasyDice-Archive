@@ -14,6 +14,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasydice.command.RollCommand;
 import xyz.apex.forge.fantasydice.init.DiceType;
 import xyz.apex.forge.fantasydice.init.FTRegistry;
@@ -22,22 +23,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-@Mod(FantasyDice.ID)
+@Mod(Mods.FANTASY_DICE)
 public final class FantasyDice
 {
-	public static final String ID = "fantasydice";
-
 	public static final Config CONFIG;
 	private static final ForgeConfigSpec CONFIG_SPEC;
 
-	public static final String DIE_ROLL_KEY = ID + ".die.roll";
-	public static final String DIE_ROLL_RESULT_KEY = ID + ".die.roll.result";
+	public static final String DIE_ROLL_KEY = Mods.FANTASY_DICE + ".die.roll";
+	public static final String DIE_ROLL_RESULT_KEY = Mods.FANTASY_DICE + ".die.roll.result";
 
-	public static final String COIN_FLIP_PREFIX = ID + ".coin.flip.prefix";
-	public static final String COIN_FLIP_SUFFIX = ID + ".coin.flip.suffix";
-	public static final String COIN_DESC = ID + "coin.desc";
+	public static final String COIN_FLIP_PREFIX = Mods.FANTASY_DICE + ".coin.flip.prefix";
+	public static final String COIN_FLIP_SUFFIX = Mods.FANTASY_DICE + ".coin.flip.suffix";
+	public static final String COIN_DESC = Mods.FANTASY_DICE + "coin.desc";
 
-	public static final String JEI_DICE_RECIPE_TITLE_KEY = ID + ".jei.dice_recipe.name";
+	public static final String JEI_DICE_RECIPE_TITLE_KEY = Mods.FANTASY_DICE + ".jei.dice_recipe.name";
 
 	public static final UUID FANTASY_UUID = UUID.fromString("598535bd-f330-4123-b4d0-c6e618390477");
 	public static boolean loadComplete = false;
@@ -56,7 +55,7 @@ public final class FantasyDice
 		EventBusHelper.addListener(ModConfigEvent.class, CONFIG::onConfigReload);
 		EventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
 		EventBusHelper.addListener(WandererTradesEvent.class, this::onWandererTrades);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, ID + ".toml");
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, Mods.FANTASY_DICE + ".toml");
 	}
 
 	private void onWandererTrades(WandererTradesEvent event)
@@ -173,7 +172,7 @@ public final class FantasyDice
 		{
 			var config = event.getConfig();
 
-			if(config.getType() == ModConfig.Type.COMMON && config.getModId().equals(ID))
+			if(config.getType() == ModConfig.Type.COMMON && config.getModId().equals(Mods.FANTASY_DICE))
 			{
 				luckyRollerIDs.clear();
 				diceLuckyRollers.get().stream().map(UUID::fromString).forEach(luckyRollerIDs::add);

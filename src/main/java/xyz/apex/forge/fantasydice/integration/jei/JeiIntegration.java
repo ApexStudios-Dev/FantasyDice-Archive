@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.init.FTBlocks;
 import xyz.apex.forge.fantasydice.init.FTRecipes;
@@ -30,7 +31,7 @@ public class JeiIntegration implements IModPlugin
 	@Override
 	public ResourceLocation getPluginUid()
 	{
-		return new ResourceLocation(FantasyDice.ID, "jei_plugin");
+		return new ResourceLocation(Mods.FANTASY_DICE, "jei_plugin");
 	}
 
 	@Override

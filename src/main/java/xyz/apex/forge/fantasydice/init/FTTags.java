@@ -5,6 +5,9 @@ import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
+import xyz.apex.forge.commonality.init.ItemTags;
+import xyz.apex.forge.commonality.init.Mods;
+
 public final class FTTags
 {
 	private static final FTRegistry REGISTRY = FTRegistry.getRegistry();
@@ -16,10 +19,10 @@ public final class FTTags
 
 	public static final class Items
 	{
-		public static final TagKey<Item> DICE = REGISTRY.moddedItemTag("dice");
-		public static final TagKey<Item> DICE_SPECIALTY = REGISTRY.moddedItemTag("dice/specialty");
+		public static final TagKey<Item> DICE = ItemTags.tag(Mods.FANTASY_DICE, "dice");
+		public static final TagKey<Item> DICE_SPECIALTY = ItemTags.tag(Mods.FANTASY_DICE, "dice/specialty");
 
-		public static final TagKey<Item> COINS = REGISTRY.moddedItemTag("coins");
+		public static final TagKey<Item> COINS = ItemTags.tag(Mods.FANTASY_DICE, "coins");
 
 		private static void bootstrap()
 		{

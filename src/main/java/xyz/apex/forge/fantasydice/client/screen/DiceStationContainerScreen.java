@@ -11,12 +11,12 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
-import xyz.apex.forge.fantasydice.FantasyDice;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasydice.container.DiceStationContainer;
 
 public class DiceStationContainerScreen extends AbstractContainerScreen<DiceStationContainer>
 {
-	public static final ResourceLocation TEXTURE = new ResourceLocation(FantasyDice.ID, "textures/gui/container/dice_station.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Mods.FANTASY_DICE, "textures/gui/container/dice_station.png");
 
 	private float scrollOffset = 0F;
 	private boolean scrolling = false;

@@ -7,7 +7,6 @@ import com.tterrag.registrate.util.DataIngredient;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
@@ -15,8 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
 
+import xyz.apex.forge.commonality.init.ItemTags;
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 import xyz.apex.forge.fantasydice.item.DyeableDiceItem;
@@ -37,27 +36,27 @@ public final class FTDiceTypes
 				.withDiceQuality(FantasyDice.CONFIG.diceWoodenQuality::get)
 
 				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Vanilla.PLANKS))
 				.build()
 
 				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Vanilla.PLANKS))
 				.build()
 
 				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Vanilla.PLANKS))
 				.build()
 
 				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Vanilla.PLANKS))
 				.build()
 
 				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Vanilla.PLANKS))
 				.build()
 
 				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.PLANKS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Vanilla.PLANKS))
 				.build()
 			.build();
 	// endregion
@@ -101,27 +100,27 @@ public final class FTDiceTypes
 				.withDiceQuality(FantasyDice.CONFIG.diceBoneQuality::get)
 
 				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.BONES))
 				.build()
 
 				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.BONES))
 				.build()
 
 				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.BONES))
 				.build()
 
 				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.BONES))
 				.build()
 
 				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.BONES))
 				.build()
 
 				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.BONES))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.BONES))
 				.build()
 			.build();
 	// endregion
@@ -133,27 +132,27 @@ public final class FTDiceTypes
 				.withDiceQuality(FantasyDice.CONFIG.diceIronQuality::get)
 
 				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_IRON))
 				.build()
 
 				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_IRON))
 				.build()
 
 				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_IRON))
 				.build()
 
 				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_IRON))
 				.build()
 
 				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_IRON))
 				.build()
 
 				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_IRON))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_IRON))
 				.build()
 			.build();
 	// endregion
@@ -165,27 +164,27 @@ public final class FTDiceTypes
 				.withDiceQuality(FantasyDice.CONFIG.diceGoldenQuality::get)
 
 				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_GOLD))
 				.build()
 
 				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_GOLD))
 				.build()
 
 				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_GOLD))
 				.build()
 
 				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_GOLD))
 				.build()
 
 				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_GOLD))
 				.build()
 
 				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_GOLD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_GOLD))
 				.build()
 			.build();
 	// endregion
@@ -197,27 +196,27 @@ public final class FTDiceTypes
 				.withDiceQuality(FantasyDice.CONFIG.diceDiamondQuality::get)
 
 				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_DIAMOND))
 				.build()
 
 				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_DIAMOND))
 				.build()
 
 				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_DIAMOND))
 				.build()
 
 				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_DIAMOND))
 				.build()
 
 				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_DIAMOND))
 				.build()
 
 				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_DIAMOND))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_DIAMOND))
 				.build()
 			.build();
 	// endregion
@@ -229,27 +228,27 @@ public final class FTDiceTypes
 				.withDiceQuality(FantasyDice.CONFIG.diceEmeraldQuality::get)
 
 				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_EMERALD))
 				.build()
 
 				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_EMERALD))
 				.build()
 
 				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_EMERALD))
 				.build()
 
 				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_EMERALD))
 				.build()
 
 				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_EMERALD))
 				.build()
 
 				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.GEMS_EMERALD))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.GEMS_EMERALD))
 				.build()
 			.build();
 	// endregion
@@ -261,32 +260,32 @@ public final class FTDiceTypes
 				.withDiceQuality(FantasyDice.CONFIG.diceNetheriteQuality::get)
 
 				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
 					.fireResistant()
 				.build()
 
 				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
 					.fireResistant()
 				.build()
 
 				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
 					.fireResistant()
 				.build()
 
 				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
 					.fireResistant()
 				.build()
 
 				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
 					.fireResistant()
 				.build()
 
 				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.INGOTS_NETHERITE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
 					.fireResistant()
 				.build()
 			.build();
@@ -397,27 +396,27 @@ public final class FTDiceTypes
 				.withType(DiceType.Type.COSMETIC)
 
 				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.SLIMEBALLS))
 				.build()
 
 				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.SLIMEBALLS))
 				.build()
 
 				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.SLIMEBALLS))
 				.build()
 
 				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.SLIMEBALLS))
 				.build()
 
 				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.SLIMEBALLS))
 				.build()
 
 				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.SLIMEBALLS))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.SLIMEBALLS))
 				.build()
 			.build();
 	// endregion
@@ -429,27 +428,27 @@ public final class FTDiceTypes
 				.withType(DiceType.Type.COSMETIC)
 
 				.withDie(4)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.DUSTS_REDSTONE))
 				.build()
 
 				.withDie(6)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.DUSTS_REDSTONE))
 				.build()
 
 				.withDie(8)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.DUSTS_REDSTONE))
 				.build()
 
 				.withDie(10)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.DUSTS_REDSTONE))
 				.build()
 
 				.withDie(12)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.DUSTS_REDSTONE))
 				.build()
 
 				.withDie(20)
-					.recipe((ctx, provider) -> diceRecipe(ctx, provider, Tags.Items.DUSTS_REDSTONE))
+					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.DUSTS_REDSTONE))
 				.build()
 			.build();
 	// endregion
