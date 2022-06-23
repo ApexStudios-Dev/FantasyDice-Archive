@@ -1,8 +1,11 @@
 package xyz.apex.forge.fantasydice.init;
 
 import com.google.common.collect.Lists;
+import com.tterrag.registrate.AbstractRegistrate;
+import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -19,19 +22,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import xyz.apex.forge.commonality.init.ItemTags;
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasydice.item.DiceItem;
-import xyz.apex.forge.utility.registrator.AbstractRegistrator;
-import xyz.apex.forge.utility.registrator.builder.ItemBuilder;
-import xyz.apex.forge.utility.registrator.entry.ItemEntry;
-import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
-import xyz.apex.java.utility.nullness.NonnullBiFunction;
 
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.IntSupplier;
 
-public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem>
+public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends DiceItem>
 {
 	private static final List<DiceType<?, ?>> diceTypes = Lists.newArrayList();
 
@@ -39,7 +38,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 	private final OWNER owner;
 	private final Int2ObjectMap<ItemEntry<DIE>> diceItems = new Int2ObjectOpenHashMap<>();
 	private final TagKey<Item> tag;
-	private final NonnullBiFunction<ItemStack, Style, Style> styleModifier;
+	private final BiFunction<ItemStack, Style, Style> styleModifier;
 	private final IntSupplier diceQuality;
 	private final RollCallback rollCallback;
 	private final boolean usesFoil;
@@ -79,7 +78,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 
 	public boolean matches(DiceType<?, ?> other)
 	{
-		return owner.getModId().equals(other.owner.getModId()) && name.equals(other.name);
+		return owner.getModid().equals(other.owner.getModid()) && name.equals(other.name);
 	}
 
 	public OWNER getOwner()
@@ -143,12 +142,12 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return rollCallback.onRoll(player, hand, stack, min, sides, roll, diceQuality);
 	}
 
-	public static <OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem> Builder<OWNER, DIE> builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
+	public static <OWNER extends AbstractRegistrate<OWNER>, DIE extends DiceItem> Builder<OWNER, DIE> builder(String name, OWNER owner, BiFunction<Item.Properties, Integer, DIE> diceFactory)
 	{
 		return new Builder<>(name, owner, diceFactory);
 	}
 
-	public static <OWNER extends AbstractRegistrator<OWNER>> Builder<OWNER, DiceItem> builder(String name, OWNER owner)
+	public static <OWNER extends AbstractRegistrate<OWNER>> Builder<OWNER, DiceItem> builder(String name, OWNER owner)
 	{
 		return builder(name, owner, DiceItem::new);
 	}
@@ -158,27 +157,27 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 		return diceTypes;
 	}
 
-	public static final class Builder<OWNER extends AbstractRegistrator<OWNER>, DIE extends DiceItem>
+	public static final class Builder<OWNER extends AbstractRegistrate<OWNER>, DIE extends DiceItem>
 	{
 		private final String name;
 		private final OWNER owner;
 		private final TagKey<Item> tag;
 		private final Int2ObjectMap<String> dieNames = new Int2ObjectOpenHashMap<>();
-		private final NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory;
+		private final BiFunction<Item.Properties, Integer, DIE> diceFactory;
 
 		private Type type = Type.REGULAR;
 		private IntSupplier diceQuality = () -> 0;
-		private NonnullBiFunction<ItemStack, Style, Style> styleModifier = (stack, style) -> style;
+		private BiFunction<ItemStack, Style, Style> styleModifier = (stack, style) -> style;
 		private RollCallback rollCallback = (player, hand, stack, min, sides, rolls, dieQuality) -> rolls;
 		private boolean usesFoil = false;
 
-		private Builder(String name, OWNER owner, NonnullBiFunction<Item.Properties, Integer, DIE> diceFactory)
+		private Builder(String name, OWNER owner, BiFunction<Item.Properties, Integer, DIE> diceFactory)
 		{
 			this.name = name;
 			this.owner = owner;
 			this.diceFactory = diceFactory;
 
-			tag = ItemTags.tag(owner.getModId(), "dice/" + name);
+			tag = ItemTags.tag(owner.getModid(), "dice/" + name);
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
 		}
 
@@ -194,7 +193,7 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			return this;
 		}
 
-		public Builder<OWNER, DIE> withStyle(NonnullBiFunction<ItemStack, Style, Style> nameStyle)
+		public Builder<OWNER, DIE> withStyle(BiFunction<ItemStack, Style, Style> nameStyle)
 		{
 			this.styleModifier = nameStyle;
 			return this;
@@ -214,10 +213,10 @@ public final class DiceType<OWNER extends AbstractRegistrator<OWNER>, DIE extend
 			var fullName = sides + "-Sided " + englishName + " Die";
 
 			return owner
-					.item(dieName, this, properties -> diceFactory.apply(properties, sides))
+					.object(dieName)
+					.item(this, properties -> diceFactory.apply(properties, sides))
 					.tag(tag)
 					.lang(fullName)
-					.lang(RegistrateLangExtProvider.EN_GB, fullName)
 					.stacksTo(8)
 					.model((ctx, provider) -> provider.generated(ctx, owner.id("item/die/" + name + "/" + sides + "_sided")))
 			;

@@ -126,7 +126,7 @@ public final class DiceStationContainer extends BaseContainer
 		resultSlot.set(ItemStack.EMPTY);
 
 		if(!stack.isEmpty())
-			recipes = level.getRecipeManager().getRecipesFor(FTRecipes.DICE_STATION_RECIPE.asRecipeType(), inventory, level);
+			recipes = level.getRecipeManager().getRecipesFor(FTRecipes.DICE_STATION_RECIPE_TYPE.get(), inventory, level);
 	}
 
 	private void setupResultSlot()
@@ -151,7 +151,7 @@ public final class DiceStationContainer extends BaseContainer
 	@Override
 	public boolean stillValid(Player player)
 	{
-		return super.stillValid(player) && stillValid(access, player, FTBlocks.DICE_STATION.asBlock());
+		return super.stillValid(player) && stillValid(access, player, FTBlocks.DICE_STATION.get());
 	}
 
 	@Override
@@ -210,7 +210,7 @@ public final class DiceStationContainer extends BaseContainer
 				if(!moveItemStackTo(stack1, 2, 38, false))
 					return ItemStack.EMPTY;
 			}
-			else if(level.getRecipeManager().getRecipeFor(FTRecipes.DICE_STATION_RECIPE.asRecipeType(), new SimpleContainer(stack1), level).isPresent())
+			else if(level.getRecipeManager().getRecipeFor(FTRecipes.DICE_STATION_RECIPE_TYPE.get(), new SimpleContainer(stack1), level).isPresent())
 			{
 				if(!moveItemStackTo(stack1, 0, 1, false))
 					return ItemStack.EMPTY;

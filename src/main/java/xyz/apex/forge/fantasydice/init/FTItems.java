@@ -1,25 +1,22 @@
 package xyz.apex.forge.fantasydice.init;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import com.tterrag.registrate.util.entry.ItemEntry;
 
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.DyeableLeatherItem;
 
-import xyz.apex.forge.commonality.init.ItemTags;
+import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasydice.item.CoinItem;
 import xyz.apex.forge.fantasydice.item.PouchItem;
-import xyz.apex.forge.utility.registrator.entry.ItemEntry;
-import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 
 public final class FTItems
 {
-	private static final FTRegistry REGISTRY = FTRegistry.getRegistry();
-
-	public static final ItemEntry<PouchItem> POUCH = REGISTRY
-			.item("pouch", PouchItem::new)
+	public static final ItemEntry<PouchItem> POUCH = FTRegistry.INSTANCE
+			.object("pouch")
+			.item(PouchItem::new)
 				.lang("Dice Pouch")
-				.lang(RegistrateLangExtProvider.EN_GB, "Dice Pouch")
 				.color(() -> () -> (stack, tintIndex) -> tintIndex == 0 ? ((DyeableLeatherItem) stack.getItem()).getColor(stack) : 0xFFFFFFFF)
 				.recipe((ctx, provider) -> ShapedRecipeBuilder
 						.shaped(ctx::get, 1)
@@ -36,10 +33,10 @@ public final class FTItems
 				.stacksTo(1)
 			.register();
 
-	public static final ItemEntry<CoinItem> IRON_COIN = REGISTRY
+	public static final ItemEntry<CoinItem> IRON_COIN = FTRegistry.INSTANCE
+			.object("iron_coin")
 			.item("iron_coin", CoinItem::new)
 				.lang("Iron Coin")
-				.lang(RegistrateLangExtProvider.EN_GB, "Iron Coin")
 				.recipe((ctx, provider) -> ShapelessRecipeBuilder
 						.shapeless(ctx::get, 1)
 						.requires(ItemTags.Forge.NUGGETS_IRON)
@@ -51,10 +48,10 @@ public final class FTItems
 				.tag(FTTags.Items.COINS)
 			.register();
 
-	public static final ItemEntry<CoinItem> GOLDEN_COIN = REGISTRY
-			.item("golden_coin", CoinItem::new)
+	public static final ItemEntry<CoinItem> GOLDEN_COIN = FTRegistry.INSTANCE
+			.object("golden_coin")
+			.item(CoinItem::new)
 				.lang("Golden Coin")
-				.lang(RegistrateLangExtProvider.EN_GB, "Golden Coin")
 				.recipe((ctx, provider) -> ShapelessRecipeBuilder
 						.shapeless(ctx::get, 1)
 						.requires(ItemTags.Forge.NUGGETS_GOLD)

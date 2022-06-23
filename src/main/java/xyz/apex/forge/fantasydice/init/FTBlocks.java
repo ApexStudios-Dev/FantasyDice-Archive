@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasydice.init;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import com.tterrag.registrate.util.entry.BlockEntry;
 
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.level.block.Blocks;
@@ -9,17 +10,13 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 
 import xyz.apex.forge.fantasydice.block.DiceStationBlock;
-import xyz.apex.forge.utility.registrator.entry.BlockEntry;
-import xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider;
 
 public final class FTBlocks
 {
-	private static final FTRegistry REGISTRY = FTRegistry.getRegistry();
-
-	public static final BlockEntry<DiceStationBlock> DICE_STATION = REGISTRY
-			.block("dice_station", DiceStationBlock::new)
+	public static final BlockEntry<DiceStationBlock> DICE_STATION = FTRegistry.INSTANCE
+			.object("dice_station")
+			.block(DiceStationBlock::new)
 				.lang("Dice Station")
-				.lang(RegistrateLangExtProvider.EN_GB, "Dice Station")
 
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -33,7 +30,7 @@ public final class FTBlocks
 							.group(ctx.getName())
 							.save(provider, ctx.getId())
 				)
-				.blockState((ctx, provider) -> {
+				.blockstate((ctx, provider) -> {
 					BlockModelBuilder model = provider.models().cube(
 							ctx.getName(),
 							provider.mcLoc("block/oak_planks"),

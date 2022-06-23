@@ -20,7 +20,7 @@ public class PouchItem extends InventoryItem<PouchContainer> implements DyeableL
 	@Override
 	protected MenuType<PouchContainer> getContainerType()
 	{
-		return FTContainers.POUCH.asMenuType();
+		return FTContainers.POUCH.get();
 	}
 
 	@Override

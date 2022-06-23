@@ -1,5 +1,7 @@
 package xyz.apex.forge.fantasydice.init;
 
+import com.tterrag.registrate.util.entry.MenuEntry;
+
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 
@@ -8,22 +10,21 @@ import xyz.apex.forge.fantasydice.client.screen.DiceStationContainerScreen;
 import xyz.apex.forge.fantasydice.client.screen.PouchContainerScreen;
 import xyz.apex.forge.fantasydice.container.DiceStationContainer;
 import xyz.apex.forge.fantasydice.container.PouchContainer;
-import xyz.apex.forge.utility.registrator.entry.MenuEntry;
 
 public final class FTContainers
 {
-	private static final FTRegistry REGISTRY = FTRegistry.getRegistry();
-
-	public static final MenuEntry<PouchContainer> POUCH = REGISTRY
-			.container(
+	public static final MenuEntry<PouchContainer> POUCH = FTRegistry.INSTANCE
+			.object("pouch")
+			.menu(
 					"pouch",
 					(containerType, i, playerInventory, packetBuffer) -> new PouchContainer(containerType, i, playerInventory, findPouch(playerInventory.player)),
 					() -> PouchContainerScreen::new
 			)
 			.register();
 
-	public static final MenuEntry<DiceStationContainer> DICE_STATION = REGISTRY
-			.container(
+	public static final MenuEntry<DiceStationContainer> DICE_STATION = FTRegistry.INSTANCE
+			.object("dice_station")
+			.menu(
 					"dice_station",
 					(containerType, i, playerInventory, packetBuffer) -> new DiceStationContainer(containerType, i, playerInventory),
 					() -> DiceStationContainerScreen::new
@@ -40,7 +41,7 @@ public final class FTContainers
 		{
 			var stack = player.getItemInHand(hand);
 
-			if(FTItems.POUCH.isInStack(stack))
+			if(FTItems.POUCH.isIn(stack))
 				return new ItemInventory(stack, 18);
 		}
 

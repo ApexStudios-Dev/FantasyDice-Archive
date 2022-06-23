@@ -5,13 +5,11 @@ import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
-import xyz.apex.forge.commonality.init.ItemTags;
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.tags.ItemTags;
 
 public final class FTTags
 {
-	private static final FTRegistry REGISTRY = FTRegistry.getRegistry();
-
 	static void bootstrap()
 	{
 		Items.bootstrap();
@@ -26,7 +24,7 @@ public final class FTTags
 
 		private static void bootstrap()
 		{
-			REGISTRY.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
+			FTRegistry.INSTANCE.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
 				var specialtyTagBuilder = provider.tag(DICE_SPECIALTY);
 
 				DiceType.getDiceTypes().stream()

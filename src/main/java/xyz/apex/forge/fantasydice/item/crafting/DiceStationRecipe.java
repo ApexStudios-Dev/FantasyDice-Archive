@@ -12,12 +12,12 @@ public final class DiceStationRecipe extends SingleItemRecipe
 {
 	public DiceStationRecipe(ResourceLocation recipeId, String recipeGroup, Ingredient recipeIngredient, ItemStack recipeResult)
 	{
-		super(FTRecipes.DICE_STATION_RECIPE.asRecipeType(), FTRecipes.DICE_STATION_RECIPE.asRecipeSerializer(), recipeId, recipeGroup, recipeIngredient, recipeResult);
+		super(FTRecipes.DICE_STATION_RECIPE_TYPE.get(), FTRecipes.DICE_STATION_RECIPE.get(), recipeId, recipeGroup, recipeIngredient, recipeResult);
 	}
 
 	@Override
 	public ItemStack getToastSymbol()
 	{
-		return FTBlocks.DICE_STATION.asItemStack();
+		return FTBlocks.DICE_STATION.asStack();
 	}
 }

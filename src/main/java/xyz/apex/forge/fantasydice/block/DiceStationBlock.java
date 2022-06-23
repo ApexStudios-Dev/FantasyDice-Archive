@@ -57,7 +57,7 @@ public class DiceStationBlock extends Block
 		var title = getName();
 
 		return new SimpleMenuProvider(
-				(windowId, playerInventory, player) -> new DiceStationContainer(FTContainers.DICE_STATION.asMenuType(), windowId, playerInventory, ContainerLevelAccess.create(level, pos)),
+				(windowId, playerInventory, player) -> new DiceStationContainer(FTContainers.DICE_STATION.get(), windowId, playerInventory, ContainerLevelAccess.create(level, pos)),
 				title
 		);
 	}

@@ -13,10 +13,10 @@ import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.init.FTItems;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
-import xyz.apex.java.utility.nullness.NonnullUnaryOperator;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class CoinItem extends Item
 {
@@ -74,7 +74,7 @@ public class CoinItem extends Item
 		return style;
 	}
 
-	public static boolean flip(Level level, Player player, InteractionHand hand, ItemStack stack, NonnullUnaryOperator<Style> withStyle)
+	public static boolean flip(Level level, Player player, InteractionHand hand, ItemStack stack, UnaryOperator<Style> withStyle)
 	{
 		if(stack.isEmpty())
 			return false;
@@ -101,7 +101,7 @@ public class CoinItem extends Item
 		return true;
 	}
 
-	public static MutableComponent buildFlipMessage(Player player, ItemStack stack, int heads, int tails, NonnullUnaryOperator<Style> withStyle)
+	public static MutableComponent buildFlipMessage(Player player, ItemStack stack, int heads, int tails, UnaryOperator<Style> withStyle)
 	{
 		// prefix: <player> flipped
 		// suffix: <N_heads> Heads & <N_tails> Tails

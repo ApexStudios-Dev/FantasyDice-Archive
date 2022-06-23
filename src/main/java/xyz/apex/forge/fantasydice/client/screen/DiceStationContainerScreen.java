@@ -11,7 +11,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasydice.container.DiceStationContainer;
 
 public class DiceStationContainerScreen extends AbstractContainerScreen<DiceStationContainer>

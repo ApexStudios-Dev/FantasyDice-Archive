@@ -14,7 +14,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasydice.command.RollCommand;
 import xyz.apex.forge.fantasydice.init.DiceType;
 import xyz.apex.forge.fantasydice.init.FTRegistry;
@@ -68,7 +68,7 @@ public final class FantasyDice
 			{
 				for(var item : diceType.getItems())
 				{
-					rareTrades.add(new BasicItemListing(6, item.asItemStack(), 10, 10));
+					rareTrades.add(new BasicItemListing(6, item.asStack(), 10, 10));
 				}
 			}
 		}

@@ -17,7 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.init.FTBlocks;
 import xyz.apex.forge.fantasydice.init.FTRecipes;
@@ -46,14 +46,14 @@ public class JeiIntegration implements IModPlugin
 	public void registerRecipes(IRecipeRegistration registration)
 	{
 		var recipeManager = Minecraft.getInstance().level.getRecipeManager();
-		var diceStationRecipes = recipeManager.getAllRecipesFor(FTRecipes.DICE_STATION_RECIPE.asRecipeType());
+		var diceStationRecipes = recipeManager.getAllRecipesFor(FTRecipes.DICE_STATION_RECIPE_TYPE.get());
 		registration.addRecipes(diceStationRecipes, FTRecipes.DICE_STATION_RECIPE.getId());
 	}
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration)
 	{
-		registration.addRecipeCatalyst(FTBlocks.DICE_STATION.asItemStack(), FTRecipes.DICE_STATION_RECIPE.getId());
+		registration.addRecipeCatalyst(FTBlocks.DICE_STATION.asStack(), FTRecipes.DICE_STATION_RECIPE.getId());
 	}
 
 	public static class DiceStationRecipeCategory implements IRecipeCategory<DiceStationRecipe>
@@ -64,7 +64,7 @@ public class JeiIntegration implements IModPlugin
 		private DiceStationRecipeCategory(IGuiHelper guiHelper)
 		{
 			background = guiHelper.createDrawable(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 0, 220, 82, 34);
-			icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, FTBlocks.DICE_STATION.asItemStack());
+			icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, FTBlocks.DICE_STATION.asStack());
 		}
 
 		@Override

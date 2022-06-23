@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.apexcore.lib.client.screen.ItemInventoryContainerScreen;
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasydice.container.PouchContainer;
 
 public final class PouchContainerScreen extends ItemInventoryContainerScreen<PouchContainer>
