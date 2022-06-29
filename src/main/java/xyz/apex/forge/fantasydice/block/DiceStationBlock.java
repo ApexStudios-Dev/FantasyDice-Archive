@@ -1,5 +1,7 @@
 package xyz.apex.forge.fantasydice.block;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -22,8 +24,6 @@ import net.minecraftforge.network.NetworkHooks;
 
 import xyz.apex.forge.fantasydice.container.DiceStationContainer;
 import xyz.apex.forge.fantasydice.init.FTContainers;
-
-import javax.annotation.Nullable;
 
 public class DiceStationBlock extends Block
 {

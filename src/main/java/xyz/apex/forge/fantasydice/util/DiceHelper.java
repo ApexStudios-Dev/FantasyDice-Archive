@@ -1,5 +1,7 @@
 package xyz.apex.forge.fantasydice.util;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.network.chat.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -12,7 +14,6 @@ import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;

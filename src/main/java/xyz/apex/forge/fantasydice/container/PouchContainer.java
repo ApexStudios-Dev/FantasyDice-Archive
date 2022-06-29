@@ -1,13 +1,13 @@
 package xyz.apex.forge.fantasydice.container;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 
 import xyz.apex.forge.apexcore.lib.container.ItemInventoryContainer;
 import xyz.apex.forge.apexcore.lib.container.inventory.ItemInventory;
 import xyz.apex.forge.fantasydice.container.slot.DiceSlot;
-
-import javax.annotation.Nullable;
 
 public final class PouchContainer extends ItemInventoryContainer
 {

@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasydice.container;
 
 import com.google.common.util.concurrent.Runnables;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,7 +18,6 @@ import xyz.apex.forge.fantasydice.init.FTBlocks;
 import xyz.apex.forge.fantasydice.init.FTRecipes;
 import xyz.apex.forge.fantasydice.item.crafting.DiceStationRecipe;
 
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 

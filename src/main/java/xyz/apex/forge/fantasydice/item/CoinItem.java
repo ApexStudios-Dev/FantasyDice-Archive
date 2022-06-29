@@ -1,5 +1,7 @@
 package xyz.apex.forge.fantasydice.item;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.network.chat.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -14,7 +16,6 @@ import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.init.FTItems;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
