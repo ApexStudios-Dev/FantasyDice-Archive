@@ -1,8 +1,10 @@
 package xyz.apex.forge.fantasydice.block;
 
-import org.jetbrains.annotations.Nullable;
+import io.netty.buffer.Unpooled;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -10,80 +12,70 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
-import xyz.apex.forge.fantasydice.container.DiceStationContainer;
-import xyz.apex.forge.fantasydice.init.FTContainers;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasydice.container.DiceStationMenu;
+import xyz.apex.forge.fantasydice.init.FTMenus;
 
-public class DiceStationBlock extends Block
+import java.util.function.Consumer;
+
+public class DiceStationBlock extends BaseBlock
 {
-	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-
 	public DiceStationBlock(Properties properties)
 	{
 		super(properties);
 	}
 
 	@Override
-	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
-		if(player instanceof ServerPlayer serverPlayer)
-		{
-			NetworkHooks.openGui(
-					serverPlayer,
-					getMenuProvider(blockState, level, pos)
-			);
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+	}
 
-			return InteractionResult.CONSUME;
+	// region: Core
+	protected final InteractionResult tryOpenContainerScreen(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
+	{
+		var provider = getMenuProvider(blockState, level, pos);
+
+		if(provider != null)
+		{
+			if(level.isClientSide)
+				return InteractionResult.SUCCESS;
+
+			if(player instanceof ServerPlayer serverPlayer)
+			{
+				NetworkHooks.openGui(serverPlayer, provider, buffer -> buffer.writeBlockPos(pos));
+				return InteractionResult.CONSUME;
+			}
 		}
 
-		return InteractionResult.SUCCESS;
+		return InteractionResult.PASS;
 	}
+	// endregion
 
-	@Nullable
+	// region: Overrides
 	@Override
-	public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos pos)
+	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
 	{
-		var title = getName();
-
-		return new SimpleMenuProvider(
-				(windowId, playerInventory, player) -> new DiceStationContainer(FTContainers.DICE_STATION.get(), windowId, playerInventory, ContainerLevelAccess.create(level, pos)),
-				title
-		);
-	}
-
-	@Nullable
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext ctx)
-	{
-		return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+		return tryOpenContainerScreen(blockState, level, pos, player, hand, rayTraceResult);
 	}
 
 	@Override
-	public BlockState rotate(BlockState blockState, Rotation rotation)
+	public final MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos pos)
 	{
-		return blockState.setValue(FACING, rotation.rotate(blockState.getValue(FACING)));
-	}
+		Component containerName = Component.translatable(getDescriptionId());
 
-	@Override
-	public BlockState mirror(BlockState blockState, Mirror mirror)
-	{
-		return blockState.rotate(mirror.getRotation(blockState.getValue(FACING)));
+		return new SimpleMenuProvider((windowId, playerInventory, player) -> {
+			var buffer = new FriendlyByteBuf(Unpooled.buffer());
+			buffer.writeBlockPos(pos);
+			return new DiceStationMenu(FTMenus.DICE_STATION.get(), windowId, playerInventory, buffer, ContainerLevelAccess.NULL);
+		}, containerName);
 	}
-
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
-	{
-		builder.add(FACING);
-	}
+	// endregion
 }

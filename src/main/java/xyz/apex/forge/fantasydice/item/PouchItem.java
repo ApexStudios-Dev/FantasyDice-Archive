@@ -1,16 +1,25 @@
 package xyz.apex.forge.fantasydice.item;
 
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.MenuType;
+import io.netty.buffer.Unpooled;
+
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 
-import xyz.apex.forge.apexcore.lib.container.inventory.ItemInventory;
-import xyz.apex.forge.apexcore.lib.item.InventoryItem;
 import xyz.apex.forge.fantasydice.container.PouchContainer;
-import xyz.apex.forge.fantasydice.init.FTContainers;
+import xyz.apex.forge.fantasydice.container.inventory.ItemInventory;
+import xyz.apex.forge.fantasydice.init.FTMenus;
 
-public class PouchItem extends InventoryItem<PouchContainer> implements DyeableLeatherItem
+public class PouchItem extends Item implements DyeableLeatherItem
 {
 	public PouchItem(Properties properties)
 	{
@@ -18,20 +27,26 @@ public class PouchItem extends InventoryItem<PouchContainer> implements DyeableL
 	}
 
 	@Override
-	protected MenuType<PouchContainer> getContainerType()
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand)
 	{
-		return FTContainers.POUCH.get();
+		var stack = player.getItemInHand(hand);
+
+		if(player instanceof ServerPlayer serverPlayer)
+		{
+			if(!openContainerScreen(level, serverPlayer, hand, stack, stack.getHoverName()))
+				return InteractionResultHolder.pass(stack);
+		}
+
+		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
 	}
 
-	@Override
-	protected ItemInventory createInventory(ItemStack stack)
+	protected boolean openContainerScreen(Level level, ServerPlayer player, InteractionHand hand, ItemStack stack, Component titleComponent)
 	{
-		return new ItemInventory(stack, 18);
-	}
-
-	@Override
-	protected PouchContainer createContainer(MenuType<PouchContainer> containerType, int i, Inventory playerInventory, ItemInventory itemInventory)
-	{
-		return FTContainers.POUCH.create(i, playerInventory);
+		NetworkHooks.openGui(player, new SimpleMenuProvider((windowId, playerInventory, plr) -> {
+			var buffer = new FriendlyByteBuf(Unpooled.buffer());
+			buffer.writeBlockPos(player.blockPosition());
+			return new PouchContainer(FTMenus.POUCH.get(), windowId, playerInventory, buffer, new ItemInventory(stack, 18));
+		}, titleComponent));
+		return true;
 	}
 }

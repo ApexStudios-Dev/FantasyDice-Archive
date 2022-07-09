@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
@@ -26,10 +26,10 @@ public class RollCommand
 
 							DiceHelper.sendMessageToPlayers(
 									player,
-									new TranslatableComponent(
+									Component.translatable(
 											FantasyDice.DIE_ROLL_KEY,
 											player.getDisplayName(),
-											new TranslatableComponent(FantasyDice.DIE_ROLL_RESULT_KEY, roll, "", max)
+											Component.translatable(FantasyDice.DIE_ROLL_RESULT_KEY, roll, "", max)
 									)
 							);
 							return 1;

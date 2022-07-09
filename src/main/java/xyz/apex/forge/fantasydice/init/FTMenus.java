@@ -4,30 +4,31 @@ import com.tterrag.registrate.util.entry.MenuEntry;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 
-import xyz.apex.forge.apexcore.lib.container.inventory.ItemInventory;
-import xyz.apex.forge.fantasydice.client.screen.DiceStationContainerScreen;
-import xyz.apex.forge.fantasydice.client.screen.PouchContainerScreen;
-import xyz.apex.forge.fantasydice.container.DiceStationContainer;
+import xyz.apex.forge.fantasydice.client.screen.DiceStationMenuScreen;
+import xyz.apex.forge.fantasydice.client.screen.PouchMenuScreen;
+import xyz.apex.forge.fantasydice.container.DiceStationMenu;
 import xyz.apex.forge.fantasydice.container.PouchContainer;
+import xyz.apex.forge.fantasydice.container.inventory.ItemInventory;
 
-public final class FTContainers
+public final class FTMenus
 {
 	public static final MenuEntry<PouchContainer> POUCH = FTRegistry.INSTANCE
 			.object("pouch")
 			.menu(
 					"pouch",
-					(containerType, i, playerInventory, packetBuffer) -> new PouchContainer(containerType, i, playerInventory, findPouch(playerInventory.player)),
-					() -> PouchContainerScreen::new
+					(containerType, i, playerInventory, packetBuffer) -> new PouchContainer(containerType, i, playerInventory, packetBuffer, findPouch(playerInventory.player)),
+					() -> PouchMenuScreen::new
 			)
 			.register();
 
-	public static final MenuEntry<DiceStationContainer> DICE_STATION = FTRegistry.INSTANCE
+	public static final MenuEntry<DiceStationMenu> DICE_STATION = FTRegistry.INSTANCE
 			.object("dice_station")
 			.menu(
 					"dice_station",
-					(containerType, i, playerInventory, packetBuffer) -> new DiceStationContainer(containerType, i, playerInventory),
-					() -> DiceStationContainerScreen::new
+					(containerType, i, playerInventory, packetBuffer) -> new DiceStationMenu(containerType, i, playerInventory, packetBuffer, ContainerLevelAccess.NULL),
+					() -> DiceStationMenuScreen::new
 			)
 			.register();
 

@@ -2,7 +2,10 @@ package xyz.apex.forge.fantasydice.item;
 
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -46,7 +49,7 @@ public class CoinItem extends Item
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslatableComponent(FantasyDice.COIN_DESC).withStyle(style -> withStyle(stack, style).withItalic(true)));
+		tooltip.add(Component.translatable(FantasyDice.COIN_DESC).withStyle(style -> withStyle(stack, style).withItalic(true)));
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class CoinItem extends Item
 
 	private MutableComponent buildNameComponent(ItemStack stack)
 	{
-		return new TranslatableComponent(getDescriptionId()).withStyle(style -> withStyle(stack, style));
+		return Component.translatable(getDescriptionId()).withStyle(style -> withStyle(stack, style));
 	}
 
 	private Style withStyle(ItemStack stack, Style style)
@@ -107,12 +110,12 @@ public class CoinItem extends Item
 		// prefix: <player> flipped
 		// suffix: <N_heads> Heads & <N_tails> Tails
 		// full: <player> flipped <N_heads> Heads & <N_tails> Tails
-		var prefix = new TranslatableComponent(
+		var prefix = Component.translatable(
 				FantasyDice.COIN_FLIP_PREFIX,
 				player.getDisplayName()
 		);
 
-		var suffix = new TranslatableComponent(FantasyDice.COIN_FLIP_SUFFIX, heads, tails)
+		var suffix = Component.translatable(FantasyDice.COIN_FLIP_SUFFIX, heads, tails)
 				.withStyle(style -> withStyle
 						.apply(style)
 						.withHoverEvent(new HoverEvent(

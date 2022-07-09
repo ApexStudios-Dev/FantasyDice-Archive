@@ -2,29 +2,39 @@ package xyz.apex.forge.fantasydice.container;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
-import xyz.apex.forge.apexcore.lib.container.ItemInventoryContainer;
-import xyz.apex.forge.apexcore.lib.container.inventory.ItemInventory;
-import xyz.apex.forge.fantasydice.container.slot.DiceSlot;
+import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
+import xyz.apex.forge.fantasydice.container.inventory.ItemInventory;
+import xyz.apex.forge.fantasydice.init.FTTags;
 
-public final class PouchContainer extends ItemInventoryContainer
+public final class PouchContainer extends BaseMenu
 {
-	public PouchContainer(@Nullable MenuType<?> containerType, int windowId, Inventory playerInventory, ItemInventory itemInventory)
+	public PouchContainer(@Nullable MenuType<? extends PouchContainer> containerType, int windowId, Inventory playerInventory, FriendlyByteBuf buffer, ItemInventory inventory)
 	{
-		super(containerType, windowId, playerInventory, itemInventory);
+		super(containerType, windowId, playerInventory, buffer);
+
+		bindPlayerInventory(this);
+		bindItemHandlerSlots(this, new InvWrapper(inventory), 3, 6, 35, 17, DiceSlot::new);
 	}
 
-	@Override
-	protected void addSlots()
+	public static final class DiceSlot extends SlotItemHandler
 	{
-		for(var row = 0; row < 3; row++)
+		public DiceSlot(IItemHandler itemHandler, int slotIndex, int x, int y)
 		{
-			for(var col = 0; col < 6; col++)
-			{
-				addSlot(new DiceSlot(itemInventory, opener, col + row * 6, 35 + col * 18, 17 + row * 18));
-			}
+			super(itemHandler, slotIndex, x, y);
+		}
+
+		@Override
+		public boolean mayPlace(ItemStack stack)
+		{
+			return stack.is(FTTags.Items.DICE);
 		}
 	}
 }

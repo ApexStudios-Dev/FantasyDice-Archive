@@ -3,6 +3,7 @@ package xyz.apex.forge.fantasydice.container;
 import com.google.common.util.concurrent.Runnables;
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -13,7 +14,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import xyz.apex.forge.apexcore.lib.container.BaseContainer;
+import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
 import xyz.apex.forge.fantasydice.init.FTBlocks;
 import xyz.apex.forge.fantasydice.init.FTRecipes;
 import xyz.apex.forge.fantasydice.item.crafting.DiceStationRecipe;
@@ -21,7 +22,7 @@ import xyz.apex.forge.fantasydice.item.crafting.DiceStationRecipe;
 import java.util.Collections;
 import java.util.List;
 
-public final class DiceStationContainer extends BaseContainer
+public final class DiceStationMenu extends BaseMenu
 {
 	private final ContainerLevelAccess access;
 	private final DataSlot selectedRecipeIndex = DataSlot.standalone();
@@ -38,23 +39,16 @@ public final class DiceStationContainer extends BaseContainer
 		public void setChanged()
 		{
 			super.setChanged();
-			DiceStationContainer.this.slotsChanged(this);
-			DiceStationContainer.this.slotUpdateListener.run();
+			DiceStationMenu.this.slotsChanged(this);
+			DiceStationMenu.this.slotUpdateListener.run();
 		}
 	};
 
 	private final ResultContainer resultContainer = new ResultContainer();
 
-	private boolean addSlots;
-
-	public DiceStationContainer(@Nullable MenuType<?> menuType, int windowId, Inventory playerInventory)
+	public DiceStationMenu(@Nullable MenuType<? extends DiceStationMenu> menuType, int windowId, Inventory playerInventory, FriendlyByteBuf buffer, ContainerLevelAccess access)
 	{
-		this(menuType, windowId, playerInventory, ContainerLevelAccess.NULL);
-	}
-
-	public DiceStationContainer(@Nullable MenuType<?> menuType, int windowId, Inventory playerInventory, ContainerLevelAccess access)
-	{
-		super(menuType, windowId, playerInventory);
+		super(menuType, windowId, playerInventory, buffer);
 
 		this.access = access;
 		level = playerInventory.player.level;
@@ -70,27 +64,25 @@ public final class DiceStationContainer extends BaseContainer
 			public void onTake(Player player, ItemStack stack)
 			{
 				stack.onCraftedBy(level, player, stack.getCount());
-				DiceStationContainer.this.resultContainer.awardUsedRecipes(player);
-				var input = DiceStationContainer.this.inputSlot.remove(1);
+				DiceStationMenu.this.resultContainer.awardUsedRecipes(player);
+				var input = DiceStationMenu.this.inputSlot.remove(1);
 
 				if(!input.isEmpty())
-					DiceStationContainer.this.setupResultSlot();
+					DiceStationMenu.this.setupResultSlot();
 
 				access.execute((world, pos) -> {
 					var l = world.getGameTime();
 
-					if(DiceStationContainer.this.lastSoundTime != l)
+					if(DiceStationMenu.this.lastSoundTime != l)
 					{
 						world.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1F, 1F);
-						DiceStationContainer.this.lastSoundTime = l;
+						DiceStationMenu.this.lastSoundTime = l;
 					}
 				});
 			}
 		};
 
-		addSlots = true;
-		addContainerSlots();
-		addPlayerInventorySlots();
+		bindPlayerInventory(this, 8, 84);
 		addDataSlot(selectedRecipeIndex);
 	}
 
@@ -244,22 +236,5 @@ public final class DiceStationContainer extends BaseContainer
 		super.removed(player);
 		resultContainer.removeItemNoUpdate(1);
 		access.execute((world, pos) -> clearContainer(player, container));
-	}
-
-	@Override
-	protected void addPlayerInventorySlots()
-	{
-		if(addSlots)
-			super.addPlayerInventorySlots();
-	}
-
-	@Override
-	protected void addContainerSlots()
-	{
-		if(addSlots)
-		{
-			addSlot(inputSlot);
-			addSlot(resultSlot);
-		}
 	}
 }

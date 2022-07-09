@@ -258,32 +258,32 @@ public final class FTDiceTypes
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.fireResistant()
+					.properties(properties -> properties.fireResistant())
 				.build()
 
 				.withDie(6)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.fireResistant()
+					.properties(properties -> properties.fireResistant())
 				.build()
 
 				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.fireResistant()
+					.properties(properties -> properties.fireResistant())
 				.build()
 
 				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.fireResistant()
+					.properties(properties -> properties.fireResistant())
 				.build()
 
 				.withDie(12)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.fireResistant()
+					.properties(properties -> properties.fireResistant())
 				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.fireResistant()
+					.properties(properties -> properties.fireResistant())
 				.build()
 			.build();
 	// endregion
@@ -569,12 +569,12 @@ public final class FTDiceTypes
 
 				.withDie(6)
 					.lang("Tobi's Thrice 6-Sided Die")
-					.stacksTo(1)
+					.properties(properties -> properties.stacksTo(1))
 				.build()
 
 				.withDie(20)
 					.lang("Tobi's Thrice 20-Sided Die")
-					.stacksTo(1)
+					.properties(properties -> properties.stacksTo(1))
 				.build()
 			.build();
 	// endregion

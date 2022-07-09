@@ -5,7 +5,6 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -98,7 +97,7 @@ public class DiceItem extends Item
 
 	private Component buildNameComponent(ItemStack stack)
 	{
-		MutableComponent nameComponent = new TranslatableComponent(getDescriptionId());
+		MutableComponent nameComponent = Component.translatable(getDescriptionId());
 
 		if(diceType != null && diceType.matches(FTDiceTypes.DICE_APEX))
 			nameComponent = DiceHelper.makeApexComponent(RNG, nameComponent);

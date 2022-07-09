@@ -2,8 +2,11 @@ package xyz.apex.forge.fantasydice.util;
 
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -22,7 +25,7 @@ public class DiceHelper
 {
 	@Nullable private static MutableComponent apexNameComponent = null;
 
-	public static int roll(Random rng, int min, int max, int dieQuality, boolean isApex)
+	public static int roll(RandomSource rng, int min, int max, int dieQuality, boolean isApex)
 	{
 		if(max < min)
 		{
@@ -139,15 +142,15 @@ public class DiceHelper
 	private static MutableComponent createTextComponent(Player player, ItemStack stack, DiceItem die, int roll, int sides, @Nullable int[] rolls)
 	{
 		var diceType = die.getDiceType();
-		var rollsComponent = new Component[] { TextComponent.EMPTY };
+		var rollsComponent = new Component[] { Component.empty() };
 
 		if(rolls != null && rolls.length > 1)
-			rollsComponent[0] = new TextComponent("\n" + Arrays.toString(rolls)).withStyle(s -> s.withItalic(true));
+			rollsComponent[0] = Component.literal("\n%s".formatted(Arrays.toString(rolls))).withStyle(s -> s.withItalic(true));
 
-		return new TranslatableComponent(
+		return Component.translatable(
 				FantasyDice.DIE_ROLL_KEY,
 				player.getDisplayName(),
-				new TranslatableComponent(FantasyDice.DIE_ROLL_RESULT_KEY, roll, stack.getCount(), sides).withStyle(style -> diceType.withStyle(stack, style))
+				Component.translatable(FantasyDice.DIE_ROLL_RESULT_KEY, roll, stack.getCount(), sides).withStyle(style -> diceType.withStyle(stack, style))
 		).withStyle(style -> style
 				.withHoverEvent(
 						new HoverEvent(
@@ -165,7 +168,7 @@ public class DiceHelper
 		var server = player.getServer();
 		var playerID = player.getGameProfile().getId();
 
-		player.sendMessage(component, playerID);
+		player.displayClientMessage(component, false);
 
 		if(server == null)
 			return;
@@ -189,7 +192,7 @@ public class DiceHelper
 					continue;
 			}
 
-			plr.sendMessage(component, playerID);
+			plr.displayClientMessage(component, false);
 		}
 	}
 
@@ -209,13 +212,13 @@ public class DiceHelper
 		if(apexNameComponent != null)
 			return apexNameComponent;
 
-		var apex = TextComponent.EMPTY.plainCopy();
+		var apex = Component.empty().plainCopy();
 		var string = component.getString();
 
 		for(var c : string.toCharArray())
 		{
 			var obfuscate = rng.nextBoolean();
-			apex = apex.append(new TextComponent(String.valueOf(c)).withStyle(style -> style.setObfuscated(obfuscate)));
+			apex = apex.append(Component.literal(String.valueOf(c)).withStyle(style -> style.withObfuscated(obfuscate)));
 		}
 
 		if(FantasyDice.loadComplete && apexNameComponent == null)

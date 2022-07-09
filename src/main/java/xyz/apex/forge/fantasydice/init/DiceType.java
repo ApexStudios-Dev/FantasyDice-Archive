@@ -13,9 +13,11 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.ObjectCollection;
 import org.apache.commons.lang3.Validate;
 
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -60,7 +62,7 @@ public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends
 			var sides = entry.getIntKey();
 			var dieName = entry.getValue();
 
-			RegistryEntry<DIE> registryEntry = owner.get(dieName, Item.class);
+			RegistryEntry<DIE> registryEntry = owner.get(dieName, Registry.ITEM_REGISTRY);
 			var itemEntry = ItemEntry.cast(registryEntry);
 
 			diceItems.put(sides, itemEntry);
@@ -68,7 +70,7 @@ public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends
 
 		diceTypes.add(this);
 
-		owner.addRegisterCallback(Item.class, () -> diceItems
+		owner.addRegisterCallback(Registry.ITEM_REGISTRY, () -> diceItems
 				.values()
 				.stream()
 				.map(RegistryEntry::get)
@@ -205,20 +207,15 @@ public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends
 			return this;
 		}
 
-		public ItemBuilder<OWNER, DIE, Builder<OWNER, DIE>> withDie(int sides)
+		public ItemBuilder<DIE, Builder<OWNER, DIE>> withDie(int sides)
 		{
-			var dieName = generateDieName(sides);
-
-			var englishName = RegistrateLangProvider.toEnglishName(name);
-			var fullName = sides + "-Sided " + englishName + " Die";
-
 			return owner
-					.object(dieName)
+					.object(generateDieName(sides))
 					.item(this, properties -> diceFactory.apply(properties, sides))
 					.tag(tag)
-					.lang(fullName)
-					.stacksTo(8)
-					.model((ctx, provider) -> provider.generated(ctx, owner.id("item/die/" + name + "/" + sides + "_sided")))
+					.lang("%d-Sided %s Die".formatted(sides, RegistrateLangProvider.toEnglishName(name)))
+					.properties(properties -> properties.stacksTo(8))
+					.model((ctx, provider) -> provider.generated(ctx, new ResourceLocation(Mods.FANTASY_DICE, "item/die/%s/%d_sided".formatted(name, sides))))
 			;
 		}
 
@@ -278,8 +275,8 @@ public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends
 		public MutableComponent getComponent(ItemStack stack, DiceType<?, ?> diceType)
 		{
 			var diceQuality = diceType.getDiceQuality();
-			return new TranslatableComponent(translationKey)
-					.append(diceQuality > 0 ? " (+" + diceQuality + ")" : " (" + diceQuality + ")")
+			return Component.translatable(translationKey)
+					.append(diceQuality > 0 ? " (+%d)".formatted(diceQuality) : " (%d)".formatted(diceQuality))
 					.withStyle(style -> diceType
 							.withStyle(stack, style)
 							.withItalic(true)

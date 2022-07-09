@@ -3,10 +3,12 @@ package xyz.apex.forge.fantasydice.integration.jei;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -14,7 +16,6 @@ import mezz.jei.api.registration.IRecipeRegistration;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import xyz.apex.forge.commonality.Mods;
@@ -26,6 +27,8 @@ import xyz.apex.forge.fantasydice.item.crafting.DiceStationRecipe;
 @JeiPlugin
 public class JeiIntegration implements IModPlugin
 {
+	public static final RecipeType<DiceStationRecipe> RECIPE_TYPE = RecipeType.create(Mods.FANTASY_DICE, "dice_station", DiceStationRecipe.class);
+
 	private DiceStationRecipeCategory diceStationRecipeCategory;
 
 	@Override
@@ -47,13 +50,13 @@ public class JeiIntegration implements IModPlugin
 	{
 		var recipeManager = Minecraft.getInstance().level.getRecipeManager();
 		var diceStationRecipes = recipeManager.getAllRecipesFor(FTRecipes.DICE_STATION_RECIPE_TYPE.get());
-		registration.addRecipes(diceStationRecipes, FTRecipes.DICE_STATION_RECIPE.getId());
+		registration.addRecipes(RECIPE_TYPE, diceStationRecipes);
 	}
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration)
 	{
-		registration.addRecipeCatalyst(FTBlocks.DICE_STATION.asStack(), FTRecipes.DICE_STATION_RECIPE.getId());
+		registration.addRecipeCatalyst(FTBlocks.DICE_STATION.asStack(), RECIPE_TYPE);
 	}
 
 	public static class DiceStationRecipeCategory implements IRecipeCategory<DiceStationRecipe>
@@ -64,25 +67,19 @@ public class JeiIntegration implements IModPlugin
 		private DiceStationRecipeCategory(IGuiHelper guiHelper)
 		{
 			background = guiHelper.createDrawable(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 0, 220, 82, 34);
-			icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, FTBlocks.DICE_STATION.asStack());
+			icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, FTBlocks.DICE_STATION.asStack());
 		}
 
 		@Override
-		public ResourceLocation getUid()
+		public RecipeType<DiceStationRecipe> getRecipeType()
 		{
-			return FTRecipes.DICE_STATION_RECIPE.getId();
-		}
-
-		@Override
-		public Class<? extends DiceStationRecipe> getRecipeClass()
-		{
-			return DiceStationRecipe.class;
+			return RECIPE_TYPE;
 		}
 
 		@Override
 		public Component getTitle()
 		{
-			return new TranslatableComponent(FantasyDice.JEI_DICE_RECIPE_TITLE_KEY);
+			return Component.translatable(FantasyDice.JEI_DICE_RECIPE_TITLE_KEY);
 		}
 
 		@Override
@@ -98,20 +95,13 @@ public class JeiIntegration implements IModPlugin
 		}
 
 		@Override
-		public void setIngredients(DiceStationRecipe recipe, IIngredients ingredients)
+		public void setRecipe(IRecipeLayoutBuilder builder, DiceStationRecipe recipe, IFocusGroup focuses)
 		{
-			ingredients.setInputIngredients(recipe.getIngredients());
-			ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-		}
+			builder.addSlot(RecipeIngredientRole.INPUT, 1, 9)
+			       .addIngredients(recipe.getIngredients().get(0));
 
-		@Override
-		public void setRecipe(IRecipeLayout recipeLayout, DiceStationRecipe recipe, IIngredients ingredients)
-		{
-			var group = recipeLayout.getItemStacks();
-			setIngredients(recipe, ingredients);
-			group.init(0, true, 0, 8);
-			group.init(1, false, 60, 8);
-			group.set(ingredients);
+			builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 9)
+			       .addItemStack(recipe.getResultItem());
 		}
 
 		@Override
