@@ -14,7 +14,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
+import xyz.apex.forge.apexcore.lib.container.BaseMenu;
 import xyz.apex.forge.fantasydice.init.FTBlocks;
 import xyz.apex.forge.fantasydice.init.FTRecipes;
 import xyz.apex.forge.fantasydice.item.crafting.DiceStationRecipe;

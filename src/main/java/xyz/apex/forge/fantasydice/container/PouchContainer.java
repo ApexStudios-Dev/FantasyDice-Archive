@@ -10,7 +10,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
+import xyz.apex.forge.apexcore.lib.container.BaseMenu;
 import xyz.apex.forge.fantasydice.container.inventory.ItemInventory;
 import xyz.apex.forge.fantasydice.init.FTTags;
 
