@@ -42,7 +42,7 @@ public class PouchItem extends Item implements DyeableLeatherItem
 
 	protected boolean openContainerScreen(Level level, ServerPlayer player, InteractionHand hand, ItemStack stack, Component titleComponent)
 	{
-		NetworkHooks.openGui(player, new SimpleMenuProvider((windowId, playerInventory, plr) -> {
+		NetworkHooks.openScreen(player, new SimpleMenuProvider((windowId, playerInventory, plr) -> {
 			var buffer = new FriendlyByteBuf(Unpooled.buffer());
 			buffer.writeBlockPos(player.blockPosition());
 			return new PouchContainer(FTMenus.POUCH.get(), windowId, playerInventory, buffer, new ItemInventory(stack, 18));
