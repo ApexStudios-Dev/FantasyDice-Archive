@@ -73,7 +73,7 @@ jobs:
           webhook_token: ${{ secrets.DISCORD_PRE_RELEASE_WEBHOOK_TOKEN }}
           color: '#E27E8B'
           file: './build/libs/fantasydice-1.18.1-${{ steps.mod_version.outputs.value }}.jar'
-          message: "Early version of **Fantasy's Dice** v**_${{ steps.mod_version.outputs.value }}_** (**Minecraft** **_1.18.1_**) is available."
+          message: "Early version of **Fantasy's Dice** v**_${{ steps.mod_version.outputs.value }}_** (**Minecraft** **_1.18.2_**) is available."
 
       - name: Stop Gradle Deamons
         run: ./gradlew --stop
