@@ -17,9 +17,9 @@ public final class FTRecipes
 	public static final Lazy<RecipeType<DiceStationRecipe>> DICE_STATION_RECIPE_TYPE = Lazy.of(() -> RecipeType.register(FTRegistry.INSTANCE.idString("dice_station")));
 
 	public static final RegistryEntry<SingleItemRecipe.Serializer<DiceStationRecipe>> DICE_STATION_RECIPE = FTRegistry.INSTANCE
-			.object("dice_stattion")
+			.object("dice_station")
 			.addRegisterCallback(Registry.RECIPE_SERIALIZER_REGISTRY, DICE_STATION_RECIPE_TYPE::get) // delay registration until correct time
-			.simple(Registry.RECIPE_SERIALIZER_REGISTRY, () -> new SingleItemRecipe.Serializer<DiceStationRecipe>(DiceStationRecipe::new));
+			.simple(Registry.RECIPE_SERIALIZER_REGISTRY, () -> new SingleItemRecipe.Serializer<>(DiceStationRecipe::new));
 
 	static void bootstrap()
 	{

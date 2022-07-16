@@ -142,7 +142,7 @@ public class DiceHelper
 		var rollsComponent = new Component[] { TextComponent.EMPTY };
 
 		if(rolls != null && rolls.length > 1)
-			rollsComponent[0] = new TextComponent("\n" + Arrays.toString(rolls)).withStyle(s -> s.withItalic(true));
+			rollsComponent[0] = new TextComponent("\n%s".formatted(Arrays.toString(rolls))).withStyle(s -> s.withItalic(true));
 
 		return new TranslatableComponent(
 				FantasyDice.DIE_ROLL_KEY,
@@ -165,7 +165,7 @@ public class DiceHelper
 		var server = player.getServer();
 		var playerID = player.getGameProfile().getId();
 
-		player.sendMessage(component, playerID);
+		player.displayClientMessage(component, false);
 
 		if(server == null)
 			return;
@@ -189,7 +189,7 @@ public class DiceHelper
 					continue;
 			}
 
-			plr.sendMessage(component, playerID);
+			plr.displayClientMessage(component, false);
 		}
 	}
 
@@ -215,7 +215,7 @@ public class DiceHelper
 		for(var c : string.toCharArray())
 		{
 			var obfuscate = rng.nextBoolean();
-			apex = apex.append(new TextComponent(String.valueOf(c)).withStyle(style -> style.setObfuscated(obfuscate)));
+			apex = apex.append(new TextComponent(String.valueOf(c)).withStyle(style -> style.withObfuscated(obfuscate)));
 		}
 
 		if(FantasyDice.loadComplete && apexNameComponent == null)

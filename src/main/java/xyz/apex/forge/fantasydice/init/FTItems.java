@@ -30,7 +30,7 @@ public final class FTItems
 						.save(provider, ctx.getId())
 				)
 				.model((ctx, provider) -> provider.generated(ctx, provider.modLoc("item/pouch/pouch"), provider.modLoc("item/pouch/string")))
-				.stacksTo(1)
+				.properties(properties -> properties.stacksTo(1))
 			.register();
 
 	public static final ItemEntry<CoinItem> IRON_COIN = FTRegistry.INSTANCE
@@ -44,7 +44,7 @@ public final class FTItems
 						.group("coin")
 						.unlockedBy("has_iron_nugget", RegistrateRecipeProvider.has(ItemTags.Forge.NUGGETS_IRON))
 						.save(provider, ctx.getId()))
-				.stacksTo(8)
+				.properties(properties -> properties.stacksTo(8))
 				.tag(FTTags.Items.COINS)
 			.register();
 
@@ -59,7 +59,7 @@ public final class FTItems
 						.group("coin")
 						.unlockedBy("has_golden_nugget", RegistrateRecipeProvider.has(ItemTags.Forge.NUGGETS_GOLD))
 						.save(provider, ctx.getId()))
-				.stacksTo(8)
+				.properties(properties -> properties.stacksTo(8))
 				.tag(FTTags.Items.COINS)
 			.register();
 

@@ -19,12 +19,14 @@ public final class FTBlocks
 				.lang("Dice Station")
 
 				.initialProperties(Material.WOOD)
-				.strength(2.5F)
-				.sound(SoundType.WOOD)
+				.properties(properties -> properties
+						.strength(2.5F)
+						.sound(SoundType.WOOD)
+				)
 
 				.recipe((ctx, provider) -> ShapelessRecipeBuilder
 							.shapeless(ctx.get(), 1)
-							.requires(FTItems.POUCH)
+							.requires(FTItems.POUCH.get())
 							.requires(Blocks.CRAFTING_TABLE)
 							.unlockedBy("has_crafting_table", RegistrateRecipeProvider.has(Blocks.CRAFTING_TABLE))
 							.group(ctx.getName())

@@ -12,9 +12,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.commonality.Mods;
-import xyz.apex.forge.fantasydice.container.DiceStationContainer;
+import xyz.apex.forge.fantasydice.container.DiceStationMenu;
 
-public class DiceStationContainerScreen extends AbstractContainerScreen<DiceStationContainer>
+public class DiceStationMenuScreen extends AbstractContainerScreen<DiceStationMenu>
 {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Mods.FANTASY_DICE, "textures/gui/container/dice_station.png");
 
@@ -23,7 +23,7 @@ public class DiceStationContainerScreen extends AbstractContainerScreen<DiceStat
 	private int startIndex = 0;
 	private boolean displayRecipes = false;
 
-	public DiceStationContainerScreen(DiceStationContainer container, Inventory playerInventory, Component title)
+	public DiceStationMenuScreen(DiceStationMenu container, Inventory playerInventory, Component title)
 	{
 		super(container, playerInventory, title);
 
