@@ -27,23 +27,7 @@ public class ItemInventory extends SimpleContainer
 	public void startOpen(Player player)
 	{
 		if(openCount == 0)
-		{
-			var invTag = item.getTagElement(NBT_INVENTORY);
-
-			if(invTag != null)
-			{
-				var slotTag = invTag.getList(NBT_ITEMS, Tag.TAG_COMPOUND);
-
-				for(var i = 0; i < slotTag.size(); i++)
-				{
-					var itemTag = slotTag.getCompound(i);
-					var slotIndex = itemTag.getByte(NBT_SLOTS) & 255;
-
-					if(slotIndex < getContainerSize())
-						setItem(slotIndex, ItemStack.of(itemTag));
-				}
-			}
-		}
+			load(this);
 
 		openCount++;
 	}
@@ -54,30 +38,52 @@ public class ItemInventory extends SimpleContainer
 		openCount--;
 
 		if(openCount == 0)
-		{
-			var invTag = new CompoundTag();
-			var slotTag = new ListTag();
-
-			for(var i = 0; i < getContainerSize(); i++)
-			{
-				var stack = getItem(i);
-
-				if(!stack.isEmpty())
-				{
-					var itemTag = new CompoundTag();
-					itemTag.putByte(NBT_SLOTS, (byte) i);
-					stack.save(itemTag);
-					slotTag.add(itemTag);
-				}
-			}
-
-			invTag.put(NBT_ITEMS, slotTag);
-			item.addTagElement(NBT_INVENTORY, invTag);
-		}
+			save(this);
 	}
 
 	public ItemStack getContainerItem()
 	{
 		return item;
+	}
+
+	public static void save(ItemInventory inventory)
+	{
+		var invTag = new CompoundTag();
+		var slotTag = new ListTag();
+
+		for(var i = 0; i < inventory.getContainerSize(); i++)
+		{
+			var stack = inventory.getItem(i);
+
+			if(!stack.isEmpty())
+			{
+				var itemTag = new CompoundTag();
+				itemTag.putByte(NBT_SLOTS, (byte) i);
+				stack.save(itemTag);
+				slotTag.add(itemTag);
+			}
+		}
+
+		invTag.put(NBT_ITEMS, slotTag);
+		inventory.item.addTagElement(NBT_INVENTORY, invTag);
+	}
+
+	public static void load(ItemInventory inventory)
+	{
+		var invTag = inventory.item.getTagElement(NBT_INVENTORY);
+
+		if(invTag != null)
+		{
+			var slotTag = invTag.getList(NBT_ITEMS, Tag.TAG_COMPOUND);
+
+			for(var i = 0; i < slotTag.size(); i++)
+			{
+				var itemTag = slotTag.getCompound(i);
+				var slotIndex = itemTag.getByte(NBT_SLOTS) & 255;
+
+				if(slotIndex < inventory.getContainerSize())
+					inventory.setItem(slotIndex, ItemStack.of(itemTag));
+			}
+		}
 	}
 }

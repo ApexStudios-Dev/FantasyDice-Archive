@@ -11,7 +11,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -74,7 +73,8 @@ public class DiceStationBlock extends BaseBlock
 		return new SimpleMenuProvider((windowId, playerInventory, player) -> {
 			var buffer = new FriendlyByteBuf(Unpooled.buffer());
 			buffer.writeBlockPos(pos);
-			return new DiceStationMenu(FTMenus.DICE_STATION.get(), windowId, playerInventory, buffer, ContainerLevelAccess.NULL);
+			buffer.writeBoolean(true);
+			return new DiceStationMenu(FTMenus.DICE_STATION.get(), windowId, playerInventory, buffer);
 		}, containerName);
 	}
 	// endregion

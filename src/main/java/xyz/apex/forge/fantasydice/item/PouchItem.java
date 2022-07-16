@@ -16,7 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
 import xyz.apex.forge.fantasydice.container.PouchContainer;
-import xyz.apex.forge.fantasydice.container.inventory.ItemInventory;
 import xyz.apex.forge.fantasydice.init.FTMenus;
 
 public class PouchItem extends Item implements DyeableLeatherItem
@@ -45,8 +44,9 @@ public class PouchItem extends Item implements DyeableLeatherItem
 		NetworkHooks.openScreen(player, new SimpleMenuProvider((windowId, playerInventory, plr) -> {
 			var buffer = new FriendlyByteBuf(Unpooled.buffer());
 			buffer.writeBlockPos(player.blockPosition());
-			return new PouchContainer(FTMenus.POUCH.get(), windowId, playerInventory, buffer, new ItemInventory(stack, 18));
-		}, titleComponent));
+			buffer.writeEnum(hand);
+			return new PouchContainer(FTMenus.POUCH.get(), windowId, playerInventory, buffer);
+		}, titleComponent), buffer -> buffer.writeBlockPos(player.blockPosition()).writeEnum(hand));
 		return true;
 	}
 }

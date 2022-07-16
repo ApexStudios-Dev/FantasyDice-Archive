@@ -46,14 +46,14 @@ public final class DiceStationMenu extends BaseMenu
 
 	private final ResultContainer resultContainer = new ResultContainer();
 
-	public DiceStationMenu(@Nullable MenuType<? extends DiceStationMenu> menuType, int windowId, Inventory playerInventory, FriendlyByteBuf buffer, ContainerLevelAccess access)
+	public DiceStationMenu(@Nullable MenuType<? extends DiceStationMenu> menuType, int windowId, Inventory playerInventory, FriendlyByteBuf buffer)
 	{
 		super(menuType, windowId, playerInventory, buffer);
 
-		this.access = access;
+		this.access = buffer.readBoolean() ? ContainerLevelAccess.create(playerInventory.player.level, pos) : ContainerLevelAccess.NULL;
 		level = playerInventory.player.level;
-		inputSlot = new Slot(container, 0, 20, 33);
-		resultSlot = new Slot(resultContainer, 1, 143, 33) {
+		inputSlot = addSlot(new Slot(container, 0, 20, 33));
+		resultSlot = addSlot(new Slot(resultContainer, 1, 143, 33) {
 			@Override
 			public boolean mayPlace(ItemStack stack)
 			{
@@ -80,7 +80,7 @@ public final class DiceStationMenu extends BaseMenu
 					}
 				});
 			}
-		};
+		});
 
 		bindPlayerInventory(this, 8, 84);
 		addDataSlot(selectedRecipeIndex);

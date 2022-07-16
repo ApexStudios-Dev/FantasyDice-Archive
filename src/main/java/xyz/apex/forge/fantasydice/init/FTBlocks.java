@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 
+import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.fantasydice.block.DiceStationBlock;
 
 public final class FTBlocks
@@ -45,6 +46,7 @@ public final class FTBlocks
 
 					provider.horizontalBlock(ctx.getEntry(), model);
 				})
+				.tag(BlockTags.Vanilla.MINEABLE_WITH_AXE)
 
 				.simpleItem()
 			.register();
