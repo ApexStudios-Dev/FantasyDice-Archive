@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[41,)"
+loaderVersion="[42,)"
 license="GNU General Public License v3.0"
 issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyDice/issues"
 
@@ -17,7 +17,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyDice/issues"
 [[dependencies.fantasydice]]
 	modId="forge"
 	mandatory=true
-	versionRange="[41.1.0,)"
+	versionRange="[42.0.0,)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasydice.custom.mc-publish]
@@ -25,7 +25,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyDice/issues"
 [[dependencies.fantasydice]]
 	modId="minecraft"
 	mandatory=true
-	versionRange="[1.19,1.20)"
+	versionRange="[1.19.1,1.20)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasydice.custom.mc-publish]
@@ -33,7 +33,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyDice/issues"
 [[dependencies.fantasydice]]
 	modId="commonality"
 	mandatory=true
-	versionRange="[2.3.0,3.0.0)"
+	versionRange="[3.0.0,4.0.0)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasydice.custom.mc-publish]
@@ -41,7 +41,8 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyDice/issues"
 [[dependencies.fantasydice]]
 	modId="apexcore"
 	mandatory=true
-	versionRange="[5.4.0,6.0.0)"
+	embedded=true
+	versionRange="[6.0.0,7.0.0)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasydice.custom.mc-publish]
@@ -50,7 +51,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyDice/issues"
 [[dependencies.fantasydice]]
 	modId="jei"
 	mandatory=false
-	versionRange="[11.0.0.211,)"
+	versionRange="[11.2.0.241,)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasydice.custom.mc-publish]
