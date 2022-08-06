@@ -10,8 +10,8 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyDice/issues"
 	updateJSONURL="https://raw.githubusercontent.com/ApexStudios-Dev/Version/master/fantasydice.json"
 	displayURL="https://www.apexstudios.dev/fantasys-dice"
 	logoFile="banner.png"
-	credits="Apex - Programming, FantasyGaming - Texture Artist"
-	authors="Apex, FantasyGaming"
+	credits="Apex - Programming, FantasyGaming - Artist"
+	authors="ApexStudios"
 	description="Mod requested by FantasyGaming which adds 6 & 20 Sided Dice to the game of varying types."
 
 [[dependencies.fantasydice]]
