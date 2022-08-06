@@ -153,9 +153,9 @@ dependencies {
 	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+	// compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+	// compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+	// runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
 	implementation fg.deobf("${registrate_package}:Registrate:MC1.19-${registrate_version}") // TODO: Change back to ${minecraft_version} in 1.20
 
