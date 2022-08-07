@@ -16,13 +16,17 @@ import xyz.apex.forge.fantasydice.item.crafting.DiceStationRecipe;
 
 public final class FTRecipes
 {
-	public static final RegistryEntry<SingleItemRecipe.Serializer<DiceStationRecipe>> DICE_STATION_RECIPE = FTRegistry.INSTANCE
+	public static final RegistryEntry<SingleItemRecipe.Serializer<DiceStationRecipe>> DICE_STATION_RECIPE = FTRegistry
+			.REGISTRATE
 			.object("dice_station")
-			.simple(Registry.RECIPE_SERIALIZER_REGISTRY, () -> new SingleItemRecipe.Serializer<>(DiceStationRecipe::new));
+			.simple(Registry.RECIPE_SERIALIZER_REGISTRY, () -> new SingleItemRecipe.Serializer<>(DiceStationRecipe::new))
+	;
 
-	public static final RegistryEntry<RecipeType<DiceStationRecipe>> DICE_STATION_RECIPE_TYPE = FTRegistry.INSTANCE
+	public static final RegistryEntry<RecipeType<DiceStationRecipe>> DICE_STATION_RECIPE_TYPE = FTRegistry
+			.REGISTRATE
 			.object("dice_station")
-			.simple(ForgeRegistries.Keys.RECIPE_TYPES, () -> RecipeType.simple(new ResourceLocation(Mods.FANTASY_DICE, "dice_station")));
+			.simple(ForgeRegistries.Keys.RECIPE_TYPES, () -> RecipeType.simple(new ResourceLocation(Mods.FANTASY_DICE, "dice_station")))
+	;
 
 	static void bootstrap()
 	{

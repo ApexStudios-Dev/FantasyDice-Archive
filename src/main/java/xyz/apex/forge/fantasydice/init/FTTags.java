@@ -7,6 +7,7 @@ import net.minecraft.world.item.Item;
 
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.ItemTags;
+import xyz.apex.forge.fantasydice.FantasyDice;
 
 public final class FTTags
 {
@@ -24,7 +25,7 @@ public final class FTTags
 
 		private static void bootstrap()
 		{
-			FTRegistry.INSTANCE.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
+			FTRegistry.REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
 				var specialtyTagBuilder = provider.tag(DICE_SPECIALTY);
 
 				DiceType.getDiceTypes().stream()

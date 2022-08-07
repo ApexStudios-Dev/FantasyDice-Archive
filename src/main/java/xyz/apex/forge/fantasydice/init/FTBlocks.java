@@ -1,7 +1,6 @@
 package xyz.apex.forge.fantasydice.init;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import com.tterrag.registrate.util.entry.BlockEntry;
 
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.level.block.Blocks;
@@ -9,21 +8,21 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 
+import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.fantasydice.block.DiceStationBlock;
 
 public final class FTBlocks
 {
-	public static final BlockEntry<DiceStationBlock> DICE_STATION = FTRegistry.INSTANCE
+	public static final BlockEntry<DiceStationBlock> DICE_STATION = FTRegistry
+			.REGISTRATE
 			.object("dice_station")
 			.block(DiceStationBlock::new)
 				.lang("Dice Station")
 
 				.initialProperties(Material.WOOD)
-				.properties(properties -> properties
-						.strength(2.5F)
-						.sound(SoundType.WOOD)
-				)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
 
 				.recipe((ctx, provider) -> ShapelessRecipeBuilder
 							.shapeless(ctx.get(), 1)
@@ -33,7 +32,7 @@ public final class FTBlocks
 							.group(ctx.getName())
 							.save(provider, ctx.getId())
 				)
-				.blockstate((ctx, provider) -> {
+				.blockState((ctx, provider) -> {
 					BlockModelBuilder model = provider.models().cube(
 							ctx.getName(),
 							provider.mcLoc("block/oak_planks"),
