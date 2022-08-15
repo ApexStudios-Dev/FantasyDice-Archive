@@ -1,11 +1,8 @@
 package xyz.apex.forge.fantasydice.init;
 
 import com.google.common.collect.Lists;
-import com.tterrag.registrate.AbstractRegistrate;
-import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
-import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -24,6 +21,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+import xyz.apex.forge.apexcore.registrate.CoreRegistrate;
+import xyz.apex.forge.apexcore.registrate.builder.ItemBuilder;
+import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
+import xyz.apex.forge.apexcore.registrate.holder.ItemHolder;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasydice.item.DiceItem;
@@ -32,7 +33,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.IntSupplier;
 
-public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends DiceItem>
+public final class DiceType<OWNER extends CoreRegistrate<OWNER> & ItemHolder<OWNER>, DIE extends DiceItem>
 {
 	private static final List<DiceType<?, ?>> diceTypes = Lists.newArrayList();
 
@@ -80,7 +81,7 @@ public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends
 
 	public boolean matches(DiceType<?, ?> other)
 	{
-		return owner.getModid().equals(other.owner.getModid()) && name.equals(other.name);
+		return owner.getModId().equals(other.owner.getModId()) && name.equals(other.name);
 	}
 
 	public OWNER getOwner()
@@ -144,12 +145,12 @@ public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends
 		return rollCallback.onRoll(player, hand, stack, min, sides, roll, diceQuality);
 	}
 
-	public static <OWNER extends AbstractRegistrate<OWNER>, DIE extends DiceItem> Builder<OWNER, DIE> builder(String name, OWNER owner, BiFunction<Item.Properties, Integer, DIE> diceFactory)
+	public static <OWNER extends CoreRegistrate<OWNER> & ItemHolder<OWNER>, DIE extends DiceItem> Builder<OWNER, DIE> builder(String name, OWNER owner, BiFunction<Item.Properties, Integer, DIE> diceFactory)
 	{
 		return new Builder<>(name, owner, diceFactory);
 	}
 
-	public static <OWNER extends AbstractRegistrate<OWNER>> Builder<OWNER, DiceItem> builder(String name, OWNER owner)
+	public static <OWNER extends CoreRegistrate<OWNER> & ItemHolder<OWNER>> Builder<OWNER, DiceItem> builder(String name, OWNER owner)
 	{
 		return builder(name, owner, DiceItem::new);
 	}
@@ -159,7 +160,7 @@ public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends
 		return diceTypes;
 	}
 
-	public static final class Builder<OWNER extends AbstractRegistrate<OWNER>, DIE extends DiceItem>
+	public static final class Builder<OWNER extends CoreRegistrate<OWNER> & ItemHolder<OWNER>, DIE extends DiceItem>
 	{
 		private final String name;
 		private final OWNER owner;
@@ -179,7 +180,7 @@ public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends
 			this.owner = owner;
 			this.diceFactory = diceFactory;
 
-			tag = ItemTags.tag(owner.getModid(), "dice/" + name);
+			tag = ItemTags.tag(owner.getModId(), "dice/" + name);
 			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
 		}
 
@@ -214,7 +215,7 @@ public final class DiceType<OWNER extends AbstractRegistrate<OWNER>, DIE extends
 					.item(this, properties -> diceFactory.apply(properties, sides))
 					.tag(tag)
 					.lang("%d-Sided %s Die".formatted(sides, RegistrateLangProvider.toEnglishName(name)))
-					.properties(properties -> properties.stacksTo(8))
+					.stacksTo(8)
 					.model((ctx, provider) -> provider.generated(ctx, new ResourceLocation(Mods.FANTASY_DICE, "item/die/%s/%d_sided".formatted(name, sides))))
 			;
 		}

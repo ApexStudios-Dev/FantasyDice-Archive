@@ -50,7 +50,10 @@ public class DiceStationBlock extends BaseBlock
 
 			if(player instanceof ServerPlayer serverPlayer)
 			{
-				NetworkHooks.openGui(serverPlayer, provider, buffer -> buffer.writeBlockPos(pos).writeBoolean(false));
+				NetworkHooks.openGui(serverPlayer, provider, buffer -> buffer
+						.writeBlockPos(pos)
+						.writeBoolean(true)
+				);
 				return InteractionResult.CONSUME;
 			}
 		}

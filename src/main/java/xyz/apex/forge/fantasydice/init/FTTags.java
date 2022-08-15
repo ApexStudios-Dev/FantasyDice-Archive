@@ -24,7 +24,7 @@ public final class FTTags
 
 		private static void bootstrap()
 		{
-			FTRegistry.INSTANCE.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
+			FTRegistry.REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
 				var specialtyTagBuilder = provider.tag(DICE_SPECIALTY);
 
 				DiceType.getDiceTypes().stream()

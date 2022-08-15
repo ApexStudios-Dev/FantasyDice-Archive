@@ -15,6 +15,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
+import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.item.DiceItem;
@@ -27,8 +28,8 @@ public final class FTDiceTypes
 {
 	// region: Regular
 	// region: Wooden
-	public static final DiceType<FTRegistry, DiceItem> DICE_WOODEN = DiceType
-			.builder("wooden", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_WOODEN = DiceType
+			.builder("wooden", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF8A5A27)))
 				.withDiceQuality(FantasyDice.CONFIG.diceWoodenQuality::get)
 
@@ -59,8 +60,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Stone
-	public static final DiceType<FTRegistry, DiceItem> DICE_STONE = DiceType
-			.builder("stone", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_STONE = DiceType
+			.builder("stone", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.GRAY))
 				.withDiceQuality(FantasyDice.CONFIG.diceStoneQuality::get)
 
@@ -91,8 +92,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Bone
-	public static final DiceType<FTRegistry, DiceItem> DICE_BONE = DiceType
-			.builder("bone", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_BONE = DiceType
+			.builder("bone", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFEDDABC)))
 				.withDiceQuality(FantasyDice.CONFIG.diceBoneQuality::get)
 
@@ -123,8 +124,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Iron
-	public static final DiceType<FTRegistry, DiceItem> DICE_IRON = DiceType
-			.builder("iron", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_IRON = DiceType
+			.builder("iron", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFE0E0E0)))
 				.withDiceQuality(FantasyDice.CONFIG.diceIronQuality::get)
 
@@ -155,8 +156,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Golden
-	public static final DiceType<FTRegistry, DiceItem> DICE_GOLD = DiceType
-			.builder("golden", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_GOLD = DiceType
+			.builder("golden", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFE8C037)))
 				.withDiceQuality(FantasyDice.CONFIG.diceGoldenQuality::get)
 
@@ -187,8 +188,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Diamond
-	public static final DiceType<FTRegistry, DiceItem> DICE_DIAMOND = DiceType
-			.builder("diamond", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_DIAMOND = DiceType
+			.builder("diamond", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.AQUA))
 				.withDiceQuality(FantasyDice.CONFIG.diceDiamondQuality::get)
 
@@ -219,8 +220,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Emerald
-	public static final DiceType<FTRegistry, DiceItem> DICE_EMERALD = DiceType
-			.builder("emerald", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_EMERALD = DiceType
+			.builder("emerald", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF1F8B20)))
 				.withDiceQuality(FantasyDice.CONFIG.diceEmeraldQuality::get)
 
@@ -251,46 +252,46 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Netherite
-	public static final DiceType<FTRegistry, DiceItem> DICE_NETHERITE = DiceType
-			.builder("netherite", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_NETHERITE = DiceType
+			.builder("netherite", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF423030)))
 				.withDiceQuality(FantasyDice.CONFIG.diceNetheriteQuality::get)
 
 				.withDie(4)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.properties(properties -> properties.fireResistant())
+					.fireResistant()
 				.build()
 
 				.withDie(6)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.properties(properties -> properties.fireResistant())
+					.fireResistant()
 				.build()
 
 				.withDie(8)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.properties(properties -> properties.fireResistant())
+					.fireResistant()
 				.build()
 
 				.withDie(10)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.properties(properties -> properties.fireResistant())
+					.fireResistant()
 				.build()
 
 				.withDie(12)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.properties(properties -> properties.fireResistant())
+					.fireResistant()
 				.build()
 
 				.withDie(20)
 					.recipe((ctx, provider) -> diceRecipe(ctx, provider, ItemTags.Forge.INGOTS_NETHERITE))
-					.properties(properties -> properties.fireResistant())
+					.fireResistant()
 				.build()
 			.build();
 	// endregion
 
 	// region: Copper
-	public static final DiceType<FTRegistry, DiceItem> DICE_COPPER = DiceType
-			.builder("copper", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_COPPER = DiceType
+			.builder("copper", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFD4784D)))
 				.withDiceQuality(FantasyDice.CONFIG.diceCopperQuality::get)
 
@@ -323,8 +324,8 @@ public final class FTDiceTypes
 
 	// region: Cosmetic
 	// region: Ender
-	public static final DiceType<FTRegistry, DiceItem> DICE_ENDER = DiceType
-			.builder("ender", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_ENDER = DiceType
+			.builder("ender", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF0F5959)))
 				.withType(DiceType.Type.COSMETIC)
 
@@ -355,8 +356,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Frozen
-	public static final DiceType<FTRegistry, DiceItem> DICE_FROZEN = DiceType
-			.builder("frozen", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_FROZEN = DiceType
+			.builder("frozen", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFBADED8)))
 				.withType(DiceType.Type.COSMETIC)
 
@@ -387,8 +388,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Slime
-	public static final DiceType<FTRegistry, DiceItem> DICE_SLIME = DiceType
-			.builder("slime", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_SLIME = DiceType
+			.builder("slime", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF8ACC83)))
 				.withType(DiceType.Type.COSMETIC)
 
@@ -419,8 +420,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Redstone
-	public static final DiceType<FTRegistry, DiceItem> DICE_REDSTONE = DiceType
-			.builder("redstone", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_REDSTONE = DiceType
+			.builder("redstone", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF931515)))
 				.withType(DiceType.Type.COSMETIC)
 
@@ -451,8 +452,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Paper
-	public static final DiceType<FTRegistry, DyeableDiceItem> DICE_PAPER = DiceType
-			.builder("paper", FTRegistry.INSTANCE, DyeableDiceItem::new)
+	public static final DiceType<BasicRegistrate, DyeableDiceItem> DICE_PAPER = DiceType
+			.builder("paper", FTRegistry.REGISTRATE, DyeableDiceItem::new)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.WHITE))
 				.withType(DiceType.Type.COSMETIC)
 
@@ -489,8 +490,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Amethyst
-	public static final DiceType<FTRegistry, DiceItem> DICE_AMETHYST = DiceType
-			.builder("amethyst", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_AMETHYST = DiceType
+			.builder("amethyst", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFC991EB)))
 				.withType(DiceType.Type.COSMETIC)
 
@@ -523,8 +524,8 @@ public final class FTDiceTypes
 
 	// region: Speciality
 	// region: Fantasy
-	public static final DiceType<FTRegistry, DiceItem> DICE_FANTASY = DiceType
-			.builder("fantasy", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_FANTASY = DiceType
+			.builder("fantasy", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFF39F9F)))
 				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> {
@@ -558,8 +559,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Tobi
-	public static final DiceType<FTRegistry, DiceItem> DICE_TOBI = DiceType
-			.builder("tobi", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_TOBI = DiceType
+			.builder("tobi", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF5B20A2)))
 				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> {
@@ -569,19 +570,19 @@ public final class FTDiceTypes
 
 				.withDie(6)
 					.lang("Tobi's Thrice 6-Sided Die")
-					.properties(properties -> properties.stacksTo(1))
+					.stacksTo(1)
 				.build()
 
 				.withDie(20)
 					.lang("Tobi's Thrice 20-Sided Die")
-					.properties(properties -> properties.stacksTo(1))
+					.stacksTo(1)
 				.build()
 			.build();
 	// endregion
 
 	// region: Apex
-	public static final DiceType<FTRegistry, DiceItem> DICE_APEX = DiceType
-			.builder("apex", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_APEX = DiceType
+			.builder("apex", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, ChatFormatting.DARK_PURPLE))
 				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> roll * -1)
@@ -597,8 +598,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Symacon
-	public static final DiceType<FTRegistry, DiceItem> DICE_SYMACON = DiceType
-			.builder("symacon", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_SYMACON = DiceType
+			.builder("symacon", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFFFF681F)))
 				.withType(DiceType.Type.SPECIALITY)
 				.onRoll((player, hand, stack, min, sides, roll, dieQuality) -> {
@@ -617,8 +618,8 @@ public final class FTDiceTypes
 	// endregion
 
 	// region: Chocolate
-	public static final DiceType<FTRegistry, DiceItem> DICE_CHOCOLATE = DiceType
-			.builder("chocolate", FTRegistry.INSTANCE)
+	public static final DiceType<BasicRegistrate, DiceItem> DICE_CHOCOLATE = DiceType
+			.builder("chocolate", FTRegistry.REGISTRATE)
 				.withStyle((stack, style) -> colorOrDyed(stack, style, TextColor.fromRgb(0xFF673B27)))
 				.withType(DiceType.Type.SPECIALITY)
 

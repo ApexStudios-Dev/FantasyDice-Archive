@@ -72,18 +72,6 @@ public class JeiIntegration implements IModPlugin
 		}
 
 		@Override
-		public ResourceLocation getUid()
-		{
-			return FTRecipes.DICE_STATION_RECIPE.getId();
-		}
-
-		@Override
-		public Class<? extends DiceStationRecipe> getRecipeClass()
-		{
-			return DiceStationRecipe.class;
-		}
-
-		@Override
 		public RecipeType<DiceStationRecipe> getRecipeType()
 		{
 			return RECIPE_TYPE;
@@ -121,6 +109,18 @@ public class JeiIntegration implements IModPlugin
 		public boolean isHandled(DiceStationRecipe recipe)
 		{
 			return !recipe.isSpecial();
+		}
+
+		@Override
+		public ResourceLocation getUid()
+		{
+			return RECIPE_TYPE.getUid();
+		}
+
+		@Override
+		public Class<? extends DiceStationRecipe> getRecipeClass()
+		{
+			return DiceStationRecipe.class;
 		}
 	}
 }
