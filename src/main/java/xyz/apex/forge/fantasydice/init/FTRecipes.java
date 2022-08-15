@@ -20,6 +20,7 @@ public final class FTRecipes
 	public static final RegistryEntry<SingleItemRecipe.Serializer<DiceStationRecipe>> DICE_STATION_RECIPE = FTRegistry
 			.REGISTRATE
 			.object("dice_station")
+			.addRegisterCallback(Registry.RECIPE_SERIALIZER_REGISTRY, DICE_STATION_RECIPE_TYPE::get) // delay registration until correct time
 			.simple(Registry.RECIPE_SERIALIZER_REGISTRY, () -> new SingleItemRecipe.Serializer<>(DiceStationRecipe::new))
 	;
 
