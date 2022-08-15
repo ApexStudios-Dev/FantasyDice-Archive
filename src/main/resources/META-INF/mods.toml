@@ -12,7 +12,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyDice/issues"
 	logoFile="banner.png"
 	credits="Apex - Programming, FantasyGaming - Artist"
 	authors="ApexStudios"
-	description="Mod requested by FantasyGaming which adds 6 & 20 Sided Dice to the game of varying types."
+	description="Adds various Dungeons & Dragons inspired Dice to the game"
 
 [[dependencies.fantasydice]]
 	modId="forge"
