@@ -12,8 +12,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.SideOnly;
 import xyz.apex.forge.fantasydice.container.DiceStationMenu;
 
+@SideOnly(SideOnly.Side.CLIENT)
 public class DiceStationMenuScreen extends AbstractContainerScreen<DiceStationMenu>
 {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Mods.FANTASY_DICE, "textures/gui/container/dice_station.png");
