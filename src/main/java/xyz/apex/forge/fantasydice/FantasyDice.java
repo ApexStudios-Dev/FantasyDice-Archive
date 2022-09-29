@@ -1,10 +1,7 @@
 package xyz.apex.forge.fantasydice;
 
 import com.google.common.collect.Lists;
-import com.tterrag.registrate.providers.RegistrateLangProvider;
 
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.BasicItemListing;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -17,19 +14,15 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
-import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.trust.TrustManager;
 import xyz.apex.forge.fantasydice.command.RollCommand;
 import xyz.apex.forge.fantasydice.init.DiceType;
-import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.init.FTRegistry;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-
-import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 @Mod(Mods.FANTASY_DICE)
 public final class FantasyDice
@@ -58,6 +51,7 @@ public final class FantasyDice
 
 	public FantasyDice()
 	{
+		TrustManager.throwIfUntrusted(Mods.FANTASY_DICE);
 		FTRegistry.bootstrap();
 		EventBusHelper.addListener(RegisterCommandsEvent.class, event -> RollCommand.register(event.getDispatcher()));
 		EventBusHelper.addListener(ModConfigEvent.class, CONFIG::onConfigReload);
