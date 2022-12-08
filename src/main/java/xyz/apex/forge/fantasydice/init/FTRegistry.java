@@ -3,8 +3,6 @@ package xyz.apex.forge.fantasydice.init;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 import org.apache.commons.lang3.Validate;
 
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
@@ -18,8 +16,10 @@ import static com.tterrag.registrate.providers.ProviderType.LANG;
 public final class FTRegistry
 {
 	public static final BasicRegistrate REGISTRATE = BasicRegistrate.create(Mods.FANTASY_DICE, registrate -> registrate
-			.creativeModeTab(ModItemGroup::new, "Fantasy's Dice")
+			// .creativeModeTab(ModItemGroup::new, "Fantasy's Dice") // TODO: See ApexCore
 			.addDataGenerator(LANG, provider -> {
+				provider.add(FantasyDice.ITEM_GROUP_KEY, "Fantasy's Dice");
+
 				provider.add(FantasyDice.DIE_ROLL_KEY, "%s rolls %s");
 				provider.add(FantasyDice.DIE_ROLL_RESULT_KEY, "%s (%sd%s)");
 				provider.add(FantasyDice.JEI_DICE_RECIPE_TITLE_KEY, "Dice Station");
@@ -44,7 +44,8 @@ public final class FTRegistry
 		FTRecipes.bootstrap();
 	}
 
-	private static final class ModItemGroup extends CreativeModeTab
+	// TODO: See ApexCore
+	/*private static final class ModItemGroup extends CreativeModeTab
 	{
 		private ModItemGroup()
 		{
@@ -56,5 +57,5 @@ public final class FTRegistry
 		{
 			return FTDiceTypes.DICE_GOLD.getItem(20).asStack();
 		}
-	}
+	}*/
 }

@@ -10,7 +10,7 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.ObjectCollection;
 import org.apache.commons.lang3.Validate;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -63,7 +63,7 @@ public final class DiceType<OWNER extends CoreRegistrate<OWNER> & ItemHolder<OWN
 			var sides = entry.getIntKey();
 			var dieName = entry.getValue();
 
-			RegistryEntry<DIE> registryEntry = owner.get(dieName, Registry.ITEM_REGISTRY);
+			RegistryEntry<DIE> registryEntry = owner.get(dieName, Registries.ITEM);
 			var itemEntry = ItemEntry.cast(registryEntry);
 
 			diceItems.put(sides, itemEntry);
@@ -71,7 +71,7 @@ public final class DiceType<OWNER extends CoreRegistrate<OWNER> & ItemHolder<OWN
 
 		diceTypes.add(this);
 
-		owner.addRegisterCallback(Registry.ITEM_REGISTRY, () -> diceItems
+		owner.addRegisterCallback(Registries.ITEM, () -> diceItems
 				.values()
 				.stream()
 				.map(RegistryEntry::get)

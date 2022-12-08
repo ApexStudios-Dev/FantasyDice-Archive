@@ -2,6 +2,7 @@ package xyz.apex.forge.fantasydice.init;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -25,7 +26,7 @@ public final class FTBlocks
 				.sound(SoundType.WOOD)
 
 				.recipe((ctx, provider) -> ShapelessRecipeBuilder
-							.shapeless(ctx.get(), 1)
+							.shapeless(RecipeCategory.MISC, ctx.get(), 1)
 							.requires(FTItems.POUCH.get())
 							.requires(Blocks.CRAFTING_TABLE)
 							.unlockedBy("has_crafting_table", RegistrateRecipeProvider.has(Blocks.CRAFTING_TABLE))
