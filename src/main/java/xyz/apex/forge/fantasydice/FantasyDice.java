@@ -1,14 +1,9 @@
 package xyz.apex.forge.fantasydice;
 
 import com.google.common.collect.Lists;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.BasicItemListing;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -23,7 +18,6 @@ import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.trust.TrustManager;
 import xyz.apex.forge.fantasydice.command.RollCommand;
 import xyz.apex.forge.fantasydice.init.DiceType;
-import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.init.FTRegistry;
 
 import java.util.Collections;
@@ -36,7 +30,6 @@ public final class FantasyDice
 	public static final Config CONFIG;
 	private static final ForgeConfigSpec CONFIG_SPEC;
 
-	public static final String ITEM_GROUP_KEY = "itemGroup.%s".formatted(Mods.FANTASY_FURNITURE);
 	public static final String DIE_ROLL_KEY = Mods.FANTASY_DICE + ".die.roll";
 	public static final String DIE_ROLL_RESULT_KEY = Mods.FANTASY_DICE + ".die.roll.result";
 
@@ -64,15 +57,6 @@ public final class FantasyDice
 		EventBusHelper.addListener(ModConfigEvent.class, CONFIG::onConfigReload);
 		EventBusHelper.addListener(EventPriority.LOWEST, FMLLoadCompleteEvent.class, event -> loadComplete = true);
 		EventBusHelper.addListener(WandererTradesEvent.class, this::onWandererTrades);
-		EventBusHelper.addListener(CreativeModeTabEvent.Register.class, event -> event.registerCreativeModeTab(new ResourceLocation(Mods.FANTASY_DICE, "main"), builder -> builder
-				.displayItems((flags, items, showOp) -> FTRegistry.REGISTRATE
-						.getAll(Registries.ITEM)
-						.stream()
-						.map(RegistryEntry::get)
-						.forEach(items::accept))
-				.icon(() -> FTDiceTypes.DICE_GOLD.getItem(20).asStack())
-				.title(Component.translatable(ITEM_GROUP_KEY))
-		));
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC, Mods.FANTASY_DICE + ".toml");
 	}
 
