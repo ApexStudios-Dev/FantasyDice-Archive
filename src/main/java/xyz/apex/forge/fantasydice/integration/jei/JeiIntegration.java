@@ -1,3 +1,4 @@
+/*
 package xyz.apex.forge.fantasydice.integration.jei;
 
 import mezz.jei.api.IModPlugin;
@@ -111,3 +112,4 @@ public class JeiIntegration implements IModPlugin
 		}
 	}
 }
+*/

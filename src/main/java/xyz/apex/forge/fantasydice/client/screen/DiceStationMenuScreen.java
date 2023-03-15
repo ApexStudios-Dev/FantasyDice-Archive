@@ -2,7 +2,6 @@ package xyz.apex.forge.fantasydice.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -10,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.SideOnly;
 import xyz.apex.forge.fantasydice.container.DiceStationMenu;
@@ -83,7 +81,7 @@ public class DiceStationMenuScreen extends AbstractContainerScreen<DiceStationMe
 		var i1 = topPos + 14;
 		var j1 = + startIndex + 12;
 		renderButtons(pose, mouseX, mouseY, l, i1, j1);
-		renderRecipes(l, i1, j1);
+		renderRecipes(pose, l, i1, j1);
 	}
 
 	@Override
@@ -105,7 +103,7 @@ public class DiceStationMenuScreen extends AbstractContainerScreen<DiceStationMe
 				var k1 = j + i1 / 4 * 18 + 2;
 
 				if(x >= j1 && x < j1 + 16 && y >= k1 && y < k1 + 18)
-					renderTooltip(pose, recipes.get(l).getResultItem(), x, y);
+					renderTooltip(pose, recipes.get(l).getResultItem(minecraft.level.registryAccess()), x, y);
 			}
 		}
 	}
@@ -129,7 +127,7 @@ public class DiceStationMenuScreen extends AbstractContainerScreen<DiceStationMe
 		}
 	}
 
-	private void renderRecipes(int left, int top, int recipeIndexOffsetMax)
+	private void renderRecipes(PoseStack pose, int left, int top, int recipeIndexOffsetMax)
 	{
 		var recipes = menu.getRecipes();
 
@@ -140,7 +138,7 @@ public class DiceStationMenuScreen extends AbstractContainerScreen<DiceStationMe
 			var l = j / 4;
 			var i1 = top + l * 18 + 2;
 
-			minecraft.getItemRenderer().renderAndDecorateItem(recipes.get(i).getResultItem(), k, i1);
+			minecraft.getItemRenderer().renderAndDecorateItem(pose, recipes.get(i).getResultItem(minecraft.level.registryAccess()), k, i1);
 		}
 	}
 

@@ -8,8 +8,6 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.ObjectCollection;
-import org.apache.commons.lang3.Validate;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -20,7 +18,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-
+import org.apache.commons.lang3.Validate;
 import xyz.apex.forge.apexcore.registrate.CoreRegistrate;
 import xyz.apex.forge.apexcore.registrate.builder.ItemBuilder;
 import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;

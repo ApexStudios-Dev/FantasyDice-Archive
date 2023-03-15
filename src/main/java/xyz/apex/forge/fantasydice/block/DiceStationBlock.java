@@ -1,7 +1,6 @@
 package xyz.apex.forge.fantasydice.block;
 
 import io.netty.buffer.Unpooled;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -16,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.fantasydice.container.DiceStationMenu;
 import xyz.apex.forge.fantasydice.init.FTMenus;

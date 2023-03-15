@@ -1,7 +1,6 @@
 package xyz.apex.forge.fantasydice.item;
 
 import io.netty.buffer.Unpooled;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
-
 import xyz.apex.forge.fantasydice.container.PouchContainer;
 import xyz.apex.forge.fantasydice.init.FTMenus;
 

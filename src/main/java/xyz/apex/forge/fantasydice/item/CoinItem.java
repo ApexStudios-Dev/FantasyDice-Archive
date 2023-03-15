@@ -1,7 +1,5 @@
 package xyz.apex.forge.fantasydice.item;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
@@ -13,7 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.init.FTItems;

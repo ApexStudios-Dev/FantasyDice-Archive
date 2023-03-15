@@ -1,8 +1,6 @@
 package xyz.apex.forge.fantasydice.container;
 
 import com.google.common.util.concurrent.Runnables;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.container.BaseMenu;
 import xyz.apex.forge.fantasydice.init.FTBlocks;
 import xyz.apex.forge.fantasydice.init.FTRecipes;
@@ -129,7 +127,7 @@ public final class DiceStationMenu extends BaseMenu
 		{
 			var recipe = recipes.get(recipeIndex);
 			resultContainer.setRecipeUsed(recipe);
-			resultSlot.set(recipe.assemble(container));
+			resultSlot.set(recipe.assemble(container, level.registryAccess()));
 		}
 		else
 			resultSlot.set(ItemStack.EMPTY);

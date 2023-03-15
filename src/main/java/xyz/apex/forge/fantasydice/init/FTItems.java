@@ -1,12 +1,10 @@
 package xyz.apex.forge.fantasydice.init;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.DyeableLeatherItem;
-
 import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasydice.item.CoinItem;

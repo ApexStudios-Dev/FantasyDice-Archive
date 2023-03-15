@@ -1,7 +1,5 @@
 package xyz.apex.forge.fantasydice.container;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -13,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.container.BaseMenu;
 import xyz.apex.forge.fantasydice.container.inventory.ItemInventory;
 import xyz.apex.forge.fantasydice.init.FTItems;

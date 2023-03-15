@@ -1,13 +1,10 @@
 package xyz.apex.forge.fantasydice.init;
 
 import com.tterrag.registrate.providers.ProviderType;
-
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.ItemTags;
-import xyz.apex.forge.fantasydice.FantasyDice;
 
 public final class FTTags
 {

@@ -3,7 +3,6 @@ package xyz.apex.forge.fantasydice.init;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -14,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasydice.FantasyDice;

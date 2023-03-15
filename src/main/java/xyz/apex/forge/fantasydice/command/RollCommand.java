@@ -2,16 +2,14 @@ package xyz.apex.forge.fantasydice.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
-
 import xyz.apex.forge.fantasydice.FantasyDice;
 import xyz.apex.forge.fantasydice.util.DiceHelper;
 
+import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
-import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 
 public class RollCommand
 {

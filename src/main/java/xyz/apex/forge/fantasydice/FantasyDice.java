@@ -1,7 +1,6 @@
 package xyz.apex.forge.fantasydice;
 
 import com.google.common.collect.Lists;
-
 import net.minecraftforge.common.BasicItemListing;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -12,7 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.trust.TrustManager;

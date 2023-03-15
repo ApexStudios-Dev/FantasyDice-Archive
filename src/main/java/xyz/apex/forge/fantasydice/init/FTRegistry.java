@@ -1,10 +1,8 @@
 package xyz.apex.forge.fantasydice.init;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
-import org.apache.commons.lang3.Validate;
-
 import net.minecraftforge.fml.ModLoadingContext;
-
+import org.apache.commons.lang3.Validate;
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasydice.FantasyDice;

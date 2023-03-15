@@ -2,14 +2,12 @@ package xyz.apex.forge.fantasydice.init;
 
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
-
 import xyz.apex.forge.apexcore.lib.item.crafting.SingleItemRecipe;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasydice.item.crafting.DiceStationRecipe;
