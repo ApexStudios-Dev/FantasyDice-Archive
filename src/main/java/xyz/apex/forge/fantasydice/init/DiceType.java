@@ -179,7 +179,7 @@ public final class DiceType<OWNER extends CoreRegistrate<OWNER> & ItemHolder<OWN
 			this.diceFactory = diceFactory;
 
 			tag = ItemTags.tag(owner.getModId(), "dice/" + name);
-			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(FTTags.Items.DICE).addTag(tag));
+			owner.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.addTag(FTTags.Items.DICE).addTag(tag));
 		}
 
 		public Builder<OWNER, DIE> withType(Type type)
