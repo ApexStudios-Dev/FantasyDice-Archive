@@ -12,6 +12,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.fantasydice.FantasyDice;
+import xyz.apex.forge.fantasydice.event.DiceRollEvent;
 import xyz.apex.forge.fantasydice.init.FTDiceTypes;
 import xyz.apex.forge.fantasydice.item.DiceItem;
 
@@ -114,6 +115,8 @@ public class DiceHelper
 
 		if(!isApex) // apex goes negative, clamping will break it
 			roll = Mth.clamp(roll, min, maxPossibleRoll);
+
+		DiceRollEvent.fireDiceRoll(player, hand, stack, diceType, roll, rolls, maxPossibleRoll);
 
 		var textComponent = createTextComponent(player, stack, die, roll, sides, rolls);
 		sendMessageToPlayers(player, textComponent);
