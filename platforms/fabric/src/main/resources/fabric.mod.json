@@ -55,6 +55,7 @@
     "license": "${MOD_LICENSE}",
     "environment": "*",
     "mixins": [],
+    "accessWidener": "fantasydice.accesswidener",
     "entrypoints": {
         "main": [
             "xyz.apex.minecraft.fantasydice.fabric.entrypoint.FantasyDiceModInitializer"

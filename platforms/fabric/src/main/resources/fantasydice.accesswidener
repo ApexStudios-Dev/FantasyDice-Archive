@@ -1,0 +1,4 @@
+accessWidener v2 named
+
+accessible class net/minecraft/world/item/crafting/SingleItemRecipe$Serializer$SingleItemMaker
+accessible method net/minecraft/world/item/crafting/SingleItemRecipe$Serializer <init> (Lnet/minecraft/world/item/crafting/SingleItemRecipe$Serializer$SingleItemMaker;)V
