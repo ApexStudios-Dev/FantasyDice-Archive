@@ -11,16 +11,30 @@ loom {
     runs {
         client {
             client()
-            property "${MOD_ID}.test_elements.enabled", 'true'
-            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
             ideConfigGenerated true
+
+            // Requires JBR
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
+            vmArg '-XX:+IgnoreUnrecognizedVMOptions'
+            vmArg '-XX:+AllowRedefinitionToAddDeleteMethods'
+
+            afterEvaluate {
+                vmArg "-javaagent:${ configurations.compileClasspath.find { it.name.contains("sponge-mixin") } }"
+            }
         }
 
         server {
             server()
-            property "${MOD_ID}.test_elements.enabled", 'true'
-            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
             ideConfigGenerated true
+
+            // Requires JBR
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
+            vmArg '-XX:+IgnoreUnrecognizedVMOptions'
+            vmArg '-XX:+AllowRedefinitionToAddDeleteMethods'
+
+            afterEvaluate {
+                vmArg "-javaagent:${ configurations.compileClasspath.find { it.name.contains("sponge-mixin") } }"
+            }
         }
 
         if(getRootProject().hasProperty('DEVLOGIN_VERSION')) {
@@ -82,6 +96,9 @@ dependencies {
         modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
         include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
     }
+
+    // to stop fabric complaining about missing jetbrains anno classes
+    runtimeOnly 'org.jetbrains:annotations:24.0.1'
 
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
     compileOnly 'com.google.errorprone:error_prone_annotations:2.11.0'
