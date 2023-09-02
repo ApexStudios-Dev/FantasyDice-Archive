@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import xyz.apex.minecraft.apexcore.common.lib.menu.EnhancedSlot;
 import xyz.apex.minecraft.apexcore.common.lib.menu.SimpleContainerMenu;
@@ -27,7 +28,7 @@ public final class DiceStationMenu extends AbstractContainerMenu
     private final DataSlot selectedRecipeIndex = DataSlot.standalone();
     private final ContainerLevelAccess levelAccess;
     private final Level level;
-    private List<DiceStationRecipe> recipes = Lists.newArrayList();
+    private List<RecipeHolder<DiceStationRecipe>> recipes = Lists.newArrayList();
     private ItemStack input = ItemStack.EMPTY;
     private long lastSoundTime = 0L;
     private final Slot inputSlot;
@@ -56,7 +57,7 @@ public final class DiceStationMenu extends AbstractContainerMenu
         return selectedRecipeIndex.get();
     }
 
-    public List<DiceStationRecipe> getRecipes()
+    public List<RecipeHolder<DiceStationRecipe>> getRecipes()
     {
         return recipes;
     }
@@ -98,12 +99,13 @@ public final class DiceStationMenu extends AbstractContainerMenu
 
         if(!recipes.isEmpty() && isValidRecipeIndex(index))
         {
-            var recipe = recipes.get(index);
+            var recipeHolder = recipes.get(index);
+            var recipe = recipeHolder.value();
             var result = recipe.assemble(inputContainer, level.registryAccess());
 
             if(result.isItemEnabled(level.enabledFeatures()))
             {
-                resultContainer.setRecipeUsed(recipe);
+                resultContainer.setRecipeUsed(recipeHolder);
                 resultSlot.set(result);
             }
         }

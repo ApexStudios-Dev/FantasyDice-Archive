@@ -111,7 +111,7 @@ public final class DiceType
                     var recipe = recipeFactory.apply(provider, entry);
 
                     if(recipe != null)
-                        recipe.save(provider::add, entry.getRegistryName());
+                        recipe.save(provider, entry.getRegistryName());
                 })
         ;
     }

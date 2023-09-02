@@ -125,7 +125,7 @@ public final class DiceStationMenuScreen extends SimpleContainerMenuScreen<DiceS
 
                 if(mouseX >= slotX && mouseY >= slotY && mouseX < slotX + recipeSlotSize && mouseY < slotY + recipeSlotSize)
                 {
-                    guiGraphics.renderTooltip(font, recipes.get(index).getResultItem(minecraft.level.registryAccess()), mouseX, mouseY);
+                    guiGraphics.renderTooltip(font, recipes.get(index).value().getResultItem(minecraft.level.registryAccess()), mouseX, mouseY);
                     break;
                 }
             }
@@ -210,7 +210,7 @@ public final class DiceStationMenuScreen extends SimpleContainerMenuScreen<DiceS
             var slotY = recipeY + slotIndex / recipeColumns * recipeSlotSize;
 
             if(drawItem)
-                graphics.renderItem(recipes.get(index).getResultItem(minecraft.level.registryAccess()), slotX + 1, slotY + 1);
+                graphics.renderItem(recipes.get(index).value().getResultItem(minecraft.level.registryAccess()), slotX + 1, slotY + 1);
             else
             {
                 var slotSprite = SPRITE_RECIPE;

@@ -24,7 +24,7 @@ public interface Coins
                     .requires(Items.IRON_NUGGET)
                     .group("coin")
                     .unlockedBy("has_ingredient", provider.has(Items.IRON_NUGGET))
-                    .save(provider::add, entry.getRegistryName())
+                    .save(provider, entry.getRegistryName())
             )
     .register();
 
@@ -34,7 +34,7 @@ public interface Coins
                     .requires(Items.GOLD_NUGGET)
                     .group("coin")
                     .unlockedBy("has_ingredient", provider.has(Items.GOLD_NUGGET))
-                    .save(provider::add, entry.getRegistryName())
+                    .save(provider, entry.getRegistryName())
             )
     .register();
 
@@ -44,7 +44,7 @@ public interface Coins
                     .requires(Items.DIAMOND)
                     .group("coin")
                     .unlockedBy("has_ingredient", provider.has(Items.DIAMOND))
-                    .save(provider::add, entry.getRegistryName())
+                    .save(provider, entry.getRegistryName())
             )
     .register();
 
@@ -54,7 +54,7 @@ public interface Coins
                     .requires(Items.EMERALD)
                     .group("coin")
                     .unlockedBy("has_ingredient", provider.has(Items.EMERALD))
-                    .save(provider::add, entry.getRegistryName())
+                    .save(provider, entry.getRegistryName())
             )
     .register();
 
@@ -64,7 +64,7 @@ public interface Coins
                     .requires(Items.NETHERITE_INGOT)
                     .group("coin")
                     .unlockedBy("has_ingredient", provider.has(Items.NETHERITE_INGOT))
-                    .save(provider::add, entry.getRegistryName())
+                    .save(provider, entry.getRegistryName())
             )
     .register();
 
@@ -74,7 +74,7 @@ public interface Coins
                     .requires(Items.AMETHYST_SHARD)
                     .group("coin")
                     .unlockedBy("has_ingredient", provider.has(Items.AMETHYST_SHARD))
-                    .save(provider::add, entry.getRegistryName())
+                    .save(provider, entry.getRegistryName())
             )
             .register();
 
