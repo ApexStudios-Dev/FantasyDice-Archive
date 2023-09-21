@@ -3,7 +3,6 @@ package xyz.apex.minecraft.fantasydice.common.recipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.world.Container;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
@@ -14,9 +13,9 @@ import xyz.apex.minecraft.fantasydice.common.menu.DiceStationMenu;
 
 public final class DiceStationRecipe extends SingleItemRecipe
 {
-    public DiceStationRecipe(String group, Ingredient ingredient, Item result, int count)
+    public DiceStationRecipe(String group, Ingredient ingredient, ItemStack result)
     {
-        super(FantasyDice.DICE_STATION_RECIPE_TYPE.value(), FantasyDice.DICE_STATION_RECIPE_SERIALIZER.value(), group, ingredient, new ItemStack(result, count));
+        super(FantasyDice.DICE_STATION_RECIPE_TYPE.value(), FantasyDice.DICE_STATION_RECIPE_SERIALIZER.value(), group, ingredient, result);
     }
 
     @Override
