@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[${NEOFORGE_LOADER_VERSION},)"
+loaderVersion="[${MCFORGE_LOADER_VERSION},)"
 license="${MOD_LICENSE}"
 issueTrackerURL="https://discord.apexstudios.dev/"
 
@@ -21,13 +21,13 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 [[dependencies."${MOD_ID}"]]
 	modId="forge"
 	mandatory=true
-	versionRange="${NEOFORGE_VERSION_RANGE}"
+	versionRange="${MCFORGE_VERSION_RANGE}"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies."${MOD_ID}"]]
 	modId="minecraft"
 	mandatory=true
-	versionRange="${MINECRAFT_NEOFORGE_VERSION_RANGE}"
+	versionRange="${MINECRAFT_FORGE_VERSION_RANGE}"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies."${MOD_ID}"]]

@@ -1,11 +1,10 @@
-package xyz.apex.minecraft.fantasydice.neoforge;
+package xyz.apex.minecraft.fantasydice.mcforge;
 
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import org.jetbrains.annotations.ApiStatus;
-import xyz.apex.minecraft.apexcore.neoforge.lib.EventBusHelper;
-import xyz.apex.minecraft.apexcore.neoforge.lib.EventBuses;
+import xyz.apex.minecraft.apexcore.common.lib.PhysicalSide;
+import xyz.apex.minecraft.apexcore.mcforge.lib.EventBuses;
 import xyz.apex.minecraft.fantasydice.common.FantasyDice;
+import xyz.apex.minecraft.fantasydice.common.FantasyDiceClient;
 
 @ApiStatus.Internal
 public final class FantasyDiceImpl implements FantasyDice
@@ -15,5 +14,6 @@ public final class FantasyDiceImpl implements FantasyDice
     {
         FantasyDice.super.bootstrap();
         EventBuses.registerForJavaFML();
+        PhysicalSide.CLIENT.runWhenOn(() -> FantasyDiceClient.INSTANCE::bootstrap);
     }
 }

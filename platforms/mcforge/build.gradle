@@ -1,4 +1,4 @@
-apply plugin: 'net.neoforged.gradle'
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'me.modmuss50.mod-publish-plugin'
@@ -16,9 +16,7 @@ minecraft {
         mappings channel: 'official', version: "${MINECRAFT_VERSION}"
     }
 
-    if(rootProject.file("${AT_FILE}").exists()) {
-        accessTransformer = rootProject.file("${AT_FILE}")
-    }
+    accessTransformer = rootProject.file('platforms/mcforge/src/main/resources/META-INF/accesstransformer.cfg')
 
     enableIdeaPrepareRuns = false
     copyIdeResources = true
@@ -29,8 +27,17 @@ minecraft {
             property 'forge.logging.markers', ''
             property 'forge.logging.console.level', 'debug'
             ideaModule "${rootProject.name}.${project.name}.main"
-            jvmArg '-XX:+AllowEnhancedClassRedefinition' // requires JBR
-            folderName 'neoforge'
+            folderName 'mcforge'
+
+            // Some of these may require JBR
+            jvmArg '-XX:+AllowEnhancedClassRedefinition'
+            jvmArg '-XX:+IgnoreUnrecognizedVMOptions'
+            jvmArg '-XX:+AllowRedefinitionToAddDeleteMethods'
+
+            // TODO: Find a FG way to do this, below code is for FabricLoom
+            /*afterEvaluate {
+                vmArg "-javaagent:${ configurations.compileClasspath.find { it.name.contains("sponge-mixin") } }"
+            }*/
 
             mods {
                 "${MOD_ID}" {
@@ -65,8 +72,6 @@ minecraft {
             args '--existing', project(':common').file('src/main/resources/')
             args '--existing', file('src/main/resources/')
             args '--existing-mod', APEXCORE_ID
-
-            property "${MOD_ID}.test_elements.enabled", 'true'
         }
     }
 }
@@ -83,35 +88,36 @@ mixin {
     }
 }
 
+repositories {
+    maven {
+        url 'https://maven.minecraftforge.net'
+    }
+}
+
 dependencies {
-    if(rootProject.hasProperty('NEOFORGE_DEV_VERSION')) {
-        minecraft "net.neoforged:forge:${MINECRAFT_VERSION}-${NEOFORGE_DEV_VERSION}"
+    if(rootProject.hasProperty('MCFORGE_DEV_VERSION')) {
+        minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${MCFORGE_DEV_VERSION}"
     } else {
-        minecraft "net.neoforged:forge:${MINECRAFT_VERSION}-${NEOFORGE_VERSION}"
+        minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${MCFORGE_VERSION}"
     }
 
     annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
+    annotationProcessor "io.github.llamalad7:mixinextras-common:${MIXIN_EXTRAS_VERSION}"
+    implementation "io.github.llamalad7:mixinextras-common:${MIXIN_EXTRAS_VERSION}"
+    implementation "io.github.llamalad7:mixinextras-forge:${MIXIN_EXTRAS_VERSION}"
 
     compileOnly project(path: ':common', configuration: 'namedElements')
 
     if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
-        if(APEXCORE_DEV_VERSION.endsWithIgnoreCase('-SNAPSHOT')) {
-            implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_DEV_VERSION}")
+        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
 
-            jarJar("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_DEV_VERSION}") {
-                jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
-            }
-        } else {
-            implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
-
-            jarJar("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}") {
-                jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
-            }
+        jarJar("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}") {
+            jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
         }
     } else {
-        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
 
-        jarJar("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") {
+        jarJar("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") {
             jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
         }
     }
@@ -165,24 +171,18 @@ publishing {
             artifact sourcesJar
             artifact tasks.jarJar
         }
-
-        snapshot(MavenPublication) {
-            artifact jar
-            artifact sourcesJar
-            artifact tasks.jarJar
-        }
     }
 }
 
 publishMods {
-    file = remapJar.archiveFile
+    file = tasks.jarJar.archiveFile
     changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
     type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
     maxRetries = 5
     version = "${MOD_FULL_VERSION}"
-    displayName = "[NeoForge] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
-    modLoaders.add('neoforge')
-    additionalFiles.from(remapSourcesJar.archiveFile)
+    displayName = "[MinecraftForge] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
+    modLoaders.add('forge')
+    additionalFiles.from(jar.archiveFile, sourcesJar.archiveFile)
     dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
 
     curseforge {

@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
 @ParametersAreNonnullByDefault
-package xyz.apex.minecraft.fantasydice.neoforge;
+package xyz.apex.minecraft.fantasydice.mcforge;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
