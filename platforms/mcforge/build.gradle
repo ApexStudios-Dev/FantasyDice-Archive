@@ -189,11 +189,19 @@ publishMods {
         projectId = "${MOD_CURSEFORGE_ID}"
         accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
         minecraftVersions.add("${MINECRAFT_VERSION}")
+
+        embeds {
+            id = "${APEXCORE_CURSEFORGE_ID}"
+        }
     }
 
     modrinth {
         projectId = "${MOD_MODRINTH_ID}"
         accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
         minecraftVersions.add("${MINECRAFT_VERSION}")
+
+        embeds {
+            id = "${APEXCORE_CURSEFORGE_ID}"
+        }
     }
 }
