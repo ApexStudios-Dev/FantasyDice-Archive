@@ -154,7 +154,7 @@ publishMods {
         }
 
         embeds {
-            id = "${APEXCORE_CURSEFORGE_ID}"
+            slug = "${APEXCORE_CURSEFORGE_SLUG}"
         }
     }
 
@@ -168,7 +168,7 @@ publishMods {
         }
 
         embeds {
-            id = "${APEXCORE_MODRINTH_ID}"
+            slug = "${APEXCORE_MODRINTH_SLUG}"
         }
     }
 }
