@@ -3,8 +3,6 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'me.modmuss50.mod-publish-plugin'
 
-jarJar.enable()
-
 minecraft {
     if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
         if(rootProject.hasProperty('PARCHMENT_DEV_MINECRAFT_VERSION')) {
@@ -110,16 +108,8 @@ dependencies {
 
     if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
         implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
-
-        jarJar("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}") {
-            jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
-        }
     } else {
         implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
-
-        jarJar("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") {
-            jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
-        }
     }
 
     if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
@@ -139,27 +129,10 @@ sourcesJar {
     from project(':common').sourceSets.main.allJava
 }
 
-tasks.jarJar.configure {
-    archiveClassifier.set('')
-}
-
-jar {
-    archiveClassifier.set('slim')
-}
-
-artifacts {
-    archives tasks.jarJar
-}
-
-reobf {
-    jarJar { }
-}
-
 jar.finalizedBy('reobfJar')
-tasks.jarJar.finalizedBy('reobfJarJar')
 
 collectJars {
-    def tasks = [ jar, sourcesJar, tasks.jarJar ]
+    def tasks = [ jar, sourcesJar ]
     dependsOn tasks
     from tasks
 }
@@ -169,20 +142,19 @@ publishing {
         release(MavenPublication) {
             artifact jar
             artifact sourcesJar
-            artifact tasks.jarJar
         }
     }
 }
 
 publishMods {
-    file = tasks.jarJar.archiveFile
+    file = jar.archiveFile
     changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
     type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
     maxRetries = 5
     version = "${MOD_FULL_VERSION}"
     displayName = "[MinecraftForge] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
     modLoaders.add('forge')
-    additionalFiles.from(jar.archiveFile, sourcesJar.archiveFile)
+    additionalFiles.from(sourcesJar.archiveFile)
     dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
 
     curseforge {
@@ -190,7 +162,7 @@ publishMods {
         accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
         minecraftVersions.add("${MINECRAFT_VERSION}")
 
-        embeds {
+        requires {
             slug = "${APEXCORE_CURSEFORGE_SLUG}"
         }
     }
@@ -200,7 +172,7 @@ publishMods {
         accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
         minecraftVersions.add("${MINECRAFT_VERSION}")
 
-        embeds {
+        requires {
             slug = "${APEXCORE_MODRINTH_SLUG}"
         }
     }
