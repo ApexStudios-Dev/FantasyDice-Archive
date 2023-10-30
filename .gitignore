@@ -23,7 +23,9 @@ run
 
 # Ignore generated files
 **/generated/**
-/changelogs
+/changelogs/*.md
+/changelogs/*.html
+/changelogs/*.txt
 
 # Ignore compiled jars
 jars

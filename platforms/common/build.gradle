@@ -1,74 +1,31 @@
-apply plugin: 'fabric-loom'
-
-loom {
-    accessWidenerPath = getRootProject().file("platforms/fabric/src/main/resources/${MOD_ID}.accesswidener")
-    enableTransitiveAccessWideners = true
-    mixin.defaultRefmapName = "${MOD_ID}.refmap.json"
+sourceSets {
+    main.resources.srcDirs += [ 'src/generated/resources' ]
 }
 
-repositories {
-    maven {
-        url 'https://repo.spongepowered.org/repository/maven-public'
-        content {
-            includeGroupByRegex 'org\\.spongepowered.*'
-        }
+architectury {
+    def enabledPlatforms = [ ]
+
+    if(findProject(':fabric') != null) {
+        enabledPlatforms += 'fabric'
     }
+
+    if(findProject(':mcforge') != null || findProject(':neoforge') != null) {
+        enabledPlatforms += 'forge'
+    }
+
+    common(enabledPlatforms)
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
-
-    mappings(loom.layered {
-        officialMojangMappings()
-
-        if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
-            if(rootProject.hasProperty('PARCHMENT_DEV_MINECRAFT_VERSION')) {
-                parchment("org.parchmentmc.data:parchment-${PARCHMENT_DEV_MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
-            } else {
-                parchment("org.parchmentmc.data:parchment-${MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
-            }
-        }
-    })
-
+    // compileOnly to not be included in maven pom
     compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
-    compileOnly 'org.ow2.asm:asm-commons:9.5'
-    annotationProcessor "io.github.llamalad7:mixinextras-common:${MIXIN_EXTRAS_VERSION}"
-    compileOnly "io.github.llamalad7:mixinextras-common:${MIXIN_EXTRAS_VERSION}"
-
-    if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
-        if(APEXCORE_DEV_VERSION.endsWithIgnoreCase('-SNAPSHOT')) {
-            modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}"
-        } else {
-            modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
-        }
-    } else {
-        modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
-    }
 
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
     compileOnly 'com.google.errorprone:error_prone_annotations:2.11.0'
-}
 
-remapJar.enabled = false
-remapSourcesJar.enabled = false
-
-jar {
-    archiveClassifier = ''
-}
-
-collectJars {
-    def tasks = [ jar, sourcesJar ]
-    dependsOn tasks
-    from tasks
-}
-
-publishing {
-    publications {
-        release(MavenPublication) {
-            loom.disableDeprecatedPomGeneration(it)
-
-            artifact jar
-            artifact sourcesJar
-        }
+    if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
+        modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}"
+    } else {
+        modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_VERSION}"
     }
 }

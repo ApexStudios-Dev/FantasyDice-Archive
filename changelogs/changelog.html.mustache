@@ -1,0 +1,13 @@
+{{#tags}}
+<h3>{{name}}</h3>
+    {{#commits}}
+<ul>
+    <li>{{messageTitle}}</li>
+    {{#messageBodyItems}}
+    <ul>
+        <li>{{.}}</li>
+    </ul>
+    {{/messageBodyItems}}
+</ul>
+    {{/commits}}
+{{/tags}}

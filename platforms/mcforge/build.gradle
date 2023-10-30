@@ -1,179 +1,116 @@
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'me.modmuss50.mod-publish-plugin'
+apply plugin: 'com.github.johnrengelman.shadow'
 
-minecraft {
-    if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
-        if(rootProject.hasProperty('PARCHMENT_DEV_MINECRAFT_VERSION')) {
-            mappings channel: 'parchment', version: "${PARCHMENT_DEV_MINECRAFT_VERSION}-${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
-        } else {
-            mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
-        }
-    } else {
-        mappings channel: 'official', version: "${MINECRAFT_VERSION}"
+configurations {
+    bundle {
+        canBeConsumed = false
+        canBeResolved = true
     }
 
-    accessTransformer = rootProject.file('platforms/mcforge/src/main/resources/META-INF/accesstransformer.cfg')
+    common
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+}
 
-    enableIdeaPrepareRuns = false
-    copyIdeResources = true
-    generateRunFolders = true
+architectury {
+    platformSetupLoomIde()
+    forge()
+}
 
+loom {
     runs {
-        configureEach {
-            property 'forge.logging.markers', ''
-            property 'forge.logging.console.level', 'debug'
-            ideaModule "${rootProject.name}.${project.name}.main"
-            folderName 'mcforge'
+        client {
+            client()
+            ideConfigGenerated true
 
             // Some of these may require JBR
-            jvmArg '-XX:+AllowEnhancedClassRedefinition'
-            jvmArg '-XX:+IgnoreUnrecognizedVMOptions'
-            jvmArg '-XX:+AllowRedefinitionToAddDeleteMethods'
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
+            vmArg '-XX:+IgnoreUnrecognizedVMOptions'
+            vmArg '-XX:+AllowRedefinitionToAddDeleteMethods'
 
-            // TODO: Find a FG way to do this, below code is for FabricLoom
+            // Does not work on forge
             /*afterEvaluate {
                 vmArg "-javaagent:${ configurations.compileClasspath.find { it.name.contains("sponge-mixin") } }"
             }*/
-
-            mods {
-                "${MOD_ID}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        client {
-            workingDirectory file('run/client')
-        }
-
-        if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
-            clientLogin {
-                parent runs.client
-                main 'net.covers1624.devlogin.DevLogin'
-                args '--launch_target', '{LAUNCH_TARGET}'
-                lazyToken("LAUNCH_TARGET", { runs.client.main })
-            }
         }
 
         server {
-            workingDirectory file('run/server')
-            args 'nogui'
+            server()
+            ideConfigGenerated true
+
+            // Requires JBR
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
+            vmArg '-XX:+IgnoreUnrecognizedVMOptions'
+            vmArg '-XX:+AllowRedefinitionToAddDeleteMethods'
+
+            // Does not work on forge
+            /*afterEvaluate {
+                vmArg "-javaagent:${ configurations.compileClasspath.find { it.name.contains("sponge-mixin") } }"
+            }*/
+        }
+    }
+
+    forge {
+        convertAccessWideners = true
+
+
+        if(ACCESS_WIDENER_FILE.exists()) {
+            extraAccessWideners.add ACCESS_WIDENER_FILE.name
         }
 
-        data {
-            workingDirectory file('run/client')
+        if(getRootProject().file("platforms/common/src/main/resources/${MOD_ID}-common.mixins.json").exists()) {
+            mixinConfig "${MOD_ID}-common.mixins.json"
+        }
 
-            args '--mod', MOD_ID, '--client', '--server', '--validate'
-            args '--output', project(':common').file('src/generated/resources')
-            args '--existing', project(':common').file('src/main/resources/')
-            args '--existing', file('src/main/resources/')
-            args '--existing-mod', APEXCORE_ID
+        if(getRootProject().file("platforms/mcforge/src/main/resources/${MOD_ID}.mixins.json").exists()) {
+            mixinConfig "${MOD_ID}.mixins.json"
         }
     }
-}
 
-mixin {
-    add sourceSets.main, "${MOD_ID}.refmap.json"
-
-    if(file("src/main/resources/${MOD_ID}.mixins.json").exists()) {
-        config "${MOD_ID}.mixins.json"
-    }
-
-    if(project(':common').file("src/main/resources/${MOD_ID}-common.mixins.json").exists()) {
-        config "${MOD_ID}-common.mixins.json"
-    }
-}
-
-repositories {
-    maven {
-        url 'https://maven.minecraftforge.net'
+    mods {
+        main {
+            sourceSet project(':common').sourceSets.main
+            sourceSet sourceSets.main
+        }
     }
 }
 
 dependencies {
     if(rootProject.hasProperty('MCFORGE_DEV_VERSION')) {
-        minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${MCFORGE_DEV_VERSION}"
+        forge "net.minecraftforge:forge:${MINECRAFT_VERSION}-${MCFORGE_DEV_VERSION}"
     } else {
-        minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${MCFORGE_VERSION}"
+        forge "net.minecraftforge:forge:${MINECRAFT_VERSION}-${MCFORGE_VERSION}"
     }
 
     annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
-    annotationProcessor "io.github.llamalad7:mixinextras-common:${MIXIN_EXTRAS_VERSION}"
-    implementation "io.github.llamalad7:mixinextras-common:${MIXIN_EXTRAS_VERSION}"
-    implementation "io.github.llamalad7:mixinextras-forge:${MIXIN_EXTRAS_VERSION}"
 
-    compileOnly project(path: ':common', configuration: 'namedElements')
+    bundle(project(path: ':common', configuration: 'transformProductionForge')) { transitive false }
+    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
 
     if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
-        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
+        modImplementation "xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_DEV_VERSION}"
     } else {
-        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
-    }
-
-    if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
-        runtimeOnly "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
+        modImplementation "xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_VERSION}"
     }
 }
 
-processResources {
-    from project(':common').sourceSets.main.resources
+jar {
+    archiveClassifier = 'dev-slim'
 }
 
-compileJava {
-    source project(':common').sourceSets.main.allSource
+shadowJar {
+    exclude 'architectury.common.json'
+    archiveClassifier = 'dev-shadow'
+    configurations = [ project.configurations.bundle ]
 }
 
-sourcesJar {
-    from project(':common').sourceSets.main.allJava
+remapJar {
+    dependsOn shadowJar
+    inputFile.set shadowJar.archiveFile
 }
 
-jar.finalizedBy('reobfJar')
-
-collectJars {
-    def tasks = [ jar, sourcesJar ]
-    dependsOn tasks
-    from tasks
-}
-
-publishing {
-    publications {
-        release(MavenPublication) {
-            artifact jar
-            artifact sourcesJar
-        }
-    }
-}
-
-publishMods {
-    file = jar.archiveFile
-    changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
-    type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
-    maxRetries = 5
-    version = "${MOD_FULL_VERSION}"
-    displayName = "[MinecraftForge] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
-    modLoaders.add('forge')
-    additionalFiles.from(sourcesJar.archiveFile)
-    dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
-
-    curseforge {
-        projectId = "${MOD_CURSEFORGE_ID}"
-        accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
-        minecraftVersions.add("${MINECRAFT_VERSION}")
-
-        requires {
-            slug = "${APEXCORE_CURSEFORGE_SLUG}"
-        }
-    }
-
-    modrinth {
-        projectId = "${MOD_MODRINTH_ID}"
-        accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
-        minecraftVersions.add("${MINECRAFT_VERSION}")
-
-        requires {
-            slug = "${APEXCORE_MODRINTH_SLUG}"
-        }
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
     }
 }

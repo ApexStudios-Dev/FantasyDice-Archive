@@ -11,6 +11,7 @@ pluginManagement {
 			url 'https://maven.minecraftforge.net'
 			content {
 				includeGroupByRegex 'net\\.minecraftforge.*'
+				includeGroupByRegex 'de\\.oceanlabs.*'
 			}
 		}
 
@@ -30,21 +31,14 @@ pluginManagement {
 		}
 
 		maven {
-			url 'https://repo.spongepowered.org/repository/maven-public'
+			url 'https://maven.architectury.dev/'
 			content {
-				includeGroupByRegex 'org\\.spongepowered.*'
+				includeGroupByRegex 'dev\\.architectury.*'
+				includeGroup 'architectury-plugin'
 			}
 		}
 
 		gradlePluginPortal()
-	}
-
-	resolutionStrategy {
-		eachPlugin {
-			if(requested.id.id == "org.spongepowered.mixin") {
-				useModule("org.spongepowered:mixingradle:${requested.version}")
-			}
-		}
 	}
 }
 

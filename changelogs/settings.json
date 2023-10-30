@@ -1,0 +1,7 @@
+{
+    "readableTagName": "/([^/]+?)$",
+    "removeIssueFromMessage": true,
+    "untaggedName": "Upcoming",
+    "toRef": "HEAD",
+    "ignoreCommitsIfMessageMatches": ".*Signed-off-by:.*"
+}
